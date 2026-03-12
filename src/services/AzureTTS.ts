@@ -12,8 +12,8 @@ export class AzureTTS {
   private config = {
     // 实际使用时，请替换为您自己的 Azure Speech Key 和 Region
     // 免费层级 (F0) 每月有 50万字符额度，足够开发测试
-    subscriptionKey: '', 
-    serviceRegion: 'eastasia', // 或 'westus' 等
+    subscriptionKey: import.meta.env.VITE_AZURE_SPEECH_KEY || '', 
+    serviceRegion: import.meta.env.VITE_AZURE_SPEECH_REGION || 'eastasia', // 或 'westus' 等
     voiceName: 'zh-CN-XiaoxiaoNeural',
     style: 'cheerful', // 默认欢快风格
   };
