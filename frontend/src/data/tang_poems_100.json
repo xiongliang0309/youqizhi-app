@@ -1,0 +1,1241 @@
+[
+  {
+    "title": "咏鹅",
+    "author": "骆宾王",
+    "content": [
+      "鹅，鹅，鹅，",
+      "曲项向天歌。",
+      "白毛浮绿水，",
+      "红掌拨清波。"
+    ],
+    "keywords": "goose white water",
+    "audio": "/audio/poems/咏鹅.mp3"
+  },
+  {
+    "title": "静夜思",
+    "author": "李白",
+    "content": [
+      "床前明月光，",
+      "疑是地上霜。",
+      "举头望明月，",
+      "低头思故乡。"
+    ],
+    "keywords": "moon night window",
+    "audio": "/audio/poems/静夜思.mp3"
+  },
+  {
+    "title": "春晓",
+    "author": "孟浩然",
+    "content": [
+      "春眠不觉晓，",
+      "处处闻啼鸟。",
+      "夜来风雨声，",
+      "花落知多少。"
+    ],
+    "keywords": "spring bird flower",
+    "image": "/images/poems/春晓.jpg",
+    "audio": "/audio/poems/春晓.mp3"
+  },
+  {
+    "title": "悯农",
+    "author": "李绅",
+    "content": [
+      "锄禾日当午，",
+      "汗滴禾下土。",
+      "谁知盘中餐，",
+      "粒粒皆辛苦。"
+    ],
+    "keywords": "farmer field rice",
+    "image": "/images/poems/悯农.jpg",
+    "audio": "/audio/poems/悯农.mp3"
+  },
+  {
+    "title": "登鹳雀楼",
+    "author": "王之涣",
+    "content": [
+      "白日依山尽，",
+      "黄河入海流。",
+      "欲穷千里目，",
+      "更上一层楼。"
+    ],
+    "keywords": "sunset river tower",
+    "image": "/images/poems/登鹳雀楼.jpg",
+    "audio": "/audio/poems/登鹳雀楼.mp3"
+  },
+  {
+    "title": "江雪",
+    "author": "柳宗元",
+    "content": [
+      "千山鸟飞绝，",
+      "万径人踪灭。",
+      "孤舟蓑笠翁，",
+      "独钓寒江雪。"
+    ],
+    "keywords": "snow river boat",
+    "image": "/images/poems/江雪.jpg",
+    "audio": "/audio/poems/江雪.mp3"
+  },
+  {
+    "title": "寻隐者不遇",
+    "author": "贾岛",
+    "content": [
+      "松下问童子，",
+      "言师采药去。",
+      "只在此山中，",
+      "云深不知处。"
+    ],
+    "keywords": "pine mountain cloud",
+    "image": "/images/poems/寻隐者不遇.jpg",
+    "audio": "/audio/poems/寻隐者不遇.mp3"
+  },
+  {
+    "title": "画",
+    "author": "王维",
+    "content": [
+      "远看山有色，",
+      "近听水无声。",
+      "春去花还在，",
+      "人来鸟不惊。"
+    ],
+    "keywords": "landscape painting",
+    "image": "/images/poems/画.jpg",
+    "audio": "/audio/poems/画.mp3"
+  },
+  {
+    "title": "风",
+    "author": "李峤",
+    "content": [
+      "解落三秋叶，",
+      "能开二月花。",
+      "过江千尺浪，",
+      "入竹万竿斜。"
+    ],
+    "keywords": "wind bamboo wave",
+    "audio": "/audio/poems/风.mp3"
+  },
+  {
+    "title": "相思",
+    "author": "王维",
+    "content": [
+      "红豆生南国，",
+      "春来发几枝。",
+      "愿君多采撷，",
+      "此物最相思。"
+    ],
+    "keywords": "red bean spring",
+    "audio": "/audio/poems/相思.mp3"
+  },
+  {
+    "title": "绝句",
+    "author": "杜甫",
+    "content": [
+      "两个黄鹂鸣翠柳，",
+      "一行白鹭上青天。",
+      "窗含西岭千秋雪，",
+      "门泊东吴万里船。"
+    ],
+    "keywords": "willow bird snow",
+    "image": "/images/poems/绝句.jpg",
+    "audio": "/audio/poems/绝句.mp3"
+  },
+  {
+    "title": "草",
+    "author": "白居易",
+    "content": [
+      "离离原上草，",
+      "一岁一枯荣。",
+      "野火烧不尽，",
+      "春风吹又生。"
+    ],
+    "keywords": "grass field fire",
+    "image": "/images/poems/草.jpg",
+    "audio": "/audio/poems/草.mp3"
+  },
+  {
+    "title": "游子吟",
+    "author": "孟郊",
+    "content": [
+      "慈母手中线，",
+      "游子身上衣。",
+      "临行密密缝，",
+      "意恐迟迟归。",
+      "谁言寸草心，",
+      "报得三春晖。"
+    ],
+    "keywords": "mother sewing clothes",
+    "image": "/images/poems/游子吟.jpg",
+    "audio": "/audio/poems/游子吟.mp3"
+  },
+  {
+    "title": "早发白帝城",
+    "author": "李白",
+    "content": [
+      "朝辞白帝彩云间，",
+      "千里江陵一日还。",
+      "两岸猿声啼不住，",
+      "轻舟已过万重山。"
+    ],
+    "keywords": "boat river mountain",
+    "image": "/images/poems/早发白帝城.jpg",
+    "audio": "/audio/poems/早发白帝城.mp3"
+  },
+  {
+    "title": "望庐山瀑布",
+    "author": "李白",
+    "content": [
+      "日照香炉生紫烟，",
+      "遥看瀑布挂前川。",
+      "飞流直下三千尺，",
+      "疑是银河落九天。"
+    ],
+    "keywords": "waterfall mountain mist",
+    "image": "/images/poems/望庐山瀑布.jpg",
+    "audio": "/audio/poems/望庐山瀑布.mp3"
+  },
+  {
+    "title": "回乡偶书",
+    "author": "贺知章",
+    "content": [
+      "少小离家老大回，",
+      "乡音无改鬓毛衰。",
+      "儿童相见不相识，",
+      "笑问客从何处来。"
+    ],
+    "keywords": "old man hometown",
+    "image": "/images/poems/回乡偶书.jpg",
+    "audio": "/audio/poems/回乡偶书.mp3"
+  },
+  {
+    "title": "赠汪伦",
+    "author": "李白",
+    "content": [
+      "李白乘舟将欲行，",
+      "忽闻岸上踏歌声。",
+      "桃花潭水深千尺，",
+      "不及汪伦送我情。"
+    ],
+    "keywords": "boat river peach",
+    "image": "/images/poems/赠汪伦.jpg",
+    "audio": "/audio/poems/赠汪伦.mp3"
+  },
+  {
+    "title": "黄鹤楼送孟浩然之广陵",
+    "author": "李白",
+    "content": [
+      "故人西辞黄鹤楼，",
+      "烟花三月下扬州。",
+      "孤帆远影碧空尽，",
+      "唯见长江天际流。"
+    ],
+    "keywords": "river boat tower",
+    "audio": "/audio/poems/黄鹤楼送孟浩然之广陵.mp3"
+  },
+  {
+    "title": "九月九日忆山东兄弟",
+    "author": "王维",
+    "content": [
+      "独在异乡为异客，",
+      "每逢佳节倍思亲。",
+      "遥知兄弟登高处，",
+      "遍插茱萸少一人。"
+    ],
+    "keywords": "mountain autumn homesick",
+    "image": "/images/poems/九月九日忆山东兄弟.jpg",
+    "audio": "/audio/poems/九月九日忆山东兄弟.mp3"
+  },
+  {
+    "title": "咏柳",
+    "author": "贺知章",
+    "content": [
+      "碧玉妆成一树高，",
+      "万条垂下绿丝绦。",
+      "不知细叶谁裁出，",
+      "二月春风似剪刀。"
+    ],
+    "keywords": "willow tree spring",
+    "image": "/images/poems/咏柳.jpg",
+    "audio": "/audio/poems/咏柳.mp3"
+  },
+  {
+    "title": "小池",
+    "author": "杨万里",
+    "content": [
+      "泉眼无声惜细流，",
+      "树阴照水爱晴柔。",
+      "小荷才露尖尖角，",
+      "早有蜻蜓立上头。"
+    ],
+    "keywords": "lotus dragonfly pond",
+    "audio": "/audio/poems/小池.mp3"
+  },
+  {
+    "title": "所见",
+    "author": "袁枚",
+    "content": [
+      "牧童骑黄牛，",
+      "歌声振林樾。",
+      "意欲捕鸣蝉，",
+      "忽然闭口立。"
+    ],
+    "keywords": "cow boy forest",
+    "audio": "/audio/poems/所见.mp3"
+  },
+  {
+    "title": "村居",
+    "author": "高鼎",
+    "content": [
+      "草长莺飞二月天，",
+      "拂堤杨柳醉春烟。",
+      "儿童散学归来早，",
+      "忙趁东风放纸鸢。"
+    ],
+    "keywords": "kite spring children",
+    "image": "/images/poems/村居.jpg",
+    "audio": "/audio/poems/村居.mp3"
+  },
+  {
+    "title": "鹿柴",
+    "author": "王维",
+    "content": [
+      "空山不见人，",
+      "但闻人语响。",
+      "返景入深林，",
+      "复照青苔上。"
+    ],
+    "keywords": "forest moss sunlight",
+    "image": "/images/poems/鹿柴.jpg",
+    "audio": "/audio/poems/鹿柴.mp3"
+  },
+  {
+    "title": "竹里馆",
+    "author": "王维",
+    "content": [
+      "独坐幽篁里，",
+      "弹琴复长啸。",
+      "深林人不知，",
+      "明月来相照。"
+    ],
+    "keywords": "bamboo moon zither",
+    "image": "/images/poems/竹里馆.jpg",
+    "audio": "/audio/poems/竹里馆.mp3"
+  },
+  {
+    "title": "夜宿山寺",
+    "author": "李白",
+    "content": [
+      "危楼高百尺，",
+      "手可摘星辰。",
+      "不敢高声语，",
+      "恐惊天上人。"
+    ],
+    "keywords": "star tower night",
+    "image": "/images/poems/夜宿山寺.jpg",
+    "audio": "/audio/poems/夜宿山寺.mp3"
+  },
+  {
+    "title": "江畔独步寻花",
+    "author": "杜甫",
+    "content": [
+      "黄四娘家花满蹊，",
+      "千朵万朵压枝低。",
+      "留连戏蝶时时舞，",
+      "自在娇莺恰恰啼。"
+    ],
+    "keywords": "flower butterfly garden",
+    "image": "/images/poems/江畔独步寻花.jpg",
+    "audio": "/audio/poems/江畔独步寻花.mp3"
+  },
+  {
+    "title": "山行",
+    "author": "杜牧",
+    "content": [
+      "远上寒山石径斜，",
+      "白云生处有人家。",
+      "停车坐爱枫林晚，",
+      "霜叶红于二月花。"
+    ],
+    "keywords": "maple autumn mountain",
+    "image": "/images/poems/山行.jpg",
+    "audio": "/audio/poems/山行.mp3"
+  },
+  {
+    "title": "清明",
+    "author": "杜牧",
+    "content": [
+      "清明时节雨纷纷，",
+      "路上行人欲断魂。",
+      "借问酒家何处有？",
+      "牧童遥指杏花村。"
+    ],
+    "keywords": "rain village shepherd",
+    "audio": "/audio/poems/清明.mp3"
+  },
+  {
+    "title": "枫桥夜泊",
+    "author": "张继",
+    "content": [
+      "月落乌啼霜满天，",
+      "江枫渔火对愁眠。",
+      "姑苏城外寒山寺，",
+      "夜半钟声到客船。"
+    ],
+    "keywords": "boat night bell",
+    "audio": "/audio/poems/枫桥夜泊.mp3"
+  },
+  {
+    "title": "悯农(其一)",
+    "author": "李绅",
+    "content": [
+      "春种一粒粟，",
+      "秋收万颗子。",
+      "四海无闲田，",
+      "农夫犹饿死。"
+    ],
+    "keywords": "field harvest grain",
+    "image": "/images/poems/悯农(其一).jpg",
+    "audio": "/audio/poems/悯农(其一).mp3"
+  },
+  {
+    "title": "江南",
+    "author": "汉乐府",
+    "content": [
+      "江南可采莲，",
+      "莲叶何田田。",
+      "鱼戏莲叶间。",
+      "鱼戏莲叶东，",
+      "鱼戏莲叶西。"
+    ],
+    "keywords": "lotus fish river",
+    "image": "/images/poems/江南.jpg",
+    "audio": "/audio/poems/江南.mp3"
+  },
+  {
+    "title": "敕勒歌",
+    "author": "北朝民歌",
+    "content": [
+      "敕勒川，阴山下。",
+      "天似穹庐，笼盖四野。",
+      "天苍苍，野茫茫，",
+      "风吹草低见牛羊。"
+    ],
+    "keywords": "grassland sheep sky",
+    "image": "/images/poems/敕勒歌.jpg",
+    "audio": "/audio/poems/敕勒歌.mp3"
+  },
+  {
+    "title": "凉州词",
+    "author": "王翰",
+    "content": [
+      "葡萄美酒夜光杯，",
+      "欲饮琵琶马上催。",
+      "醉卧沙场君莫笑，",
+      "古来征战几人回？"
+    ],
+    "keywords": "wine desert horse",
+    "image": "/images/poems/凉州词.jpg",
+    "audio": "/audio/poems/凉州词.mp3"
+  },
+  {
+    "title": "塞下曲",
+    "author": "卢纶",
+    "content": [
+      "月黑雁飞高，",
+      "单于夜遁逃。",
+      "欲将轻骑逐，",
+      "大雪满弓刀。"
+    ],
+    "keywords": "snow night archer",
+    "image": "/images/poems/塞下曲.jpg",
+    "audio": "/audio/poems/塞下曲.mp3"
+  },
+  {
+    "title": "逢雪宿芙蓉山主人",
+    "author": "刘长卿",
+    "content": [
+      "日暮苍山远，",
+      "天寒白屋贫。",
+      "柴门闻犬吠，",
+      "风雪夜归人。"
+    ],
+    "keywords": "snow dog house",
+    "image": "/images/poems/逢雪宿芙蓉山主人.jpg",
+    "audio": "/audio/poems/逢雪宿芙蓉山主人.mp3"
+  },
+  {
+    "title": "渡汉江",
+    "author": "宋之问",
+    "content": [
+      "岭外音书断，",
+      "经冬复历春。",
+      "近乡情更怯，",
+      "不敢问来人。"
+    ],
+    "keywords": "river road traveler",
+    "image": "/images/poems/渡汉江.jpg",
+    "audio": "/audio/poems/渡汉江.mp3"
+  },
+  {
+    "title": "秋浦歌",
+    "author": "李白",
+    "content": [
+      "白发三千丈，",
+      "缘愁似个长。",
+      "不知明镜里，",
+      "何处得秋霜。"
+    ],
+    "keywords": "mirror white hair",
+    "audio": "/audio/poems/秋浦歌.mp3"
+  },
+  {
+    "title": "独坐敬亭山",
+    "author": "李白",
+    "content": [
+      "众鸟高飞尽，",
+      "孤云独去闲。",
+      "相看两不厌，",
+      "只有敬亭山。"
+    ],
+    "keywords": "mountain bird cloud",
+    "image": "/images/poems/独坐敬亭山.jpg",
+    "audio": "/audio/poems/独坐敬亭山.mp3"
+  },
+  {
+    "title": "宿建德江",
+    "author": "孟浩然",
+    "content": [
+      "移舟泊烟渚，",
+      "日暮客愁新。",
+      "野旷天低树，",
+      "江清月近人。"
+    ],
+    "keywords": "river boat moon",
+    "image": "/images/poems/宿建德江.jpg",
+    "audio": "/audio/poems/宿建德江.mp3"
+  },
+  {
+    "title": "从军行",
+    "author": "王昌龄",
+    "content": [
+      "黄沙百战穿金甲，",
+      "不破楼兰终不还。"
+    ],
+    "keywords": "desert soldier armor",
+    "audio": "/audio/poems/从军行.mp3"
+  },
+  {
+    "title": "出塞",
+    "author": "王昌龄",
+    "content": [
+      "秦时明月汉时关，",
+      "万里长征人未还。",
+      "但使龙城飞将在，",
+      "不教胡马度阴山。"
+    ],
+    "keywords": "moon wall horse",
+    "audio": "/audio/poems/出塞.mp3"
+  },
+  {
+    "title": "送元二使安西",
+    "author": "王维",
+    "content": [
+      "渭城朝雨浥轻尘，",
+      "客舍青青柳色新。",
+      "劝君更尽一杯酒，",
+      "西出阳关无故人。"
+    ],
+    "keywords": "wine willow rain",
+    "image": "/images/poems/送元二使安西.jpg",
+    "audio": "/audio/poems/送元二使安西.mp3"
+  },
+  {
+    "title": "送灵澈上人",
+    "author": "刘长卿",
+    "content": [
+      "苍苍竹林寺，",
+      "杳杳钟声晚。",
+      "荷笠带斜阳，",
+      "青山独归远。"
+    ],
+    "keywords": "temple bamboo bell",
+    "image": "/images/poems/送灵澈上人.jpg",
+    "audio": "/audio/poems/送灵澈上人.mp3"
+  },
+  {
+    "title": "听筝",
+    "author": "李端",
+    "content": [
+      "鸣筝金粟柱，",
+      "素手玉房前。",
+      "欲得周郎顾，",
+      "时时误拂弦。"
+    ],
+    "keywords": "zither hand music",
+    "image": "/images/poems/听筝.jpg",
+    "audio": "/audio/poems/听筝.mp3"
+  },
+  {
+    "title": "玉阶怨",
+    "author": "李白",
+    "content": [
+      "玉阶生白露，",
+      "夜久侵罗袜。",
+      "却下水晶帘，",
+      "玲珑望秋月。"
+    ],
+    "keywords": "moon curtain night",
+    "image": "/images/poems/玉阶怨.jpg",
+    "audio": "/audio/poems/玉阶怨.mp3"
+  },
+  {
+    "title": "杂诗",
+    "author": "王维",
+    "content": [
+      "君自故乡来，",
+      "应知故乡事。",
+      "来日绮窗前，",
+      "寒梅著花未？"
+    ],
+    "keywords": "plum flower window",
+    "image": "/images/poems/杂诗.jpg",
+    "audio": "/audio/poems/杂诗.mp3"
+  },
+  {
+    "title": "问刘十九",
+    "author": "白居易",
+    "content": [
+      "绿蚁新醅酒，",
+      "红泥小火炉。",
+      "晚来天欲雪，",
+      "能饮一杯无？"
+    ],
+    "keywords": "wine fire snow",
+    "image": "/images/poems/问刘十九.jpg",
+    "audio": "/audio/poems/问刘十九.mp3"
+  },
+  {
+    "title": "秋夜寄邱员外",
+    "author": "韦应物",
+    "content": [
+      "怀君属秋夜，",
+      "散步咏凉天。",
+      "空山松子落，",
+      "幽人应未眠。"
+    ],
+    "keywords": "night mountain autumn",
+    "audio": "/audio/poems/秋夜寄邱员外.mp3"
+  },
+  {
+    "title": "乐游原",
+    "author": "李商隐",
+    "content": [
+      "向晚意不适，",
+      "驱车登古原。",
+      "夕阳无限好，",
+      "只是近黄昏。"
+    ],
+    "keywords": "sunset hill grass",
+    "audio": "/audio/poems/乐游原.mp3"
+  },
+  {
+    "title": "乌衣巷",
+    "author": "刘禹锡",
+    "content": [
+      "朱雀桥边野草花，",
+      "乌衣巷口夕阳斜。",
+      "旧时王谢堂前燕，",
+      "飞入寻常百姓家。"
+    ],
+    "keywords": "sunset bird wall",
+    "image": "/images/poems/乌衣巷.jpg",
+    "audio": "/audio/poems/乌衣巷.mp3"
+  },
+  {
+    "title": "秋风引",
+    "author": "刘禹锡",
+    "content": [
+      "何处秋风至？",
+      "萧萧送雁群。",
+      "朝来入庭树，",
+      "孤客最先闻。"
+    ],
+    "keywords": "autumn wind bird",
+    "image": "/images/poems/秋风引.jpg",
+    "audio": "/audio/poems/秋风引.mp3"
+  },
+  {
+    "title": "题都城南庄",
+    "author": "崔护",
+    "content": [
+      "去年今日此门中，",
+      "人面桃花相映红。",
+      "人面不知何处去，",
+      "桃花依旧笑春风。"
+    ],
+    "keywords": "peach blossom door",
+    "image": "/images/poems/题都城南庄.jpg",
+    "audio": "/audio/poems/题都城南庄.mp3"
+  },
+  {
+    "title": "江楼感旧",
+    "author": "赵嘏",
+    "content": [
+      "独上江楼思渺然，",
+      "月光如水水如天。",
+      "同来玩月人何在？",
+      "风景依稀似去年。"
+    ],
+    "keywords": "river moon sky",
+    "image": "/images/poems/江楼感旧.jpg",
+    "audio": "/audio/poems/江楼感旧.mp3"
+  },
+  {
+    "title": "金缕衣",
+    "author": "杜秋娘",
+    "content": [
+      "劝君莫惜金缕衣，",
+      "劝君惜取少年时。",
+      "花开堪折直须折，",
+      "莫待无花空折枝。"
+    ],
+    "keywords": "gold flower clothes",
+    "image": "/images/poems/金缕衣.jpg",
+    "audio": "/audio/poems/金缕衣.mp3"
+  },
+  {
+    "title": "马诗",
+    "author": "李贺",
+    "content": [
+      "大漠沙如雪，",
+      "燕山月似钩。",
+      "何当金络脑，",
+      "快走踏清秋。"
+    ],
+    "keywords": "desert moon horse",
+    "image": "/images/poems/马诗.jpg",
+    "audio": "/audio/poems/马诗.mp3"
+  },
+  {
+    "title": "垂钓",
+    "author": "严维",
+    "content": [
+      "万籁生山舍，",
+      "一峰对水亭。",
+      "石桥分浪白，",
+      "古木映潭青。"
+    ],
+    "keywords": "fishing boat mountain",
+    "image": "/images/poems/垂钓.jpg",
+    "audio": "/audio/poems/垂钓.mp3"
+  },
+  {
+    "title": "渔歌子",
+    "author": "张志和",
+    "content": [
+      "西塞山前白鹭飞，",
+      "桃花流水鳜鱼肥。",
+      "青箬笠，绿蓑衣，",
+      "斜风细雨不须归。"
+    ],
+    "keywords": "fish bird rain",
+    "audio": "/audio/poems/渔歌子.mp3"
+  },
+  {
+    "title": "忆江南",
+    "author": "白居易",
+    "content": [
+      "江南好，风景旧曾谙。",
+      "日出江花红胜火，",
+      "春来江水绿如蓝。",
+      "能不忆江南？"
+    ],
+    "keywords": "river sun flower",
+    "image": "/images/poems/忆江南.jpg",
+    "audio": "/audio/poems/忆江南.mp3"
+  },
+  {
+    "title": "赋得古原草送别",
+    "author": "白居易",
+    "content": [
+      "离离原上草，一岁一枯荣。",
+      "野火烧不尽，春风吹又生。",
+      "远芳侵古道，晴翠接荒城。",
+      "又送王孙去，萋萋满别情。"
+    ],
+    "keywords": "grass road field",
+    "image": "/images/poems/赋得古原草送别.jpg",
+    "audio": "/audio/poems/赋得古原草送别.mp3"
+  },
+  {
+    "title": "登幽州台歌",
+    "author": "陈子昂",
+    "content": [
+      "前不见古人，后不见来者。",
+      "念天地之悠悠，独怆然而涕下。"
+    ],
+    "keywords": "sky earth tower",
+    "audio": "/audio/poems/登幽州台歌.mp3"
+  },
+  {
+    "title": "凉州词(其一)",
+    "author": "王之涣",
+    "content": [
+      "黄河远上白云间，",
+      "一片孤城万仞山。",
+      "羌笛何须怨杨柳，",
+      "春风不度玉门关。"
+    ],
+    "keywords": "river cloud mountain",
+    "audio": "/audio/poems/凉州词(其一).mp3"
+  },
+  {
+    "title": "浪淘沙",
+    "author": "刘禹锡",
+    "content": [
+      "九曲黄河万里沙，",
+      "浪淘风簸自天涯。",
+      "如今直上银河去，",
+      "同到牵牛织女家。"
+    ],
+    "keywords": "river sand star",
+    "image": "/images/poems/浪淘沙.jpg",
+    "audio": "/audio/poems/浪淘沙.mp3"
+  },
+  {
+    "title": "望天门山",
+    "author": "李白",
+    "content": [
+      "天门中断楚江开，",
+      "碧水东流至此回。",
+      "两岸青山相对出，",
+      "孤帆一片日边来。"
+    ],
+    "keywords": "mountain river boat",
+    "image": "/images/poems/望天门山.jpg",
+    "audio": "/audio/poems/望天门山.mp3"
+  },
+  {
+    "title": "江南逢李龟年",
+    "author": "杜甫",
+    "content": [
+      "岐王宅里寻常见，",
+      "崔九堂前几度闻。",
+      "正是江南好风景，",
+      "落花时节又逢君。"
+    ],
+    "keywords": "flower river garden",
+    "image": "/images/poems/江南逢李龟年.jpg",
+    "audio": "/audio/poems/江南逢李龟年.mp3"
+  },
+  {
+    "title": "晓出净慈寺送林子方",
+    "author": "杨万里",
+    "content": [
+      "毕竟西湖六月中，",
+      "风光不与四时同。",
+      "接天莲叶无穷碧，",
+      "映日荷花别样红。"
+    ],
+    "keywords": "lotus lake sun",
+    "image": "/images/poems/晓出净慈寺送林子方.jpg",
+    "audio": "/audio/poems/晓出净慈寺送林子方.mp3"
+  },
+  {
+    "title": "饮湖上初晴后雨",
+    "author": "苏轼",
+    "content": [
+      "水光潋滟晴方好，",
+      "山色空蒙雨亦奇。",
+      "欲把西湖比西子，",
+      "淡妆浓抹总相宜。"
+    ],
+    "keywords": "lake rain mountain",
+    "image": "/images/poems/饮湖上初晴后雨.jpg",
+    "audio": "/audio/poems/饮湖上初晴后雨.mp3"
+  },
+  {
+    "title": "题西林壁",
+    "author": "苏轼",
+    "content": [
+      "横看成岭侧成峰，",
+      "远近高低各不同。",
+      "不识庐山真面目，",
+      "只缘身在此山中。"
+    ],
+    "keywords": "mountain cloud mist",
+    "image": "/images/poems/题西林壁.jpg",
+    "audio": "/audio/poems/题西林壁.mp3"
+  },
+  {
+    "title": "惠崇春江晚景",
+    "author": "苏轼",
+    "content": [
+      "竹外桃花三两枝，",
+      "春江水暖鸭先知。",
+      "蒌蒿满地芦芽短，",
+      "正是河豚欲上时。"
+    ],
+    "keywords": "peach duck river",
+    "audio": "/audio/poems/惠崇春江晚景.mp3"
+  },
+  {
+    "title": "赠刘景文",
+    "author": "苏轼",
+    "content": [
+      "荷尽已无擎雨盖，",
+      "菊残犹有傲霜枝。",
+      "一年好景君须记，",
+      "最是橙黄橘绿时。"
+    ],
+    "keywords": "orange lotus winter",
+    "audio": "/audio/poems/赠刘景文.mp3"
+  },
+  {
+    "title": "别董大",
+    "author": "高适",
+    "content": [
+      "千里黄云白日曛，",
+      "北风吹雁雪纷纷。",
+      "莫愁前路无知己，",
+      "天下谁人不识君。"
+    ],
+    "keywords": "snow wind bird",
+    "image": "/images/poems/别董大.jpg",
+    "audio": "/audio/poems/别董大.mp3"
+  },
+  {
+    "title": "春夜喜雨",
+    "author": "杜甫",
+    "content": [
+      "好雨知时节，当春乃发生。",
+      "随风潜入夜，润物细无声。"
+    ],
+    "keywords": "rain night spring",
+    "image": "/images/poems/春夜喜雨.jpg",
+    "audio": "/audio/poems/春夜喜雨.mp3"
+  },
+  {
+    "title": "枫桥夜泊",
+    "author": "张继",
+    "content": [
+      "月落乌啼霜满天，",
+      "江枫渔火对愁眠。",
+      "姑苏城外寒山寺，",
+      "夜半钟声到客船。"
+    ],
+    "keywords": "boat night bell",
+    "image": "/images/poems/枫桥夜泊.jpg",
+    "audio": "/audio/poems/枫桥夜泊.mp3"
+  },
+  {
+    "title": "望洞庭",
+    "author": "刘禹锡",
+    "content": [
+      "湖光秋月两相和，",
+      "潭面无风镜未磨。",
+      "遥望洞庭山水翠，",
+      "白银盘里一青螺。"
+    ],
+    "keywords": "lake moon mountain",
+    "image": "/images/poems/望洞庭.jpg",
+    "audio": "/audio/poems/望洞庭.mp3"
+  },
+  {
+    "title": "渔歌子",
+    "author": "张志和",
+    "content": [
+      "西塞山前白鹭飞，",
+      "桃花流水鳜鱼肥。",
+      "青箬笠，绿蓑衣，",
+      "斜风细雨不须归。"
+    ],
+    "keywords": "fish bird rain",
+    "image": "/images/poems/渔歌子.jpg",
+    "audio": "/audio/poems/渔歌子.mp3"
+  },
+  {
+    "title": "塞下曲",
+    "author": "卢纶",
+    "content": [
+      "林暗草惊风，",
+      "将军夜引弓。",
+      "平明寻白羽，",
+      "没在石棱中。"
+    ],
+    "keywords": "bow night rock",
+    "image": "/images/poems/塞下曲.jpg",
+    "audio": "/audio/poems/塞下曲.mp3"
+  },
+  {
+    "title": "题乌江亭",
+    "author": "杜牧",
+    "content": [
+      "胜败兵家事不期，",
+      "包羞忍耻是男儿。",
+      "江东子弟多才俊，",
+      "卷土重来未可知。"
+    ],
+    "keywords": "river soldier wall",
+    "image": "/images/poems/题乌江亭.jpg",
+    "audio": "/audio/poems/题乌江亭.mp3"
+  },
+  {
+    "title": "赤壁",
+    "author": "杜牧",
+    "content": [
+      "折戟沉沙铁未销，",
+      "自将磨洗认前朝。",
+      "东风不与周郎便，",
+      "铜雀春深锁二乔。"
+    ],
+    "keywords": "river fire sand",
+    "audio": "/audio/poems/赤壁.mp3"
+  },
+  {
+    "title": "泊秦淮",
+    "author": "杜牧",
+    "content": [
+      "烟笼寒水月笼沙，",
+      "夜泊秦淮近酒家。",
+      "商女不知亡国恨，",
+      "隔江犹唱后庭花。"
+    ],
+    "keywords": "river night moon",
+    "image": "/images/poems/泊秦淮.jpg",
+    "audio": "/audio/poems/泊秦淮.mp3"
+  },
+  {
+    "title": "商山早行",
+    "author": "温庭筠",
+    "content": [
+      "晨起动征铎，客行悲故乡。",
+      "鸡声茅店月，人迹板桥霜。"
+    ],
+    "keywords": "road morning moon",
+    "image": "/images/poems/商山早行.jpg",
+    "audio": "/audio/poems/商山早行.mp3"
+  },
+  {
+    "title": "无题",
+    "author": "李商隐",
+    "content": [
+      "相见时难别亦难，东风无力百花残。",
+      "春蚕到死丝方尽，蜡炬成灰泪始干。"
+    ],
+    "keywords": "candle silk flower",
+    "audio": "/audio/poems/无题.mp3"
+  },
+  {
+    "title": "锦瑟",
+    "author": "李商隐",
+    "content": [
+      "锦瑟无端五十弦，一弦一柱思华年。",
+      "庄生晓梦迷蝴蝶，望帝春心托杜鹃。"
+    ],
+    "keywords": "zither butterfly bird",
+    "audio": "/audio/poems/锦瑟.mp3"
+  },
+  {
+    "title": "登高",
+    "author": "杜甫",
+    "content": [
+      "风急天高猿啸哀，屿清沙白鸟飞回。",
+      "无边落木萧萧下，不尽长江滚滚来。"
+    ],
+    "keywords": "river wind bird",
+    "image": "/images/poems/登高.jpg",
+    "audio": "/audio/poems/登高.mp3"
+  },
+  {
+    "title": "春望",
+    "author": "杜甫",
+    "content": [
+      "国破山河在，城春草木深。",
+      "感时花溅泪，恨别鸟惊心。"
+    ],
+    "keywords": "city grass flower",
+    "image": "/images/poems/春望.jpg",
+    "audio": "/audio/poems/春望.mp3"
+  },
+  {
+    "title": "长恨歌(节选)",
+    "author": "白居易",
+    "content": [
+      "在天愿作比翼鸟，",
+      "在地愿为连理枝。"
+    ],
+    "keywords": "bird tree love",
+    "image": "/images/poems/长恨歌(节选).jpg",
+    "audio": "/audio/poems/长恨歌(节选).mp3"
+  },
+  {
+    "title": "琵琶行(节选)",
+    "author": "白居易",
+    "content": [
+      "大弦嘈嘈如急雨，",
+      "小弦切切如私语。"
+    ],
+    "keywords": "lute rain music",
+    "image": "/images/poems/琵琶行(节选).jpg",
+    "audio": "/audio/poems/琵琶行(节选).mp3"
+  },
+  {
+    "title": "春宵",
+    "author": "苏轼",
+    "content": [
+      "春宵一刻值千金，",
+      "花有清香月有阴。"
+    ],
+    "keywords": "night moon flower",
+    "image": "/images/poems/春宵.jpg",
+    "audio": "/audio/poems/春宵.mp3"
+  },
+  {
+    "title": "江上渔者",
+    "author": "范仲淹",
+    "content": [
+      "江上往来人，",
+      "但爱鲈鱼美。",
+      "君看一叶舟，",
+      "出没风波里。"
+    ],
+    "keywords": "boat fish river",
+    "image": "/images/poems/江上渔者.jpg",
+    "audio": "/audio/poems/江上渔者.mp3"
+  },
+  {
+    "title": "梅花",
+    "author": "王安石",
+    "content": [
+      "墙角数枝梅，",
+      "凌寒独自开。",
+      "遥知不是雪，",
+      "为有暗香来。"
+    ],
+    "keywords": "plum flower snow",
+    "audio": "/audio/poems/梅花.mp3"
+  },
+  {
+    "title": "登飞来峰",
+    "author": "王安石",
+    "content": [
+      "不畏浮云遮望眼，",
+      "自缘身在最高层。"
+    ],
+    "keywords": "mountain cloud sky",
+    "audio": "/audio/poems/登飞来峰.mp3"
+  },
+  {
+    "title": "夏日绝句",
+    "author": "李清照",
+    "content": [
+      "生当作人杰，",
+      "死亦为鬼雄。",
+      "至今思项羽，",
+      "不肯过江东。"
+    ],
+    "keywords": "river sword hero",
+    "image": "/images/poems/夏日绝句.jpg",
+    "audio": "/audio/poems/夏日绝句.mp3"
+  },
+  {
+    "title": "小至",
+    "author": "杜甫",
+    "content": [
+      "天时人事日相催，冬至阳生春又来。"
+    ],
+    "keywords": "winter spring sun",
+    "image": "/images/poems/小至.jpg",
+    "audio": "/audio/poems/小至.mp3"
+  },
+  {
+    "title": "江南春",
+    "author": "杜牧",
+    "content": [
+      "千里莺啼绿映红，水村山郭酒旗风。",
+      "南朝四百八十寺，多少楼台烟雨中。"
+    ],
+    "keywords": "rain temple village",
+    "image": "/images/poems/江南春.jpg",
+    "audio": "/audio/poems/江南春.mp3"
+  },
+  {
+    "title": "早春呈水部张十八员外",
+    "author": "韩愈",
+    "content": [
+      "天街小雨润如酥，草色遥看近却无。",
+      "最是一年春好处，绝胜烟柳满皇都。"
+    ],
+    "keywords": "rain grass spring",
+    "image": "/images/poems/早春呈水部张十八员外.jpg",
+    "audio": "/audio/poems/早春呈水部张十八员外.mp3"
+  },
+  {
+    "title": "晚春",
+    "author": "韩愈",
+    "content": [
+      "草树知春不久归，百般红紫斗芳菲。",
+      "杨花榆荚无才思，惟解漫天作雪飞。"
+    ],
+    "keywords": "flower spring snow",
+    "image": "/images/poems/晚春.jpg",
+    "audio": "/audio/poems/晚春.mp3"
+  },
+  {
+    "title": "秋夕",
+    "author": "杜牧",
+    "content": [
+      "银烛秋光冷画屏，轻罗小扇扑流萤。",
+      "天阶夜色凉如水，坐看牵牛织女星。"
+    ],
+    "keywords": "night star firefly",
+    "image": "/images/poems/秋夕.jpg",
+    "audio": "/audio/poems/秋夕.mp3"
+  },
+  {
+    "title": "金夜思",
+    "author": "李白",
+    "content": [
+      "床前明月光，",
+      "疑是地上霜。",
+      "举头望明月，",
+      "低头思故乡。"
+    ],
+    "keywords": "moon night window",
+    "image": "/images/poems/金夜思.jpg",
+    "audio": "/audio/poems/金夜思.mp3"
+  },
+  {
+    "title": "元日",
+    "author": "王安石",
+    "content": [
+      "爆竹声中一岁除，",
+      "春风送暖入屠苏。",
+      "千门万户曈曈日，",
+      "总把新桃换旧符。"
+    ],
+    "keywords": "firecracker spring sun",
+    "audio": "/audio/poems/元日.mp3"
+  },
+  {
+    "title": "书湖阴先生壁",
+    "author": "王安石",
+    "content": [
+      "一水护田将绿绕，",
+      "两山排闼送青来。"
+    ],
+    "keywords": "river mountain field",
+    "image": "/images/poems/书湖阴先生壁.jpg",
+    "audio": "/audio/poems/书湖阴先生壁.mp3"
+  },
+  {
+    "title": "送友人",
+    "author": "李白",
+    "content": [
+      "青山横北郭，白水绕东城。",
+      "此地一为别，孤蓬万里征。"
+    ],
+    "keywords": "mountain river road",
+    "image": "/images/poems/送友人.jpg",
+    "audio": "/audio/poems/送友人.mp3"
+  }
+]
