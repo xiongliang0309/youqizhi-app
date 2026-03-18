@@ -10,10 +10,16 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "node scripts/edge_tts_selftest.js"
+    "test": "node scripts/edge_tts_selftest.js",
+    "upload:songs-audio": "node scripts/upload_songs_audio_to_storage.js",
+    "migrate:data": "node scripts/migrate_to_supabase.js"
   },
   "dependencies": {
     "@faker-js/faker": "^10.3.0",
+    "@fontsource/baloo-2": "^5.2.7",
+    "@fontsource/comic-neue": "^5.2.7",
+    "@fontsource/nunito": "^5.2.7",
+    "@supabase/supabase-js": "^2.99.2",
     "axios": "^1.6.2",
     "framer-motion": "^10.16.4",
     "hls.js": "^1.6.15",
@@ -30,6 +36,8 @@
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react": "^4.2.0",
     "autoprefixer": "^10.4.16",
+    "cross-fetch": "^4.1.0",
+    "dotenv": "^17.3.1",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
     "typescript": "^5.2.2",

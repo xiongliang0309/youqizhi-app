@@ -1,11 +1,23 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Music, Scroll, Volume2, Search, Filter, Play, Pause } from 'lucide-react';
-import { generateCultureCards, type CultureCard, type CultureCategory } from '../data/generator';
-import TANG_POEMS from '../data/tang_poems_100.json';
+import { supabase } from '../lib/supabase';
 import { useSpeech } from '../hooks/useSpeech';
 import { MusicPlayer } from '../components/MusicPlayer';
+
+export type CultureCategory = 'poem' | 'song';
+
+export interface CultureCard {
+  id: string;
+  title: string;
+  content: string[];
+  image: string;
+  category: CultureCategory;
+  author?: string;
+  audio?: string;
+  cover?: string;
+}
 
 const CATEGORIES: { id: CultureCategory; name: string; icon: any; color: string }[] = [
   { id: 'poem', name: '古诗诵读', icon: Scroll, color: 'bg-red-50 text-red-800' },
@@ -30,7 +42,8 @@ export const Culture: React.FC = () => {
   const [activeSongFilter, setActiveSongFilter] = useState('all');
 
   const [cards, setCards] = useState<CultureCard[]>([]);
-  
+  const [loadingData, setLoadingData] = useState(false);
+
   // 记录当前正在朗读的卡片ID和行索引 (古诗模式)
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState<number | null>(null);
@@ -42,24 +55,62 @@ export const Culture: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
-  useEffect(() => {
-    if (selectedCategory) {
-      if (selectedCategory === 'poem') {
-        // 使用新的唐诗数据源
-        const poemCards: CultureCard[] = TANG_POEMS.map((poem: any, idx: number) => ({
-            id: `poem_${idx}`,
+  const fetchCards = useCallback(async (category: CultureCategory) => {
+    setLoadingData(true);
+    try {
+      if (category === 'poem') {
+        const { data, error } = await supabase
+          .from('poems')
+          .select('*')
+          .order('id');
+          
+        if (error) throw error;
+        
+        if (data) {
+          const poemCards: CultureCard[] = data.map((poem: any) => ({
+            id: poem.id,
             title: poem.title,
             author: poem.author,
             content: poem.content,
-            image: poem.image || '🎍', // 使用下载的配图
+            image: poem.image || '🎍',
             category: 'poem',
-            audio: poem.audio // 本地高音质音频
-        }));
-        setCards(poemCards);
-      } else {
-        // 儿歌保持原有逻辑
-        setCards(generateCultureCards(selectedCategory, 200));
+            audio: poem.audio
+          }));
+          setCards(poemCards);
+        }
+      } else if (category === 'song') {
+        const { data, error } = await supabase
+          .from('songs')
+          .select('*')
+          .order('id');
+          
+        if (error) throw error;
+        
+        if (data) {
+          const songCards: CultureCard[] = data.map((song: any) => ({
+            id: song.id,
+            title: song.title,
+            author: song.author,
+            content: song.content,
+            image: song.icon || '🎵',
+            category: 'song',
+            audio: song.audio,
+            cover: song.cover
+          }));
+          setCards(songCards);
+        }
       }
+    } catch (error) {
+      console.error('Error fetching data from Supabase:', error);
+      // Optional: add error state handling here
+    } finally {
+      setLoadingData(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectedCategory) {
+      fetchCards(selectedCategory);
     }
     // 切换分类或离开页面时重置状态
     return () => {
@@ -69,8 +120,9 @@ export const Culture: React.FC = () => {
       setCurrentSongIndex(null);
       setSearchQuery('');
       setActiveSongFilter('all');
+      setCards([]);
     };
-  }, [selectedCategory]);
+  }, [selectedCategory, fetchCards]);
 
   const stopAllAudio = () => {
       cancel(); // 停止 TTS
@@ -231,6 +283,9 @@ export const Culture: React.FC = () => {
             <h1 className="ml-4 text-xl font-bold text-gray-800">
             {CATEGORIES.find(c => c.id === selectedCategory)?.name}
             </h1>
+            {loadingData && (
+               <span className="ml-2 w-4 h-4 border-2 border-orange-500 border-t-transparent rounded-full animate-spin"></span>
+            )}
             <span className="ml-auto text-sm text-gray-400 font-medium bg-white px-3 py-1 rounded-full border border-gray-100">
             共 {filteredCards.length} 首
             </span>

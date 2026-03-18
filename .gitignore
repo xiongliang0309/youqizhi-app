@@ -136,3 +136,6 @@ scripts/node_modules/
 .vercel/
 .vercelignore
 public/audio/processed/
+
+.env
+.env.*
