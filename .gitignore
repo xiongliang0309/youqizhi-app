@@ -132,3 +132,7 @@ dist
 frontend/node_modules/
 backend/node_modules/
 scripts/node_modules/
+
+.vercel/
+.vercelignore
+public/audio/processed/
