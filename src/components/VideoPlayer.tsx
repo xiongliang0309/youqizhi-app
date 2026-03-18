@@ -15,6 +15,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClo
   const videoRef = useRef<HTMLVideoElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const hlsRef = useRef<Hls | null>(null);
+  const startedLoadRef = useRef(false);
   
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -24,27 +25,28 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClo
   const [showControls, setShowControls] = useState(true);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // 初始化播放器 (支持 HLS)
+  // 初始化播放器 (支持 HLS)，默认不自动播放/不自动拉流，等用户点击播放再开始加载
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
+    startedLoadRef.current = false;
+    video.pause();
+
     if (isHls && Hls.isSupported()) {
-        const hls = new Hls();
+        const hls = new Hls({ autoStartLoad: false });
         hls.loadSource(videoUrl);
         hls.attachMedia(video);
         hlsRef.current = hls;
-        hls.on(Hls.Events.MANIFEST_PARSED, () => {
-            video.play().then(() => setIsPlaying(true)).catch(console.error);
-        });
+        setIsPlaying(false);
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
         // Safari 原生支持 HLS
         video.src = videoUrl;
-        video.play().then(() => setIsPlaying(true)).catch(console.error);
+        setIsPlaying(false);
     } else {
         // 普通 MP4
         video.src = videoUrl;
-        video.play().then(() => setIsPlaying(true)).catch(console.error);
+        setIsPlaying(false);
     }
 
     return () => {
@@ -68,6 +70,10 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClo
       if (isPlaying) {
         videoRef.current.pause();
       } else {
+        if (isHls && hlsRef.current && !startedLoadRef.current) {
+          startedLoadRef.current = true;
+          hlsRef.current.startLoad();
+        }
         videoRef.current.play();
       }
       setIsPlaying(!isPlaying);
@@ -126,7 +132,9 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClo
       <div className="relative w-full h-full max-w-6xl max-h-screen aspect-video bg-black shadow-2xl overflow-hidden group">
         <video
           ref={videoRef}
-          src={videoUrl}
+          preload="none"
+          playsInline
+          src={isHls ? undefined : videoUrl}
           className="w-full h-full object-contain"
           onTimeUpdate={handleTimeUpdate}
           onEnded={() => setIsPlaying(false)}

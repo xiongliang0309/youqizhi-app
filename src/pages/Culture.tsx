@@ -127,6 +127,7 @@ export const Culture: React.FC = () => {
           // 播放本地高音质 MP3
           if (!audioRef.current) {
               audioRef.current = new Audio();
+              audioRef.current.preload = 'none';
           }
           audioRef.current.src = card.audio;
           audioRef.current.play();

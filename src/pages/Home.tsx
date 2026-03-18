@@ -313,6 +313,9 @@ const DraggableTailMascot: React.FC = () => {
         <img
           src="/images/logo/bear.jpg"
           alt="小尾巴吉祥物"
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
           className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-cover rounded-[2rem] ring-4 ring-white shadow-pop-purple"
           draggable={false}
         />

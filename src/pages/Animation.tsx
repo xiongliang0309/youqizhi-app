@@ -105,7 +105,13 @@ export const Animation: React.FC = () => {
                     >
                         {/* 封面区域 */}
                         <div className="relative aspect-video bg-gray-100 overflow-hidden">
-                            <img src={cartoon.cover} alt={cartoon.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                            <img
+                              src={cartoon.cover}
+                              alt={cartoon.title}
+                              loading="lazy"
+                              decoding="async"
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            />
                             
                             {/* 播放按钮覆盖层 */}
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors flex items-center justify-center">

@@ -163,6 +163,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ card, onClose, onNext,
         <audio
           ref={audioRef}
           src={card.audio}
+          preload="none"
           onTimeUpdate={handleTimeUpdate}
           onEnded={handleEnded}
           onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
@@ -200,7 +201,14 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({ card, onClose, onNext,
              {/* Cover Image Area */}
              <div className="w-full h-full rounded-full bg-gradient-to-br from-orange-100 to-yellow-100 overflow-hidden flex items-center justify-center relative z-10">
                  {card.cover ? (
-                     <img src={card.cover} alt={card.title} className="w-full h-full object-cover animate-spin-slow" style={{ animationDuration: '20s' }} />
+                     <img
+                       src={card.cover}
+                       alt={card.title}
+                       loading="lazy"
+                       decoding="async"
+                       className="w-full h-full object-cover animate-spin-slow"
+                       style={{ animationDuration: '20s' }}
+                     />
                  ) : (
                      <div className="text-8xl md:text-9xl select-none animate-bounce-slow transform transition-transform">
                         {card.image}
