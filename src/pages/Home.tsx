@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BookOpen, Brain, Palette, CheckCircle, Lightbulb, Music, Book, Star, Zap, Tv, Cloud, Sun, Sparkles } from 'lucide-react';
 import { useUserStore } from '../store/useUserStore';
+import { edgeTtsSpeak } from '../services/EdgeTtsClient';
 
 // V2 配置：多巴胺配色
 const MODULES = [
@@ -122,23 +123,204 @@ const ModuleCard = ({ title, icon: Icon, color, bg, shadow, border, path, delay,
       whileHover={{ scale: 1.05, rotate: -2, y: -5 }}
       whileTap={{ scale: 0.95 }}
       onClick={() => navigate(path)}
-      className={`relative h-60 w-full cursor-pointer group`}
+      className={`relative h-48 sm:h-52 md:h-56 lg:h-60 w-full cursor-pointer group`}
     >
       {/* 卡片主体 - 纯净版 */}
       <div className={`absolute inset-0 ${cardBg} rounded-[2rem] border-4 border-white ${shadow} p-6 flex flex-col items-center justify-center overflow-hidden z-10 transition-all duration-300 group-hover:bg-white`}>
         
         {/* 去掉复杂的装饰圆点，改为顶部柔和光晕 */}
-        <div className={`absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-white/40 to-transparent`} />
+        <div className={`absolute top-0 inset-x-0 h-16 sm:h-20 bg-gradient-to-b from-white/40 to-transparent`} />
 
         {/* 图标容器 - 稍微缩小并简化 */}
-        <div className={`w-16 h-16 rounded-2xl ${bg} flex items-center justify-center mb-3 shadow-md group-hover:scale-110 transition-transform duration-300 ring-4 ring-white`}>
-          <Icon className={`w-8 h-8 ${color}`} strokeWidth={3} />
+        <div className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl ${bg} flex items-center justify-center mb-3 shadow-md group-hover:scale-110 transition-transform duration-300 ring-4 ring-white`}>
+          <Icon className={`w-7 h-7 md:w-8 md:h-8 ${color}`} strokeWidth={3} />
         </div>
         
-        <h3 className={`text-xl font-black text-gray-800 mb-1 tracking-wide text-center group-hover:${bg.replace('bg-', 'text-')} transition-colors`}>{title}</h3>
-        <p className="text-gray-500 text-xs font-bold bg-white/60 px-2 py-1 rounded-full">{desc}</p>
+        <h3 className={`text-lg md:text-xl font-black text-gray-800 mb-1 tracking-wide text-center group-hover:${bg.replace('bg-', 'text-')} transition-colors`}>{title}</h3>
+        <p className="text-gray-500 text-xs md:text-sm font-bold bg-white/60 px-2 py-1 rounded-full">{desc}</p>
       </div>
     </motion.div>
+  );
+};
+
+const XWB_MASCOT_TEXT = '你好！小朋友！我是小尾巴。欢迎来到幼启智乐园。让我陪你一起度过欢乐时光吧！';
+
+const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
+const DraggableTailMascot: React.FC = () => {
+  const rootRef = React.useRef<HTMLButtonElement | null>(null);
+  const draggingRef = React.useRef(false);
+  const movedRef = React.useRef(false);
+  const startRef = React.useRef<{ x: number; y: number; px: number; py: number }>({ x: 0, y: 0, px: 0, py: 0 });
+
+  const voiceName = 'zh-CN-YunxiNeural';
+  const speakRate = '-8%';
+  const speakPitch = '+24%';
+
+  const getResponsiveMargin = () => {
+    if (typeof window === 'undefined') return 12;
+    const w = window.innerWidth;
+    if (w >= 1024) return 20; // PC
+    if (w >= 768) return 16;  // Pad
+    return 12;                // Mobile
+  };
+
+  const [pos, setPos] = React.useState<{ x: number; y: number } | null>(null);
+
+  const clampToViewport = React.useCallback((next: { x: number; y: number }) => {
+    const el = rootRef.current;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const margin = getResponsiveMargin();
+    // 使用 offsetWidth/Height 获取更准确的渲染尺寸，如果未渲染则使用默认值
+    const w = el?.offsetWidth || 128; // 默认尺寸调整为 128 (对应下面的 w-32)
+    const h = el?.offsetHeight || 128;
+
+    // 计算允许的偏移范围（相对于右下角锚点）
+    // 锚点为：right=margin, bottom=margin
+    // x,y 为 transform 偏移量
+    // x <= 0 (不能向右超出 margin)
+    // x >= (margin + w - vw + margin) = 2*margin + w - vw (不能向左超出 margin)
+    const minX = 2 * margin + w - vw;
+    const maxX = 0;
+    const minY = 2 * margin + h - vh;
+    const maxY = 0;
+
+    return {
+      x: clamp(next.x, minX, maxX),
+      y: clamp(next.y, minY, maxY),
+    };
+  }, []);
+
+  React.useEffect(() => {
+    const key = 'xwb_mascot_pos_v4'; // 更新 key 以适配新的坐标系（偏移量）
+    const raw = localStorage.getItem(key);
+    
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw) as { x: number; y: number };
+        const clamped = clampToViewport(parsed);
+        setPos(clamped);
+        return;
+      } catch {
+        localStorage.removeItem(key);
+      }
+    }
+    
+    // 默认位置：(0, 0) 即右下角锚点位置
+    setPos({ x: 0, y: 0 });
+  }, [clampToViewport]);
+
+  React.useEffect(() => {
+    if (!pos) return;
+    const key = 'xwb_mascot_pos_v4';
+    localStorage.setItem(key, JSON.stringify(pos));
+  }, [pos]);
+
+  React.useEffect(() => {
+    if (!pos) return;
+    const onResize = () => setPos(prev => (prev ? clampToViewport(prev) : prev));
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [pos, clampToViewport]);
+
+  const onPointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
+    if (e.button !== undefined && e.button !== 0) return;
+    const el = e.currentTarget;
+    el.setPointerCapture?.(e.pointerId);
+    draggingRef.current = true;
+    movedRef.current = false;
+    // 使用最新状态的 pos
+    setPos(currentPos => {
+      const safePos = currentPos ?? { x: 0, y: 0 };
+      // 记录鼠标按下时的屏幕坐标，以及此时元素应该在的 x,y 偏移量
+      startRef.current = { x: safePos.x, y: safePos.y, px: e.clientX, py: e.clientY };
+      return currentPos;
+    });
+  };
+
+  React.useEffect(() => {
+    const onPointerMove = (e: PointerEvent) => {
+      if (!draggingRef.current) return;
+      const dx = e.clientX - startRef.current.px;
+      const dy = e.clientY - startRef.current.py;
+      if (!movedRef.current && Math.hypot(dx, dy) > 6) movedRef.current = true;
+      
+      if (movedRef.current) {
+        const next = { x: startRef.current.x + dx, y: startRef.current.y + dy };
+        setPos(clampToViewport(next));
+      }
+    };
+
+    const endDrag = (e: PointerEvent) => {
+      if (!draggingRef.current) return;
+      draggingRef.current = false;
+      
+      if (rootRef.current) {
+         rootRef.current.releasePointerCapture?.(e.pointerId);
+      }
+      
+      if (!movedRef.current) {
+        edgeTtsSpeak(XWB_MASCOT_TEXT, { voice: voiceName, rate: speakRate, pitch: speakPitch });
+      } else {
+        setPos(currentPos => {
+          if (currentPos) {
+            const key = 'xwb_mascot_pos_v4';
+            localStorage.setItem(key, JSON.stringify(currentPos));
+          }
+          return currentPos;
+        });
+      }
+    };
+
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
+
+    return () => {
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', endDrag);
+      window.removeEventListener('pointercancel', endDrag);
+    };
+  }, [clampToViewport, voiceName, speakRate, speakPitch]);
+
+  if (!pos) return null;
+
+  return (
+    <motion.button
+      ref={rootRef}
+      type="button"
+      aria-label="小尾巴吉祥物：按住拖动，点击播放欢迎语音"
+      onPointerDown={onPointerDown}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          edgeTtsSpeak(XWB_MASCOT_TEXT, { voice: voiceName, rate: speakRate, pitch: speakPitch });
+        }
+      }}
+      whileHover={{ scale: 1.04 }}
+      whileTap={{ scale: 0.98 }}
+      className="fixed z-50 select-none touch-none cursor-grab active:cursor-grabbing origin-center right-[12px] bottom-[12px] md:right-[16px] md:bottom-[16px] lg:right-[20px] lg:bottom-[20px]"
+      initial={false}
+      animate={{ x: pos.x, y: pos.y }}
+      transition={{ type: "spring", stiffness: 300, damping: 30, mass: 1 }}
+      style={{ 
+        margin: 0
+      }}
+    >
+      <div className="relative">
+        <div className="absolute -inset-2 rounded-[2rem] bg-gradient-to-br from-secondary/25 via-accent-yellow/25 to-accent-cyan/25 blur-lg" />
+        <img
+          src="/images/logo/bear.jpg"
+          alt="小尾巴吉祥物"
+          className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-cover rounded-[2rem] ring-4 ring-white shadow-pop-purple"
+          draggable={false}
+        />
+        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-white text-black text-[10px] font-black px-2 py-1 rounded-full border-2 border-black shadow-[2px_2px_0px_#000]">
+          小尾巴
+        </div>
+      </div>
+    </motion.button>
   );
 };
 
@@ -241,21 +423,21 @@ export const Home: React.FC = () => {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16 relative"
+          className="text-center mb-12 md:mb-16 relative"
         >
-          <h2 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent-cyan mb-4 drop-shadow-sm font-heading tracking-tight py-2">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent-cyan mb-3 md:mb-4 drop-shadow-sm font-heading tracking-tight py-2">
             探索奇妙世界 🚀
           </h2>
           <div className="inline-block relative">
             <div className="absolute -inset-1 bg-gradient-to-r from-accent-mint to-accent-yellow rounded-full blur opacity-70"></div>
-            <p className="relative bg-white text-text-main text-base font-bold px-8 py-2 rounded-full shadow-xl border-4 border-white flex items-center gap-2">
-              <span className="text-lg">✨</span> 准备好开始今天的冒险了吗？
+            <p className="relative bg-white text-text-main text-sm sm:text-base font-bold px-6 sm:px-8 py-2 rounded-full shadow-xl border-4 border-white flex items-center gap-2">
+              <span className="text-base sm:text-lg">✨</span> 准备好开始今天的冒险了吗？
             </p>
           </div>
         </motion.div>
 
         {/* 模块网格 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-24 px-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 pb-20 md:pb-24 px-2 sm:px-4">
           {MODULES.map((mod, idx) => (
             <ModuleCard 
               key={mod.id}
@@ -265,33 +447,7 @@ export const Home: React.FC = () => {
           ))}
         </div>
       </main>
-
-      {/* 吉祥物 (右下角) */}
-      <motion.div
-        initial={{ y: 200, rotate: 20 }}
-        animate={{ y: 0, rotate: 0 }}
-        transition={{ type: "spring", stiffness: 120, delay: 0.5 }}
-        className="fixed -bottom-10 -right-4 md:right-0 z-40 pointer-events-none"
-      >
-        <div className="relative w-32 md:w-48 h-32 md:h-48">
-           <img 
-            src="https://images.unsplash.com/photo-1596727147705-54a9d0820948?q=80&w=600&auto=format&fit=crop" 
-            alt="Cute Mascot"
-            className="w-full h-full object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-300 origin-bottom" 
-            style={{ maskImage: 'linear-gradient(to bottom, black 90%, transparent 100%)' }}
-          />
-        </div>
-        
-        {/* 气泡对话框 - 漫画风格 */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.5, type: "spring" }}
-          className="absolute -top-8 -left-8 bg-white px-4 py-2 rounded-2xl rounded-br-none shadow-[3px_3px_0px_#000] border-2 border-black whitespace-nowrap z-50"
-        >
-          <p className="font-black text-black text-sm md:text-base">一起加油鸭！🔥</p>
-        </motion.div>
-      </motion.div>
+      <DraggableTailMascot />
     </div>
   );
 };

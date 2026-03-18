@@ -53,6 +53,12 @@ export class AzureTTS {
     this.synthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfig);
   }
 
+  public setVoiceName(voiceName: string) {
+    if (!voiceName || voiceName === this.config.voiceName) return;
+    this.config.voiceName = voiceName;
+    this.recreateSynthesizer();
+  }
+
   /**
    * 停止播放
    */
@@ -73,8 +79,12 @@ export class AzureTTS {
    * @param style 情感风格 (cheerful, sad, story, etc.)
    * @param role 角色 (Girl, Boy, etc.)
    */
-  public speak(text: string, style: string = 'cheerful', role?: string): Promise<void> {
+  public speak(text: string, style: string = 'cheerful', role?: string, voiceName?: string): Promise<void> {
     return new Promise((resolve, reject) => {
+      if (voiceName) {
+        this.setVoiceName(voiceName);
+      }
+
       if (!this.synthesizer) {
         // 如果没有 Key，拒绝执行（外层应降级到本地 TTS）
         reject(new Error('Azure TTS not initialized'));
@@ -87,7 +97,7 @@ export class AzureTTS {
         <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
           <voice name="${this.config.voiceName}">
             <mstts:express-as style="${style}" ${role ? `role="${role}"` : ''}>
-              ${text}
+              <prosody rate="+5%" pitch="+8%">${text}</prosody>
             </mstts:express-as>
           </voice>
         </speak>

@@ -1,12 +1,16 @@
-const fs = require('fs');
-const path = require('path');
-const https = require('https');
-const http = require('http');
+import fs from 'fs';
+import path from 'path';
+import https from 'https';
+import http from 'http';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // 目标目录
-const AUDIO_DIR = path.join(__dirname, '../youqizhi-app/frontend/public/audio');
+const AUDIO_DIR = path.join(__dirname, '../public/audio');
 // 元数据保存路径
-const METADATA_PATH = path.join(__dirname, '../youqizhi-app/frontend/src/data/beilehu_songs.json');
+const METADATA_PATH = path.join(__dirname, '../src/data/beilehu_songs.json');
 
 // 确保目录存在
 if (!fs.existsSync(AUDIO_DIR)) {

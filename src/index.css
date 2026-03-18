@@ -39,3 +39,12 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #8B5CF6; 
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-blob,
+  .animate-float,
+  .animate-wiggle {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,11 +1,15 @@
-const fs = require('fs');
-const path = require('path');
-// 引用前端目录下的 node_modules
-const { EdgeTTS } = require('../youqizhi-app/frontend/node_modules/node-edge-tts');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+// 引用依赖
+import { EdgeTTS } from 'node-edge-tts';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // 目标目录
-const AUDIO_DIR = path.join(__dirname, '../youqizhi-app/frontend/public/audio/poems');
-const DATA_FILE = path.join(__dirname, '../youqizhi-app/frontend/src/data/tang_poems_100.json');
+const AUDIO_DIR = path.join(__dirname, '../public/audio/poems');
+const DATA_FILE = path.join(__dirname, '../src/data/tang_poems_100.json');
 
 // 确保目录存在
 if (!fs.existsSync(AUDIO_DIR)) {
@@ -37,7 +41,7 @@ async function main() {
         // 尝试直接使用纯文本，因为 node-edge-tts 对 SSML 支持有限，且 rate 参数已经是全局控制了
         // 为了"深情并茂"，我们通过标点符号的停顿来增强节奏感
         const text = `
-            题目：${poem.title}。
+            ${poem.title}。
             作者：${poem.author}。
             ${poem.content.join('，')}。
         `;

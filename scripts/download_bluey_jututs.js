@@ -1,12 +1,16 @@
-const fs = require('fs');
-const path = require('path');
-const https = require('https');
-const http = require('http');
+import fs from 'fs';
+import path from 'path';
+import https from 'https';
+import http from 'http';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // 目标目录
-const VIDEO_DIR = path.join(__dirname, '../youqizhi-app/frontend/public/videos');
-const THUMB_DIR = path.join(__dirname, '../youqizhi-app/frontend/public/videos/thumbs');
-const METADATA_PATH = path.join(__dirname, '../youqizhi-app/frontend/src/data/cartoons.json');
+const VIDEO_DIR = path.join(__dirname, '../public/videos');
+const THUMB_DIR = path.join(__dirname, '../public/videos/thumbs');
+const METADATA_PATH = path.join(__dirname, '../src/data/cartoons.json');
 
 // 确保目录存在
 [VIDEO_DIR, THUMB_DIR].forEach(dir => {

@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node scripts/edge_tts_selftest.js"
   },
   "dependencies": {
     "@faker-js/faker": "^10.3.0",
