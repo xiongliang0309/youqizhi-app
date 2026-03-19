@@ -35,6 +35,7 @@ export default {
       fontFamily: {
         sans: ['"Nunito"', '"Comic Neue"', 'sans-serif'], // Swapped priority
         heading: ['"Baloo 2"', 'cursive'],
+        brand: ['"Comic Neue"', '"Baloo 2"', 'cursive'],
       },
       boxShadow: {
         // V2 Shadows - Colored & Bouncy

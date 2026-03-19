@@ -1,0 +1,20 @@
+:root {
+  --space-2: 0.5rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+
+  --app-nav-height: 4.25rem;
+  --app-nav-max-width: 90rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+
+  .xwb-motion,
+  .xwb-motion * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

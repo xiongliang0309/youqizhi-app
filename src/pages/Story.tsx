@@ -50,11 +50,11 @@ export const Story: React.FC = () => {
   if (!selectedStory) {
     return (
       <div className="h-screen bg-[#FDF2F8] flex flex-col font-sans overflow-hidden">
-        <div className="p-4 md:p-6 flex items-center bg-white/60 backdrop-blur-md sticky top-0 z-10 shadow-sm border-b border-pink-100">
+        <div className="p-4 md:p-6 flex items-center bg-white/60 backdrop-blur-md sticky top-[var(--app-nav-height)] z-10 shadow-sm border-b border-pink-100">
           <button onClick={() => navigate('/')} className="bg-white p-3 rounded-full shadow-md hover:bg-pink-50 transition-colors">
             <ArrowLeft className="text-gray-600" />
           </button>
-          <h1 className="ml-4 text-3xl font-black text-gray-800 tracking-tight">故事城堡</h1>
+          <h2 className="ml-4 text-3xl font-black text-gray-800 tracking-tight">故事城堡</h2>
           <span className="ml-auto text-sm text-pink-500 font-bold bg-pink-100 px-4 py-1.5 rounded-full">
              共 {stories.length} 个精彩故事
           </span>

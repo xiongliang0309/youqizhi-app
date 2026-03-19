@@ -2,8 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BookOpen, Brain, Palette, CheckCircle, Lightbulb, Music, Book, Star, Zap, Tv, Cloud, Sun, Sparkles } from 'lucide-react';
-import { useUserStore } from '../store/useUserStore';
-import { edgeTtsSpeak } from '../services/EdgeTtsClient';
 
 // V2 配置：多巴胺配色
 const MODULES = [
@@ -156,6 +154,17 @@ const DraggableTailMascot: React.FC = () => {
   const voiceName = 'zh-CN-YunxiNeural';
   const speakRate = '-8%';
   const speakPitch = '+24%';
+  const ttsModuleRef = React.useRef<any>(null);
+
+  const speakMascot = React.useCallback(async () => {
+    try {
+      if (!ttsModuleRef.current) {
+        ttsModuleRef.current = await import('../services/EdgeTtsClient');
+      }
+      ttsModuleRef.current.edgeTtsSpeak(XWB_MASCOT_TEXT, { voice: voiceName, rate: speakRate, pitch: speakPitch });
+    } catch {
+    }
+  }, [voiceName, speakRate, speakPitch]);
 
   const getResponsiveMargin = () => {
     if (typeof window === 'undefined') return 12;
@@ -261,7 +270,7 @@ const DraggableTailMascot: React.FC = () => {
       }
       
       if (!movedRef.current) {
-        edgeTtsSpeak(XWB_MASCOT_TEXT, { voice: voiceName, rate: speakRate, pitch: speakPitch });
+        speakMascot();
       } else {
         setPos(currentPos => {
           if (currentPos) {
@@ -282,7 +291,7 @@ const DraggableTailMascot: React.FC = () => {
       window.removeEventListener('pointerup', endDrag);
       window.removeEventListener('pointercancel', endDrag);
     };
-  }, [clampToViewport, voiceName, speakRate, speakPitch]);
+  }, [clampToViewport, voiceName, speakRate, speakPitch, speakMascot]);
 
   if (!pos) return null;
 
@@ -294,12 +303,12 @@ const DraggableTailMascot: React.FC = () => {
       onPointerDown={onPointerDown}
       onClick={() => {
         if (typeof window !== 'undefined' && 'PointerEvent' in window) return;
-        edgeTtsSpeak(XWB_MASCOT_TEXT, { voice: voiceName, rate: speakRate, pitch: speakPitch });
+        speakMascot();
       }}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          edgeTtsSpeak(XWB_MASCOT_TEXT, { voice: voiceName, rate: speakRate, pitch: speakPitch });
+          speakMascot();
         }
       }}
       whileHover={{ scale: 1.04 }}
@@ -332,8 +341,6 @@ const DraggableTailMascot: React.FC = () => {
 };
 
 export const Home: React.FC = () => {
-  const { age, setAge } = useUserStore();
-  
   return (
     <div className="min-h-screen bg-background-cloud font-sans selection:bg-accent-yellow/50 relative overflow-x-hidden">
       
@@ -354,76 +361,6 @@ export const Home: React.FC = () => {
           <Star size={40} className="text-accent-rose fill-current" />
         </motion.div>
       </div>
-
-      {/* 顶部导航栏 - 浮动云朵 */}
-      <header className="sticky top-4 z-50 px-4 md:px-8">
-        <div className="max-w-7xl mx-auto bg-white/80 backdrop-blur-xl rounded-full border-2 border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] py-2 px-4 md:px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          
-          {/* Logo & 用户信息区域 */}
-          <div className="flex items-center w-full md:w-auto gap-4">
-            {/* Logo - 幼启智 */}
-            <div className="flex-shrink-0 cursor-pointer hover:scale-105 transition-transform duration-300" onClick={() => window.location.reload()}>
-              <img src="/images/logo/logo.svg" alt="幼启智 Logo" className="h-20 md:h-24 w-auto drop-shadow-md" />
-            </div>
-
-            {/* 分隔线 */}
-            <div className="h-10 w-0.5 bg-gray-200 hidden md:block"></div>
-
-            {/* 用户头像与欢迎语 */}
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-accent-yellow to-orange-400 rounded-full flex items-center justify-center text-2xl shadow-md ring-2 ring-white border-2 border-orange-200">
-                  🦁
-                </div>
-                <div className="absolute -bottom-1 -right-1 bg-accent-mint text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full border border-white">
-                  LV.5
-                </div>
-              </div>
-              <div className="hidden sm:block">
-                <h1 className="text-base md:text-lg font-black text-text-main leading-tight">
-                  你好，宝贝！
-                </h1>
-                <div className="flex items-center text-orange-500 font-bold text-xs">
-                  <Sun size={12} className="mr-1 fill-current animate-spin-slow" />
-                  <span>今天也是元气满满！</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* 右侧功能区：状态栏 & 年龄选择 */}
-          <div className="flex items-center gap-3 md:gap-6 w-full md:w-auto justify-between md:justify-end">
-            {/* 状态栏：金币、能量 - 紧凑胶囊风格 */}
-            <div className="flex items-center gap-2 md:gap-4">
-              <div className="flex items-center bg-yellow-50 px-3 py-1.5 rounded-xl border border-yellow-200 shadow-sm">
-                <Star className="text-yellow-500 fill-yellow-500 w-4 h-4 md:w-5 md:h-5 mr-1.5" />
-                <span className="font-black text-yellow-700 text-sm md:text-base">120</span>
-              </div>
-              <div className="flex items-center bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-200 shadow-sm">
-                <Zap className="text-blue-500 fill-blue-500 w-4 h-4 md:w-5 md:h-5 mr-1.5" />
-                <span className="font-black text-blue-700 text-sm md:text-base">能量</span>
-              </div>
-            </div>
-
-            {/* 年龄选择器 - 糖果按钮 */}
-            <div className="flex items-center bg-gray-100 p-1.5 rounded-full gap-1.5">
-              {[3, 4, 5, 6].map((num) => (
-                <button
-                  key={num}
-                  onClick={() => setAge(num)}
-                  className={`w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center font-black text-sm md:text-base transition-all duration-300 border-2 ${
-                    age === num 
-                      ? 'bg-secondary border-pink-400 text-white shadow-md scale-110' 
-                      : 'bg-white border-gray-200 text-gray-400 hover:bg-gray-50'
-                  }`}
-                >
-                  {num}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8 md:py-12 relative z-10">
         {/* 欢迎标语 - 动感文字 */}

@@ -49,15 +49,15 @@ export const Animation: React.FC = () => {
       </AnimatePresence>
 
       {/* 顶部导航 */}
-      <header className="relative z-10 px-4 py-4 md:px-8 flex items-center justify-between bg-white/60 backdrop-blur-md sticky top-0 shadow-sm">
+      <header className="relative z-10 px-4 py-4 md:px-8 flex items-center justify-between bg-white/60 backdrop-blur-md sticky top-[var(--app-nav-height)] shadow-sm">
         <div className="flex items-center">
             <button onClick={() => navigate('/')} className="p-3 rounded-full bg-white shadow-md hover:bg-blue-50 transition-colors mr-4">
             <ArrowLeft className="text-blue-600" />
             </button>
-            <h1 className="text-2xl font-black text-blue-800 tracking-wide flex items-center gap-2">
+            <h2 className="text-2xl font-black text-blue-800 tracking-wide flex items-center gap-2">
             <Tv size={28} className="text-blue-600" />
             趣味动画
-            </h1>
+            </h2>
         </div>
         
         {/* 搜索框 */}

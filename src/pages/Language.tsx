@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Volume2, Star, RefreshCw, Grid } from 'lucide-react';
-import { generateWordCards, WordCard, WordCategory } from '../data/generator';
+import { generateWordCards, type WordCard, type WordCategory } from '../data/generator';
 import { useSpeech } from '../hooks/useSpeech';
-import { useUserStore } from '../store/useUserStore';
 
 // 角色头像配置
 const CHARACTERS = {
@@ -25,20 +24,19 @@ const CATEGORIES: { id: WordCategory; name: string; icon: string; color: string 
 export const Language: React.FC = () => {
   const navigate = useNavigate();
   const { speak } = useSpeech();
-  const { age } = useUserStore();
   
   const [selectedCategory, setSelectedCategory] = useState<WordCategory | null>(null);
   const [words, setWords] = useState<WordCard[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
 
-  // 当选择分类或年龄变化时，生成新数据
+  // 当选择分类时，生成新数据
   useEffect(() => {
     if (selectedCategory) {
-      setWords(generateWordCards(20, age, selectedCategory)); // 每次生成20个
+      setWords(generateWordCards(20, selectedCategory)); // 每次生成20个
       setCurrentIndex(0);
     }
-  }, [age, selectedCategory]);
+  }, [selectedCategory]);
 
   const currentWord = words[currentIndex];
 
@@ -81,7 +79,7 @@ export const Language: React.FC = () => {
         </header>
 
         <div className="max-w-4xl mx-auto w-full">
-          <h1 className="text-3xl font-black text-gray-800 mb-8 text-center">你想学什么？</h1>
+          <h2 className="text-3xl font-black text-gray-800 mb-8 text-center">你想学什么？</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {CATEGORIES.map(cat => (
               <motion.button
@@ -110,7 +108,7 @@ export const Language: React.FC = () => {
   // --- 视图 2: 单词卡片页 ---
   return (
     <div className="min-h-screen bg-[#FFF0F5] flex flex-col font-sans relative overflow-hidden">
-      <div className="p-4 md:p-6 flex items-center justify-between bg-white/50 backdrop-blur-sm sticky top-0 z-10">
+      <div className="p-4 md:p-6 flex items-center justify-between bg-white/50 backdrop-blur-sm sticky top-[var(--app-nav-height)] z-10">
         <div className="flex items-center">
           <button 
             onClick={() => setSelectedCategory(null)}
@@ -119,9 +117,9 @@ export const Language: React.FC = () => {
             <Grid className="text-gray-600 w-6 h-6" />
           </button>
           <div className="ml-4">
-            <h1 className="text-xl md:text-2xl font-black text-gray-800">
+            <h2 className="text-xl md:text-2xl font-black text-gray-800">
               {CATEGORIES.find(c => c.id === selectedCategory)?.name}
-            </h1>
+            </h2>
           </div>
         </div>
         

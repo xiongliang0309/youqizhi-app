@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Check, X, Grid, Cloud, Star } from 'lucide-react';
-import { generateLogicLevels, LogicGameLevel, LogicCategory } from '../data/generator';
-import { useUserStore } from '../store/useUserStore';
+import { generateLogicLevels, type LogicGameLevel, type LogicCategory } from '../data/generator';
 
 // 角色配置
 const CHARACTERS = {
@@ -20,7 +19,6 @@ const CATEGORIES: { id: LogicCategory; name: string; icon: string; color: string
 
 export const Logic: React.FC = () => {
   const navigate = useNavigate();
-  const { age } = useUserStore();
   
   const [selectedCategory, setSelectedCategory] = useState<LogicCategory | null>(null);
   const [levels, setLevels] = useState<LogicGameLevel[]>([]);
@@ -29,10 +27,10 @@ export const Logic: React.FC = () => {
 
   useEffect(() => {
     if (selectedCategory) {
-      setLevels(generateLogicLevels(10, age, selectedCategory)); // 每次10关
+      setLevels(generateLogicLevels(10, selectedCategory)); // 每次10关
       setCurrentLevel(0);
     }
-  }, [age, selectedCategory]);
+  }, [selectedCategory]);
 
   const level = levels[currentLevel];
 
@@ -122,9 +120,9 @@ export const Logic: React.FC = () => {
             <Grid className="text-gray-600 w-6 h-6 stroke-[3]" />
           </button>
           <div className="ml-4 bg-white/30 backdrop-blur px-4 py-2 rounded-2xl">
-            <h1 className="text-xl md:text-2xl font-black text-white drop-shadow-md">
+            <h2 className="text-xl md:text-2xl font-black text-white drop-shadow-md">
               {CATEGORIES.find(c => c.id === selectedCategory)?.name}
-            </h1>
+            </h2>
           </div>
         </div>
         

@@ -240,7 +240,7 @@ export const Culture: React.FC = () => {
           <button onClick={() => navigate('/')} className="bg-white p-3 rounded-full shadow-md hover:bg-stone-50">
             <ArrowLeft className="text-gray-600" />
           </button>
-          <h1 className="ml-4 text-2xl font-black text-gray-800">国学经典</h1>
+          <h2 className="ml-4 text-2xl font-black text-gray-800">国学经典</h2>
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto w-full">
@@ -275,14 +275,14 @@ export const Culture: React.FC = () => {
         )}
       </AnimatePresence>
 
-      <div className="p-4 md:p-6 flex flex-col gap-4 bg-white/50 backdrop-blur-sm sticky top-0 z-10 shadow-sm">
+      <div className="p-4 md:p-6 flex flex-col gap-4 bg-white/50 backdrop-blur-sm sticky top-[var(--app-nav-height)] z-10 shadow-sm">
         <div className="flex items-center">
             <button onClick={() => setSelectedCategory(null)} className="bg-white p-3 rounded-full shadow-md hover:bg-stone-50">
             <ArrowLeft className="text-gray-600" />
             </button>
-            <h1 className="ml-4 text-xl font-bold text-gray-800">
+            <h2 className="ml-4 text-xl font-bold text-gray-800">
             {CATEGORIES.find(c => c.id === selectedCategory)?.name}
-            </h1>
+            </h2>
             {loadingData && (
                <span className="ml-2 w-4 h-4 border-2 border-orange-500 border-t-transparent rounded-full animate-spin"></span>
             )}

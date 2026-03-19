@@ -88,7 +88,7 @@ export const Art: React.FC = () => {
           <button onClick={() => navigate('/')} className="bg-white p-2 md:p-3 rounded-full shadow hover:bg-purple-50">
             <ArrowLeft className="text-gray-600" />
           </button>
-          <h1 className="ml-4 text-xl md:text-2xl font-black text-gray-800">艺术创造</h1>
+          <h2 className="ml-4 text-xl md:text-2xl font-black text-gray-800">艺术创造</h2>
         </div>
         <div className="flex space-x-2">
            <button onClick={clearCanvas} className="p-2 md:p-3 bg-red-100 text-red-500 rounded-xl hover:bg-red-200 active:scale-95 transition-transform shadow-sm">

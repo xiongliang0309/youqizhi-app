@@ -447,8 +447,9 @@ function shuffle(array: any[]) {
 // --- 生成器函数 ---
 
 // 1. [升级] 单词生成器 - 组合生成法
-export const generateWordCards = (count: number = 50, age: number = 4, category?: WordCategory): WordCard[] => {
+export const generateWordCards = (count: number = 50, category?: WordCategory): WordCard[] => {
   const cards: WordCard[] = [];
+  const learningLevel = 4;
   
   // 1. 获取基础词汇
   const targetCategories = category ? [category] : (Object.keys(baseWords) as Array<keyof typeof baseWords>);
@@ -456,7 +457,7 @@ export const generateWordCards = (count: number = 50, age: number = 4, category?
   targetCategories.forEach(cat => {
     // @ts-ignore
     const items = baseWords[cat];
-    if (items) items.forEach((item: any) => { if (item.level <= age + 1) baseItems.push({ ...item, category: cat }); });
+    if (items) items.forEach((item: any) => { if (item.level <= learningLevel + 1) baseItems.push({ ...item, category: cat }); });
   });
 
   // 2. 如果请求数量小于基础词汇量，直接随机返回
@@ -686,20 +687,20 @@ export const generateStories = (count: number = 100): StoryCard[] => {
 };
 
 // --- 复用 Logic 辅助函数 (必须包含在文件中) ---
-function generatePattern(age: number): LogicGameLevel {
+function generatePattern(learningLevel: number): LogicGameLevel {
   const emojis = ['🍎', '🍌', '🍇', '🐶', '🐱', '🚗', '⭐️', '❤️', '🔷', '🔶'];
   const a = emojis[Math.floor(Math.random() * emojis.length)];
   let b = emojis[Math.floor(Math.random() * emojis.length)];
   while(a === b) b = emojis[Math.floor(Math.random() * emojis.length)];
   let question = "", answer = "", options = [a, b, emojis[Math.floor(Math.random() * emojis.length)]];
-  if (age <= 3) { question = `找规律：${a} ${b} ${a} ${b} ❓`; answer = a; } 
-  else if (age <= 4) { question = `找规律：${a} ${a} ${b} ${a} ${a} ${b} ❓`; answer = a; } 
+  if (learningLevel <= 3) { question = `找规律：${a} ${b} ${a} ${b} ❓`; answer = a; } 
+  else if (learningLevel <= 4) { question = `找规律：${a} ${a} ${b} ${a} ${a} ${b} ❓`; answer = a; } 
   else { const c = emojis[Math.floor(Math.random() * emojis.length)]; question = `找规律：${a} ${b} ${c} ${a} ${b} ${c} ❓`; answer = a; options = [a, b, c]; }
   return { type: 'pattern', question, options: shuffle(options), answer, id: '' };
 }
 
-function generateCount(age: number): LogicGameLevel {
-  const max = age <= 3 ? 5 : 10;
+function generateCount(learningLevel: number): LogicGameLevel {
+  const max = learningLevel <= 3 ? 5 : 10;
   const target = Math.floor(Math.random() * max) + 1;
   const emojis = ['🐱', '🐶', '🍎', '⭐️', '🎈', '🍬'];
   const emoji = emojis[Math.floor(Math.random() * emojis.length)];
@@ -708,25 +709,26 @@ function generateCount(age: number): LogicGameLevel {
   return { type: 'count', question: `数一数：这里有几个 ${emoji}？\n${questionStr}`, options: shuffle(options), answer: target.toString(), id: '' };
 }
 
-function generateMath(age: number): LogicGameLevel {
-  const isAddition = Math.random() > 0.3 || age < 6; 
+function generateMath(learningLevel: number): LogicGameLevel {
+  const isAddition = Math.random() > 0.3 || learningLevel < 6; 
   let a, b, result, operator;
-  if (isAddition) { const max = age <= 5 ? 5 : 10; a = Math.floor(Math.random() * max) + 1; b = Math.floor(Math.random() * max) + 1; result = a + b; operator = '+'; } 
+  if (isAddition) { const max = learningLevel <= 5 ? 5 : 10; a = Math.floor(Math.random() * max) + 1; b = Math.floor(Math.random() * max) + 1; result = a + b; operator = '+'; } 
   else { a = Math.floor(Math.random() * 10) + 2; b = Math.floor(Math.random() * (a - 1)) + 1; result = a - b; operator = '-'; }
   const options = [result.toString(), (result + 1).toString(), (Math.max(0, result - 1)).toString()];
   return { type: 'math', question: `算一算：${a} ${operator} ${b} = ❓`, options: shuffle(options), answer: result.toString(), id: '' };
 }
 
-function generateCompare(age: number): LogicGameLevel {
-  const max = age <= 4 ? 10 : 20;
+function generateCompare(learningLevel: number): LogicGameLevel {
+  const max = learningLevel <= 4 ? 10 : 20;
   let a = Math.floor(Math.random() * max), b = Math.floor(Math.random() * max);
   while (a === b) b = Math.floor(Math.random() * max);
   const isGreater = a > b;
   return { type: 'compare', question: `比一比：${a} 和 ${b}，哪个更大？`, options: [a.toString(), b.toString()], answer: isGreater ? a.toString() : b.toString(), id: '' };
 }
 
-export const generateLogicLevels = (count: number = 50, age: number = 4, category?: LogicCategory): LogicGameLevel[] => {
+export const generateLogicLevels = (count: number = 50, category?: LogicCategory): LogicGameLevel[] => {
   const levels: LogicGameLevel[] = [];
+  const learningLevel = 4;
   const allTypes: LogicCategory[] = ['pattern', 'count', 'math', 'compare'];
   const targetTypes = category ? [category] : allTypes;
 
@@ -736,19 +738,19 @@ export const generateLogicLevels = (count: number = 50, age: number = 4, categor
 
     switch (type) {
       case 'pattern':
-        level = generatePattern(age);
+        level = generatePattern(learningLevel);
         break;
       case 'count':
-        level = generateCount(age);
+        level = generateCount(learningLevel);
         break;
       case 'math':
-        level = generateMath(age);
+        level = generateMath(learningLevel);
         break;
       case 'compare':
-        level = generateCompare(age);
+        level = generateCompare(learningLevel);
         break;
       default:
-        level = generatePattern(age);
+        level = generatePattern(learningLevel);
     }
 
     levels.push({
