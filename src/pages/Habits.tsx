@@ -48,7 +48,7 @@ export const Habits: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#F0FDF4] flex flex-col font-sans relative">
-      <div className="p-4 md:p-6 flex items-center bg-white/80 backdrop-blur-md sticky top-[var(--app-nav-height)] z-10 border-b border-green-100">
+      <div className="p-4 md:p-6 flex items-center bg-white/80 backdrop-blur-md sticky top-0 z-10 border-b border-green-100">
         <button onClick={() => navigate('/')} className="bg-white p-3 rounded-full shadow-md hover:bg-green-50">
           <ArrowLeft className="text-gray-600" />
         </button>

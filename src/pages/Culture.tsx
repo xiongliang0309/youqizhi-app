@@ -275,7 +275,7 @@ export const Culture: React.FC = () => {
         )}
       </AnimatePresence>
 
-      <div className="p-4 md:p-6 flex flex-col gap-4 bg-white/50 backdrop-blur-sm sticky top-[var(--app-nav-height)] z-10 shadow-sm">
+      <div className="p-4 md:p-6 flex flex-col gap-4 bg-white/50 backdrop-blur-sm sticky top-0 z-10 shadow-sm">
         <div className="flex items-center">
             <button onClick={() => setSelectedCategory(null)} className="bg-white p-3 rounded-full shadow-md hover:bg-stone-50">
             <ArrowLeft className="text-gray-600" />

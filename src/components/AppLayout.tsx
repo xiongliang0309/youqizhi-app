@@ -4,9 +4,11 @@ import { AppNav } from './AppNav'
 
 export function AppLayout() {
   return (
-    <div className="min-h-screen bg-background-cloud font-sans overflow-x-hidden">
+    <div className="h-screen bg-background-cloud font-sans overflow-hidden flex flex-col">
       <AppNav />
-      <Outlet />
+      <div className="flex-1 overflow-y-auto overflow-x-hidden" data-app-scroll-container="true">
+        <Outlet />
+      </div>
     </div>
   )
 }

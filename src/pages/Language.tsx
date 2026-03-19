@@ -108,7 +108,7 @@ export const Language: React.FC = () => {
   // --- 视图 2: 单词卡片页 ---
   return (
     <div className="min-h-screen bg-[#FFF0F5] flex flex-col font-sans relative overflow-hidden">
-      <div className="p-4 md:p-6 flex items-center justify-between bg-white/50 backdrop-blur-sm sticky top-[var(--app-nav-height)] z-10">
+      <div className="p-4 md:p-6 flex items-center justify-between bg-white/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="flex items-center">
           <button 
             onClick={() => setSelectedCategory(null)}

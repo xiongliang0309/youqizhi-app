@@ -166,12 +166,20 @@ const DraggableTailMascot: React.FC = () => {
     }
   }, [voiceName, speakRate, speakPitch]);
 
-  const getResponsiveMargin = () => {
+  const getResponsiveMarginX = () => {
     if (typeof window === 'undefined') return 12;
     const w = window.innerWidth;
-    if (w >= 1024) return 20; // PC
-    if (w >= 768) return 16;  // Pad
-    return 12;                // Mobile
+    if (w >= 1024) return 20;
+    if (w >= 768) return 16;
+    return 12;
+  };
+
+  const getResponsiveMarginY = () => {
+    if (typeof window === 'undefined') return 24;
+    const w = window.innerWidth;
+    if (w >= 1024) return 32;
+    if (w >= 768) return 28;
+    return 24;
   };
 
   const [pos, setPos] = React.useState<{ x: number; y: number } | null>(null);
@@ -180,19 +188,21 @@ const DraggableTailMascot: React.FC = () => {
     const el = rootRef.current;
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    const margin = getResponsiveMargin();
+    const marginX = getResponsiveMarginX();
+    const marginY = getResponsiveMarginY();
     // 使用 offsetWidth/Height 获取更准确的渲染尺寸，如果未渲染则使用默认值
     const w = el?.offsetWidth || 128; // 默认尺寸调整为 128 (对应下面的 w-32)
-    const h = el?.offsetHeight || 128;
+    const labelExtra = 28;
+    const h = (el?.offsetHeight || 128) + labelExtra;
 
     // 计算允许的偏移范围（相对于右下角锚点）
-    // 锚点为：right=margin, bottom=margin
+    // 锚点为：right=marginX, bottom=marginY
     // x,y 为 transform 偏移量
     // x <= 0 (不能向右超出 margin)
     // x >= (margin + w - vw + margin) = 2*margin + w - vw (不能向左超出 margin)
-    const minX = 2 * margin + w - vw;
+    const minX = 2 * marginX + w - vw;
     const maxX = 0;
-    const minY = 2 * margin + h - vh;
+    const minY = 2 * marginY + h - vh;
     const maxY = 0;
 
     return {
@@ -313,7 +323,7 @@ const DraggableTailMascot: React.FC = () => {
       }}
       whileHover={{ scale: 1.04 }}
       whileTap={{ scale: 0.98 }}
-      className="fixed z-50 select-none touch-none cursor-grab active:cursor-grabbing origin-center right-[12px] bottom-[12px] md:right-[16px] md:bottom-[16px] lg:right-[20px] lg:bottom-[20px]"
+      className="fixed z-50 select-none touch-none cursor-grab active:cursor-grabbing origin-center right-[12px] bottom-[24px] md:right-[16px] md:bottom-[28px] lg:right-[20px] lg:bottom-[32px]"
       initial={false}
       animate={{ x: pos.x, y: pos.y }}
       transition={{ type: "spring", stiffness: 300, damping: 30, mass: 1 }}
@@ -332,7 +342,7 @@ const DraggableTailMascot: React.FC = () => {
           className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-cover rounded-[2rem] ring-4 ring-white shadow-pop-purple"
           draggable={false}
         />
-        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-white text-black text-[10px] font-black px-2 py-1 rounded-full border-2 border-black shadow-[2px_2px_0px_#000]">
+        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-white text-black text-[10px] font-black px-2 py-1 rounded-full border-2 border-black shadow-[2px_2px_0px_#000] whitespace-nowrap">
           小尾巴
         </div>
       </div>

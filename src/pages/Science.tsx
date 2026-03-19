@@ -75,7 +75,7 @@ export const Science: React.FC = () => {
 
   return (
     <div className="h-screen bg-[#F0FFF4] flex flex-col font-sans overflow-hidden">
-      <div className="p-4 md:p-6 flex items-center bg-white/60 backdrop-blur-md sticky top-[var(--app-nav-height)] z-10 shadow-sm border-b border-green-100">
+      <div className="p-4 md:p-6 flex items-center bg-white/60 backdrop-blur-md sticky top-0 z-10 shadow-sm border-b border-green-100">
         <button onClick={() => setSelectedCategory(null)} className="bg-white p-3 rounded-full shadow-md hover:bg-green-50 transition-colors">
           <ArrowLeft className="text-gray-600" />
         </button>

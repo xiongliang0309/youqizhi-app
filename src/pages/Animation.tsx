@@ -49,7 +49,7 @@ export const Animation: React.FC = () => {
       </AnimatePresence>
 
       {/* 顶部导航 */}
-      <header className="relative z-10 px-4 py-4 md:px-8 flex items-center justify-between bg-white/60 backdrop-blur-md sticky top-[var(--app-nav-height)] shadow-sm">
+      <header className="relative z-10 px-4 py-4 md:px-8 flex items-center justify-between bg-white/60 backdrop-blur-md sticky top-0 shadow-sm">
         <div className="flex items-center">
             <button onClick={() => navigate('/')} className="p-3 rounded-full bg-white shadow-md hover:bg-blue-50 transition-colors mr-4">
             <ArrowLeft className="text-blue-600" />
