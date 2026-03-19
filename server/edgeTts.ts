@@ -119,9 +119,10 @@ export function createEdgeTtsVitePlugin(params: {
     configureServer(server) {
       server.middlewares.use(cacheRoutePrefix, async (req, res, next) => {
         const urlPath = (req.url || '').split('?')[0];
-        if (!urlPath) return next();
-        const safe = urlPath.replace(/\.{2,}/g, '.');
-        const filePath = path.join(resolvedCacheDir, safe);
+        const rel = urlPath.replace(/^\/+/, '');
+        if (!rel) return next();
+        if (rel.includes('..') || rel.includes('\\')) return next();
+        const filePath = path.join(resolvedCacheDir, rel);
         if (!filePath.startsWith(resolvedCacheDir)) return next();
         if (!fssync.existsSync(filePath)) return next();
         res.setHeader('Content-Type', 'audio/mpeg');
@@ -149,11 +150,12 @@ export function createEdgeTtsVitePlugin(params: {
             cacheDir: resolvedCacheDir,
           });
           const tookMs = Date.now() - startedAt;
-          const url = `${cacheRoutePrefix}/${path.basename(cacheFilePath)}`;
-
           res.statusCode = 200;
-          res.setHeader('Content-Type', 'application/json; charset=utf-8');
-          res.end(JSON.stringify({ url, cacheKey, cached, tookMs }));
+          res.setHeader('Content-Type', 'audio/mpeg');
+          res.setHeader('X-Edge-TTS-Cache', cached ? 'HIT' : 'MISS');
+          res.setHeader('X-Edge-TTS-Key', cacheKey);
+          res.setHeader('X-Edge-TTS-TookMs', String(tookMs));
+          fssync.createReadStream(cacheFilePath).pipe(res);
         } catch {
           res.statusCode = 500;
           res.setHeader('Content-Type', 'application/json; charset=utf-8');

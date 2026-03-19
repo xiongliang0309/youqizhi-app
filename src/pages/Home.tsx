@@ -292,6 +292,10 @@ const DraggableTailMascot: React.FC = () => {
       type="button"
       aria-label="小尾巴吉祥物：按住拖动，点击播放欢迎语音"
       onPointerDown={onPointerDown}
+      onClick={() => {
+        if (typeof window !== 'undefined' && 'PointerEvent' in window) return;
+        edgeTtsSpeak(XWB_MASCOT_TEXT, { voice: voiceName, rate: speakRate, pitch: speakPitch });
+      }}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();

@@ -24,6 +24,18 @@ let currentNodes: {
   master?: GainNode;
 } | null = null;
 
+let htmlAudio: HTMLAudioElement | null = null;
+
+const ensureHtmlAudio = () => {
+  if (typeof window === 'undefined') return null;
+  if (htmlAudio) return htmlAudio;
+  htmlAudio = new Audio();
+  htmlAudio.preload = 'none';
+  (htmlAudio as any).playsInline = true;
+  htmlAudio.setAttribute('playsinline', 'true');
+  return htmlAudio;
+};
+
 const playSurpriseChime = async () => {
   if (typeof window === 'undefined') return;
   const AC = (window.AudioContext || (window as any).webkitAudioContext) as typeof AudioContext | undefined;
@@ -60,6 +72,17 @@ export async function edgeTtsSpeak(text: string, options: EdgeTtsSpeakOptions = 
   const trimmed = text.trim();
   if (!trimmed) return;
 
+  const fallbackLocalTts = () => {
+    try {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(trimmed);
+      utter.lang = 'zh-CN';
+      window.speechSynthesis.speak(utter);
+    } catch {
+    }
+  };
+
   const config = {
     ...EDGE_TTS_BOY_VOICE_CONFIG,
     voice: options.voice || EDGE_TTS_BOY_VOICE_CONFIG.voice,
@@ -75,13 +98,31 @@ export async function edgeTtsSpeak(text: string, options: EdgeTtsSpeakOptions = 
   audioCtx = audioCtx || new AC();
   if (audioCtx.state === 'suspended') await audioCtx.resume();
 
+  if (!(audioCtx as any).__xwb_unlocked) {
+    const b = audioCtx.createBuffer(1, 1, audioCtx.sampleRate);
+    const s = audioCtx.createBufferSource();
+    s.buffer = b;
+    s.connect(audioCtx.destination);
+    s.start(0);
+    (audioCtx as any).__xwb_unlocked = true;
+  }
+
   const stopCurrent = () => {
-    if (!currentNodes) return;
-    try {
-      currentNodes.source?.stop();
-    } catch {
+    if (currentNodes) {
+      try {
+        currentNodes.source?.stop();
+      } catch {
+      }
+      currentNodes = null;
     }
-    currentNodes = null;
+
+    if (htmlAudio) {
+      try {
+        htmlAudio.pause();
+        htmlAudio.currentTime = 0;
+      } catch {
+      }
+    }
   };
 
   const createWarmImpulse = (durationSec: number, decay: number) => {
@@ -168,46 +209,108 @@ export async function edgeTtsSpeak(text: string, options: EdgeTtsSpeakOptions = 
     };
   };
 
-  if (cachedBuffer) {
-    await playBuffer(cachedBuffer);
-    return;
+  const decodeToBuffer = async (arr: ArrayBuffer) => {
+    try {
+      return await audioCtx!.decodeAudioData(arr.slice(0));
+    } catch {
+      return null;
+    }
+  };
+
+  const playMp3ViaHtmlAudio = async (arr: ArrayBuffer) => {
+    const audio = ensureHtmlAudio();
+    if (!audio) return;
+    const blob = new Blob([arr], { type: 'audio/mpeg' });
+    const url = URL.createObjectURL(blob);
+    audio.src = url;
+    try {
+      await audio.play();
+    } finally {
+      setTimeout(() => URL.revokeObjectURL(url), 30_000);
+    }
+  };
+
+  try {
+    if (cachedBuffer) {
+      await playBuffer(cachedBuffer);
+      return;
+    }
+
+    const cachedUrl = urlCache.get(cacheKey);
+    if (cachedUrl) {
+      const r = await fetch(cachedUrl);
+      if (r.ok) {
+        const arr = await r.arrayBuffer();
+        const buffer = await decodeToBuffer(arr);
+        if (buffer) {
+          bufferCache.set(cacheKey, buffer);
+          await playBuffer(buffer);
+        } else {
+          await playMp3ViaHtmlAudio(arr);
+        }
+        return;
+      }
+      urlCache.delete(cacheKey);
+    }
+
+    const res = await fetch('/api/edge-tts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: trimmed,
+        config,
+      }),
+    });
+
+    if (!res.ok) throw new Error(`edge_tts_http_${res.status}`);
+
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType.includes('audio/')) {
+      const arr = await res.arrayBuffer();
+      const buffer = await decodeToBuffer(arr);
+      if (buffer) {
+        bufferCache.set(cacheKey, buffer);
+        await playBuffer(buffer);
+      } else {
+        await playMp3ViaHtmlAudio(arr);
+      }
+      return;
+    }
+
+    const data = (await res.json()) as ApiResponse;
+    const url = data.url;
+    urlCache.set(cacheKey, url);
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`edge_tts_cache_http_${r.status}`);
+    const arr = await r.arrayBuffer();
+    const buffer = await decodeToBuffer(arr);
+    if (buffer) {
+      bufferCache.set(cacheKey, buffer);
+      await playBuffer(buffer);
+    } else {
+      await playMp3ViaHtmlAudio(arr);
+    }
+  } catch {
+    fallbackLocalTts();
   }
-
-  const cachedUrl = urlCache.get(cacheKey);
-  if (cachedUrl) {
-    const arr = await fetch(cachedUrl).then(r => r.arrayBuffer());
-    const buffer = await audioCtx.decodeAudioData(arr.slice(0));
-    bufferCache.set(cacheKey, buffer);
-    await playBuffer(buffer);
-    return;
-  }
-
-  const res = await fetch('/api/edge-tts', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      text: trimmed,
-      config,
-    }),
-  });
-
-  if (!res.ok) return;
-  const data = (await res.json()) as ApiResponse;
-  const url = data.url;
-  urlCache.set(cacheKey, url);
-  const arr = await fetch(url).then(r => r.arrayBuffer());
-  const buffer = await audioCtx.decodeAudioData(arr.slice(0));
-  bufferCache.set(cacheKey, buffer);
-  await playBuffer(buffer);
 }
 
 export function edgeTtsStop() {
-  if (!currentNodes) return;
-  try {
-    currentNodes.source?.stop();
-  } catch {
+  if (currentNodes) {
+    try {
+      currentNodes.source?.stop();
+    } catch {
+    }
+    currentNodes = null;
   }
-  currentNodes = null;
+
+  if (htmlAudio) {
+    try {
+      htmlAudio.pause();
+      htmlAudio.currentTime = 0;
+    } catch {
+    }
+  }
 }
