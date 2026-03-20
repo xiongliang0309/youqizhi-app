@@ -421,10 +421,9 @@ function shuffle(array: any[]) {
 
 // --- 生成器函数 ---
 
-// 1. [升级] 单词生成器 - 组合生成法
-export const generateWordCards = (count: number = 50, category?: WordCategory): WordCard[] => {
+export const generateWordCardsFromBank = (bank: LanguageWordEntry[], count: number = 50, category?: WordCategory): WordCard[] => {
   const learningLevel = 4;
-  const pool = category ? LANGUAGE_WORD_BANK.filter(w => w.category === category) : LANGUAGE_WORD_BANK;
+  const pool = category ? bank.filter(w => w.category === category) : bank;
   const filtered = pool.filter(w => w.level <= learningLevel + 1);
   const usable = filtered.length > 0 ? filtered : pool;
 
@@ -453,6 +452,11 @@ export const generateWordCards = (count: number = 50, category?: WordCategory): 
   }
 
   return cards;
+};
+
+// 1. [升级] 单词生成器 - 组合生成法
+export const generateWordCards = (count: number = 50, category?: WordCategory): WordCard[] => {
+  return generateWordCardsFromBank(LANGUAGE_WORD_BANK, count, category);
 };
 
 // 2. [升级] 逻辑生成器 (算法生成，本身支持无限)

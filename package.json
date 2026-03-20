@@ -14,6 +14,7 @@
     "audit:language": "node scripts/audit_language_words.mjs",
     "build:language-images": "node scripts/build_language_images_from_twemoji.mjs",
     "upload:songs-audio": "node scripts/upload_songs_audio_to_storage.js",
+    "migrate:language": "node scripts/migrate_language_words_to_supabase.js",
     "migrate:data": "node scripts/migrate_to_supabase.js"
   },
   "dependencies": {

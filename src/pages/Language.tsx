@@ -2,7 +2,9 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Volume2, RefreshCw, Grid } from 'lucide-react';
-import { generateWordCards, type WordCard, type WordCategory } from '../data/generator';
+import { generateWordCards, generateWordCardsFromBank, type WordCard, type WordCategory } from '../data/generator';
+import { fetchLanguageWordsFromSupabase } from '../data/languageSupabase';
+import type { LanguageWordEntry } from '../data/languageQuality';
 import { useSpeech } from '../hooks/useSpeech';
 
 const CHARACTERS = {
@@ -100,12 +102,39 @@ export const Language: React.FC = () => {
   const [words, setWords] = useState<WordCard[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [wordBank, setWordBank] = useState<LanguageWordEntry[] | null>(null);
+  const [isWordsLoading, setIsWordsLoading] = useState(false);
+  const loadSeqRef = React.useRef(0);
 
   // 当选择分类时，生成新数据
   useEffect(() => {
     if (selectedCategory) {
-      setWords(generateWordCards(20, selectedCategory)); // 每次生成20个
+      const seq = ++loadSeqRef.current;
+      setIsWordsLoading(true);
+      setWordBank(null);
+      setWords([]);
       setCurrentIndex(0);
+
+      (async () => {
+        try {
+          const remote = await fetchLanguageWordsFromSupabase(selectedCategory);
+          if (seq !== loadSeqRef.current) return;
+
+          if (remote.length > 0) {
+            setWordBank(remote);
+            setWords(generateWordCardsFromBank(remote, 20, selectedCategory));
+            return;
+          }
+        } catch {
+          if (seq !== loadSeqRef.current) return;
+        }
+
+        setWordBank(null);
+        setWords(generateWordCards(20, selectedCategory));
+      })().finally(() => {
+        if (seq !== loadSeqRef.current) return;
+        setIsWordsLoading(false);
+      });
     }
   }, [selectedCategory]);
 
@@ -173,6 +202,13 @@ export const Language: React.FC = () => {
 
   const handleRegenerate = () => {
     if (!selectedCategory) return;
+    if (isWordsLoading) return;
+    if (wordBank && wordBank.length > 0) {
+      setWords(generateWordCardsFromBank(wordBank, 20, selectedCategory));
+      setCurrentIndex(0);
+      return;
+    }
+
     setWords(generateWordCards(20, selectedCategory));
     setCurrentIndex(0);
   };
@@ -322,19 +358,35 @@ export const Language: React.FC = () => {
               <div className="flex items-start justify-end">
                 <button
                   onClick={handleRegenerate}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/70 shadow-sm ring-1 ring-black/5 backdrop-blur transition-all duration-200 ease-out hover:bg-white/90 hover:shadow-md active:scale-[0.98] sm:hidden"
+                  disabled={isWordsLoading}
+                  className={`inline-flex h-10 w-10 items-center justify-center rounded-full shadow-sm ring-1 ring-black/5 backdrop-blur transition-all duration-200 ease-out sm:hidden ${
+                    isWordsLoading
+                      ? 'cursor-not-allowed bg-white/50 opacity-70'
+                      : 'bg-white/70 hover:bg-white/90 hover:shadow-md active:scale-[0.98]'
+                  }`}
                   aria-label="换一批"
                 >
-                  <RefreshCw className="h-4 w-4 text-text-body" />
+                  <RefreshCw className={`h-4 w-4 text-text-body ${isWordsLoading ? 'animate-spin' : ''}`} />
                 </button>
               </div>
 
-              <button
-                onClick={playSound}
+              {isWordsLoading ? (
+                <div className="mt-4 w-full rounded-5xl bg-gradient-to-br from-background-surface to-background-soft p-5 text-center shadow-sm ring-1 ring-black/5 sm:mt-6 sm:p-7 [@media(max-height:720px)]:mt-4 [@media(max-height:720px)]:p-4">
+                  <div className="mx-auto grid place-items-center">
+                    <div className="h-[clamp(3.8rem,min(16vw,14svh),8.5rem)] w-[clamp(3.8rem,min(16vw,14svh),8.5rem)] rounded-4xl bg-white/70 ring-1 ring-black/5 animate-pulse" />
+                    <div className="mt-5 w-full max-w-[18rem] space-y-3">
+                      <div className="mx-auto h-8 w-3/4 rounded-full bg-white/70 ring-1 ring-black/5 animate-pulse" />
+                      <div className="mx-auto h-5 w-2/3 rounded-full bg-white/60 ring-1 ring-black/5 animate-pulse" />
+                    </div>
+                  </div>
+                </div>
+              ) : currentWord ? (
+                <button
+                  onClick={playSound}
                   className="mt-4 w-full rounded-5xl bg-gradient-to-br from-background-surface to-background-soft p-5 text-center shadow-sm ring-1 ring-black/5 transition-transform active:scale-[0.99] sm:mt-6 sm:p-7 [@media(max-height:720px)]:mt-4 [@media(max-height:720px)]:p-4"
-                aria-label="播放发音"
-              >
-                <div className="mx-auto grid place-items-center">
+                  aria-label="播放发音"
+                >
+                  <div className="mx-auto grid place-items-center">
                     <div className="leading-none drop-shadow-2xl">
                       {isImageAsset(currentWord.image) ? (
                         <img
@@ -348,16 +400,17 @@ export const Language: React.FC = () => {
                         <span className="text-[clamp(3.8rem,min(16vw,14svh),8.5rem)]">{currentWord.image}</span>
                       )}
                     </div>
-                  <div className="mt-5 text-center">
+                    <div className="mt-5 text-center">
                       <div className="break-words font-heading text-[clamp(1.6rem,min(9vw,6.2svh),3.2rem)] font-black leading-[1.05] text-text-main">
-                      {currentWord.word}
-                    </div>
+                        {currentWord.word}
+                      </div>
                       <div className="mt-2 break-words text-[clamp(1rem,min(4.8vw,4.3svh),1.55rem)] font-extrabold text-text-light">
-                      {currentWord.translation}
+                        {currentWord.translation}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </button>
+                </button>
+              ) : null}
 
               {((currentWord.examples && currentWord.examples.length > 0) || (currentWord.collocations && currentWord.collocations.length > 0)) && (
                 <div className="mt-5 grid gap-4 rounded-5xl bg-white/70 p-5 shadow-sm ring-1 ring-black/5 sm:mt-6 sm:grid-cols-2 sm:p-6 [@media(max-height:720px)]:mt-4 [@media(max-height:720px)]:gap-3 [@media(max-height:720px)]:p-4">
