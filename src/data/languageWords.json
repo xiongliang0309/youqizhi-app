@@ -4,1055 +4,1889 @@
     "category": "fruit",
     "en": "Apple",
     "zh": "苹果",
-    "emoji": "🍎",
     "level": 3,
     "pos": "noun",
     "meaning": "一种常见的水果，脆甜多汁。",
-    "examples": [{ "en": "I eat an apple.", "zh": "我吃一个苹果。" }],
+    "examples": [
+      {
+        "en": "I eat an apple.",
+        "zh": "我吃一个苹果。"
+      }
+    ],
     "collocations": [
-      { "en": "apple juice", "zh": "苹果汁" },
-      { "en": "red apple", "zh": "红苹果" }
-    ]
+      {
+        "en": "apple juice",
+        "zh": "苹果汁"
+      },
+      {
+        "en": "red apple",
+        "zh": "红苹果"
+      }
+    ],
+    "image": "/assets/language/fruit_apple.svg",
+    "emojiFallback": "🍎"
   },
   {
     "id": "fruit_banana",
     "category": "fruit",
     "en": "Banana",
     "zh": "香蕉",
-    "emoji": "🍌",
     "level": 3,
     "pos": "noun",
     "meaning": "一种长长的黄色水果，味道香甜。",
-    "examples": [{ "en": "The banana is sweet.", "zh": "这根香蕉很甜。" }],
+    "examples": [
+      {
+        "en": "The banana is sweet.",
+        "zh": "这根香蕉很甜。"
+      }
+    ],
     "collocations": [
-      { "en": "banana peel", "zh": "香蕉皮" },
-      { "en": "ripe banana", "zh": "熟香蕉" }
-    ]
+      {
+        "en": "banana peel",
+        "zh": "香蕉皮"
+      },
+      {
+        "en": "ripe banana",
+        "zh": "熟香蕉"
+      }
+    ],
+    "image": "/assets/language/fruit_banana.svg",
+    "emojiFallback": "🍌"
   },
   {
     "id": "fruit_orange",
     "category": "fruit",
     "en": "Orange",
     "zh": "橙子",
-    "emoji": "🍊",
     "level": 3,
     "pos": "noun",
     "meaning": "一种圆圆的橙色水果，酸甜可口。",
-    "examples": [{ "en": "I like orange juice.", "zh": "我喜欢橙汁。" }],
+    "examples": [
+      {
+        "en": "I like orange juice.",
+        "zh": "我喜欢橙汁。"
+      }
+    ],
     "collocations": [
-      { "en": "orange juice", "zh": "橙汁" },
-      { "en": "orange slice", "zh": "橙子片" }
-    ]
+      {
+        "en": "orange juice",
+        "zh": "橙汁"
+      },
+      {
+        "en": "orange slice",
+        "zh": "橙子片"
+      }
+    ],
+    "image": "/assets/language/fruit_orange.svg",
+    "emojiFallback": "🍊"
   },
   {
     "id": "fruit_grape",
     "category": "fruit",
     "en": "Grape",
     "zh": "葡萄",
-    "emoji": "🍇",
     "level": 3,
     "pos": "noun",
     "meaning": "一串串的小水果，甜甜的。",
-    "examples": [{ "en": "These grapes are small.", "zh": "这些葡萄很小。" }],
+    "examples": [
+      {
+        "en": "These grapes are small.",
+        "zh": "这些葡萄很小。"
+      }
+    ],
     "collocations": [
-      { "en": "a bunch of grapes", "zh": "一串葡萄" },
-      { "en": "grape juice", "zh": "葡萄汁" }
-    ]
+      {
+        "en": "a bunch of grapes",
+        "zh": "一串葡萄"
+      },
+      {
+        "en": "grape juice",
+        "zh": "葡萄汁"
+      }
+    ],
+    "image": "/assets/language/fruit_grape.svg",
+    "emojiFallback": "🍇"
   },
   {
     "id": "fruit_watermelon",
     "category": "fruit",
     "en": "Watermelon",
     "zh": "西瓜",
-    "emoji": "🍉",
     "level": 4,
     "pos": "noun",
     "meaning": "一种大大的水果，夏天吃很清凉。",
-    "examples": [{ "en": "The watermelon is big.", "zh": "这个西瓜很大。" }],
+    "examples": [
+      {
+        "en": "The watermelon is big.",
+        "zh": "这个西瓜很大。"
+      }
+    ],
     "collocations": [
-      { "en": "watermelon slice", "zh": "西瓜片" },
-      { "en": "sweet watermelon", "zh": "甜西瓜" }
-    ]
+      {
+        "en": "watermelon slice",
+        "zh": "西瓜片"
+      },
+      {
+        "en": "sweet watermelon",
+        "zh": "甜西瓜"
+      }
+    ],
+    "image": "/assets/language/fruit_watermelon.svg",
+    "emojiFallback": "🍉"
   },
   {
     "id": "fruit_lemon",
     "category": "fruit",
     "en": "Lemon",
     "zh": "柠檬",
-    "emoji": "🍋",
     "level": 4,
     "pos": "noun",
     "meaning": "一种黄色水果，味道酸酸的。",
-    "examples": [{ "en": "This lemon is sour.", "zh": "这个柠檬很酸。" }],
+    "examples": [
+      {
+        "en": "This lemon is sour.",
+        "zh": "这个柠檬很酸。"
+      }
+    ],
     "collocations": [
-      { "en": "lemon tea", "zh": "柠檬茶" },
-      { "en": "lemon slice", "zh": "柠檬片" }
-    ]
+      {
+        "en": "lemon tea",
+        "zh": "柠檬茶"
+      },
+      {
+        "en": "lemon slice",
+        "zh": "柠檬片"
+      }
+    ],
+    "image": "/assets/language/fruit_lemon.svg",
+    "emojiFallback": "🍋"
   },
   {
     "id": "fruit_strawberry",
     "category": "fruit",
     "en": "Strawberry",
     "zh": "草莓",
-    "emoji": "🍓",
     "level": 4,
     "pos": "noun",
     "meaning": "一种红红的小水果，有甜香味。",
-    "examples": [{ "en": "I pick a strawberry.", "zh": "我摘了一颗草莓。" }],
+    "examples": [
+      {
+        "en": "I pick a strawberry.",
+        "zh": "我摘了一颗草莓。"
+      }
+    ],
     "collocations": [
-      { "en": "strawberry cake", "zh": "草莓蛋糕" },
-      { "en": "fresh strawberry", "zh": "新鲜草莓" }
-    ]
+      {
+        "en": "strawberry cake",
+        "zh": "草莓蛋糕"
+      },
+      {
+        "en": "fresh strawberry",
+        "zh": "新鲜草莓"
+      }
+    ],
+    "image": "/assets/language/fruit_strawberry.svg",
+    "emojiFallback": "🍓"
   },
   {
     "id": "fruit_peach",
     "category": "fruit",
     "en": "Peach",
     "zh": "桃子",
-    "emoji": "🍑",
     "level": 4,
     "pos": "noun",
     "meaning": "一种毛茸茸的水果，香香甜甜。",
-    "examples": [{ "en": "The peach smells good.", "zh": "这个桃子闻起来很香。" }],
+    "examples": [
+      {
+        "en": "The peach smells good.",
+        "zh": "这个桃子闻起来很香。"
+      }
+    ],
     "collocations": [
-      { "en": "peach juice", "zh": "桃汁" },
-      { "en": "ripe peach", "zh": "熟桃子" }
-    ]
+      {
+        "en": "peach juice",
+        "zh": "桃汁"
+      },
+      {
+        "en": "ripe peach",
+        "zh": "熟桃子"
+      }
+    ],
+    "image": "/assets/language/fruit_peach.svg",
+    "emojiFallback": "🍑"
   },
   {
     "id": "fruit_pear",
     "category": "fruit",
     "en": "Pear",
     "zh": "梨",
-    "emoji": "🍐",
     "level": 3,
     "pos": "noun",
     "meaning": "一种脆脆的水果，汁水很多。",
-    "examples": [{ "en": "I have a pear.", "zh": "我有一个梨。" }],
+    "examples": [
+      {
+        "en": "I have a pear.",
+        "zh": "我有一个梨。"
+      }
+    ],
     "collocations": [
-      { "en": "pear tree", "zh": "梨树" },
-      { "en": "sweet pear", "zh": "甜梨" }
-    ]
+      {
+        "en": "pear tree",
+        "zh": "梨树"
+      },
+      {
+        "en": "sweet pear",
+        "zh": "甜梨"
+      }
+    ],
+    "image": "/assets/language/fruit_pear.svg",
+    "emojiFallback": "🍐"
   },
   {
     "id": "fruit_pineapple",
     "category": "fruit",
     "en": "Pineapple",
     "zh": "菠萝",
-    "emoji": "🍍",
     "level": 4,
     "pos": "noun",
     "meaning": "一种外皮有小刺的水果，甜里带点酸。",
-    "examples": [{ "en": "The pineapple is yellow.", "zh": "这个菠萝是黄色的。" }],
+    "examples": [
+      {
+        "en": "The pineapple is yellow.",
+        "zh": "这个菠萝是黄色的。"
+      }
+    ],
     "collocations": [
-      { "en": "pineapple pizza", "zh": "菠萝披萨" },
-      { "en": "pineapple juice", "zh": "菠萝汁" }
-    ]
+      {
+        "en": "pineapple pizza",
+        "zh": "菠萝披萨"
+      },
+      {
+        "en": "pineapple juice",
+        "zh": "菠萝汁"
+      }
+    ],
+    "image": "/assets/language/fruit_pineapple.svg",
+    "emojiFallback": "🍍"
   },
   {
     "id": "fruit_mango",
     "category": "fruit",
     "en": "Mango",
     "zh": "芒果",
-    "emoji": "🥭",
     "level": 4,
     "pos": "noun",
     "meaning": "一种香甜的热带水果，果肉软软的。",
-    "examples": [{ "en": "I like mango.", "zh": "我喜欢芒果。" }],
+    "examples": [
+      {
+        "en": "I like mango.",
+        "zh": "我喜欢芒果。"
+      }
+    ],
     "collocations": [
-      { "en": "mango smoothie", "zh": "芒果奶昔" },
-      { "en": "ripe mango", "zh": "熟芒果" }
-    ]
+      {
+        "en": "mango smoothie",
+        "zh": "芒果奶昔"
+      },
+      {
+        "en": "ripe mango",
+        "zh": "熟芒果"
+      }
+    ],
+    "image": "/assets/language/fruit_mango.svg",
+    "emojiFallback": "🥭"
   },
   {
     "id": "fruit_cherry",
     "category": "fruit",
     "en": "Cherry",
     "zh": "樱桃",
-    "emoji": "🍒",
     "level": 4,
     "pos": "noun",
     "meaning": "一种红红的小水果，酸甜可口。",
-    "examples": [{ "en": "Two cherries are on the cake.", "zh": "蛋糕上有两颗樱桃。" }],
+    "examples": [
+      {
+        "en": "Two cherries are on the cake.",
+        "zh": "蛋糕上有两颗樱桃。"
+      }
+    ],
     "collocations": [
-      { "en": "cherry tree", "zh": "樱桃树" },
-      { "en": "cherry pie", "zh": "樱桃派" }
-    ]
+      {
+        "en": "cherry tree",
+        "zh": "樱桃树"
+      },
+      {
+        "en": "cherry pie",
+        "zh": "樱桃派"
+      }
+    ],
+    "image": "/assets/language/fruit_cherry.svg",
+    "emojiFallback": "🍒"
   },
-
   {
     "id": "animal_cat",
     "category": "animal",
     "en": "Cat",
     "zh": "猫",
-    "emoji": "🐱",
     "level": 3,
     "pos": "noun",
     "meaning": "一种常见的小动物，会喵喵叫。",
-    "examples": [{ "en": "The cat is cute.", "zh": "这只猫很可爱。" }],
+    "examples": [
+      {
+        "en": "The cat is cute.",
+        "zh": "这只猫很可爱。"
+      }
+    ],
     "collocations": [
-      { "en": "pet cat", "zh": "宠物猫" },
-      { "en": "cat tail", "zh": "猫尾巴" }
-    ]
+      {
+        "en": "pet cat",
+        "zh": "宠物猫"
+      },
+      {
+        "en": "cat tail",
+        "zh": "猫尾巴"
+      }
+    ],
+    "image": "/assets/language/animal_cat.svg",
+    "emojiFallback": "🐱"
   },
   {
     "id": "animal_dog",
     "category": "animal",
     "en": "Dog",
     "zh": "狗",
-    "emoji": "🐶",
     "level": 3,
     "pos": "noun",
     "meaning": "一种忠诚的小动物，会汪汪叫。",
-    "examples": [{ "en": "My dog can run.", "zh": "我的小狗会跑。" }],
+    "examples": [
+      {
+        "en": "My dog can run.",
+        "zh": "我的小狗会跑。"
+      }
+    ],
     "collocations": [
-      { "en": "pet dog", "zh": "宠物狗" },
-      { "en": "dog house", "zh": "狗窝" }
-    ]
+      {
+        "en": "pet dog",
+        "zh": "宠物狗"
+      },
+      {
+        "en": "dog house",
+        "zh": "狗窝"
+      }
+    ],
+    "image": "/assets/language/animal_dog.svg",
+    "emojiFallback": "🐶"
   },
   {
     "id": "animal_rabbit",
     "category": "animal",
     "en": "Rabbit",
     "zh": "兔子",
-    "emoji": "🐰",
     "level": 3,
     "pos": "noun",
     "meaning": "一种长耳朵的小动物，喜欢吃胡萝卜。",
-    "examples": [{ "en": "The rabbit has long ears.", "zh": "兔子有长耳朵。" }],
+    "examples": [
+      {
+        "en": "The rabbit has long ears.",
+        "zh": "兔子有长耳朵。"
+      }
+    ],
     "collocations": [
-      { "en": "white rabbit", "zh": "白兔" },
-      { "en": "rabbit ear", "zh": "兔耳朵" }
-    ]
+      {
+        "en": "white rabbit",
+        "zh": "白兔"
+      },
+      {
+        "en": "rabbit ear",
+        "zh": "兔耳朵"
+      }
+    ],
+    "image": "/assets/language/animal_rabbit.svg",
+    "emojiFallback": "🐰"
   },
   {
     "id": "animal_elephant",
     "category": "animal",
     "en": "Elephant",
     "zh": "大象",
-    "emoji": "🐘",
     "level": 4,
     "pos": "noun",
     "meaning": "一种很大的动物，有长长的鼻子。",
-    "examples": [{ "en": "The elephant is big.", "zh": "大象很大。" }],
+    "examples": [
+      {
+        "en": "The elephant is big.",
+        "zh": "大象很大。"
+      }
+    ],
     "collocations": [
-      { "en": "elephant trunk", "zh": "象鼻" },
-      { "en": "baby elephant", "zh": "小象" }
-    ]
+      {
+        "en": "elephant trunk",
+        "zh": "象鼻"
+      },
+      {
+        "en": "baby elephant",
+        "zh": "小象"
+      }
+    ],
+    "image": "/assets/language/animal_elephant.svg",
+    "emojiFallback": "🐘"
   },
   {
     "id": "animal_lion",
     "category": "animal",
     "en": "Lion",
     "zh": "狮子",
-    "emoji": "🦁",
     "level": 4,
     "pos": "noun",
     "meaning": "一种威风的大猫科动物，被叫作森林之王。",
-    "examples": [{ "en": "A lion can roar.", "zh": "狮子会吼叫。" }],
+    "examples": [
+      {
+        "en": "A lion can roar.",
+        "zh": "狮子会吼叫。"
+      }
+    ],
     "collocations": [
-      { "en": "lion roar", "zh": "狮吼" },
-      { "en": "male lion", "zh": "雄狮" }
-    ]
+      {
+        "en": "lion roar",
+        "zh": "狮吼"
+      },
+      {
+        "en": "male lion",
+        "zh": "雄狮"
+      }
+    ],
+    "image": "/assets/language/animal_lion.svg",
+    "emojiFallback": "🦁"
   },
   {
     "id": "animal_panda",
     "category": "animal",
     "en": "Panda",
     "zh": "熊猫",
-    "emoji": "🐼",
     "level": 4,
     "pos": "noun",
     "meaning": "一种黑白相间的动物，喜欢吃竹子。",
-    "examples": [{ "en": "The panda eats bamboo.", "zh": "熊猫吃竹子。" }],
+    "examples": [
+      {
+        "en": "The panda eats bamboo.",
+        "zh": "熊猫吃竹子。"
+      }
+    ],
     "collocations": [
-      { "en": "giant panda", "zh": "大熊猫" },
-      { "en": "panda cub", "zh": "熊猫宝宝" }
-    ]
+      {
+        "en": "giant panda",
+        "zh": "大熊猫"
+      },
+      {
+        "en": "panda cub",
+        "zh": "熊猫宝宝"
+      }
+    ],
+    "image": "/assets/language/animal_panda.svg",
+    "emojiFallback": "🐼"
   },
   {
     "id": "animal_monkey",
     "category": "animal",
     "en": "Monkey",
     "zh": "猴子",
-    "emoji": "🐵",
     "level": 3,
     "pos": "noun",
     "meaning": "一种爱爬树的小动物，很灵活。",
-    "examples": [{ "en": "The monkey can climb.", "zh": "猴子会爬。" }],
+    "examples": [
+      {
+        "en": "The monkey can climb.",
+        "zh": "猴子会爬。"
+      }
+    ],
     "collocations": [
-      { "en": "monkey tail", "zh": "猴尾巴" },
-      { "en": "funny monkey", "zh": "调皮的猴子" }
-    ]
+      {
+        "en": "monkey tail",
+        "zh": "猴尾巴"
+      },
+      {
+        "en": "funny monkey",
+        "zh": "调皮的猴子"
+      }
+    ],
+    "image": "/assets/language/animal_monkey.svg",
+    "emojiFallback": "🐵"
   },
   {
     "id": "animal_giraffe",
     "category": "animal",
     "en": "Giraffe",
     "zh": "长颈鹿",
-    "emoji": "🦒",
     "level": 5,
     "pos": "noun",
     "meaning": "一种脖子很长的动物，能吃到高处的叶子。",
-    "examples": [{ "en": "The giraffe has a long neck.", "zh": "长颈鹿有长脖子。" }],
+    "examples": [
+      {
+        "en": "The giraffe has a long neck.",
+        "zh": "长颈鹿有长脖子。"
+      }
+    ],
     "collocations": [
-      { "en": "long neck", "zh": "长脖子" },
-      { "en": "baby giraffe", "zh": "小长颈鹿" }
-    ]
+      {
+        "en": "long neck",
+        "zh": "长脖子"
+      },
+      {
+        "en": "baby giraffe",
+        "zh": "小长颈鹿"
+      }
+    ],
+    "image": "/assets/language/animal_giraffe.svg",
+    "emojiFallback": "🦒"
   },
   {
     "id": "animal_zebra",
     "category": "animal",
     "en": "Zebra",
     "zh": "斑马",
-    "emoji": "🦓",
     "level": 5,
     "pos": "noun",
     "meaning": "一种身上有黑白条纹的动物。",
-    "examples": [{ "en": "The zebra has stripes.", "zh": "斑马有条纹。" }],
+    "examples": [
+      {
+        "en": "The zebra has stripes.",
+        "zh": "斑马有条纹。"
+      }
+    ],
     "collocations": [
-      { "en": "black and white", "zh": "黑白的" },
-      { "en": "zebra crossing", "zh": "斑马线" }
-    ]
+      {
+        "en": "black and white",
+        "zh": "黑白的"
+      },
+      {
+        "en": "zebra crossing",
+        "zh": "斑马线"
+      }
+    ],
+    "image": "/assets/language/animal_zebra.svg",
+    "emojiFallback": "🦓"
   },
   {
     "id": "animal_turtle",
     "category": "animal",
     "en": "Turtle",
     "zh": "乌龟",
-    "emoji": "🐢",
     "level": 4,
     "pos": "noun",
     "meaning": "一种背着硬壳的小动物，走得慢慢的。",
-    "examples": [{ "en": "The turtle is slow.", "zh": "乌龟很慢。" }],
+    "examples": [
+      {
+        "en": "The turtle is slow.",
+        "zh": "乌龟很慢。"
+      }
+    ],
     "collocations": [
-      { "en": "turtle shell", "zh": "龟壳" },
-      { "en": "sea turtle", "zh": "海龟" }
-    ]
+      {
+        "en": "turtle shell",
+        "zh": "龟壳"
+      },
+      {
+        "en": "sea turtle",
+        "zh": "海龟"
+      }
+    ],
+    "image": "/assets/language/animal_turtle.svg",
+    "emojiFallback": "🐢"
   },
   {
     "id": "animal_dolphin",
     "category": "animal",
     "en": "Dolphin",
     "zh": "海豚",
-    "emoji": "🐬",
     "level": 5,
     "pos": "noun",
     "meaning": "一种聪明的海洋动物，喜欢跳出水面。",
-    "examples": [{ "en": "The dolphin can swim.", "zh": "海豚会游泳。" }],
+    "examples": [
+      {
+        "en": "The dolphin can swim.",
+        "zh": "海豚会游泳。"
+      }
+    ],
     "collocations": [
-      { "en": "ocean dolphin", "zh": "海洋海豚" },
-      { "en": "dolphin show", "zh": "海豚表演" }
-    ]
+      {
+        "en": "ocean dolphin",
+        "zh": "海洋海豚"
+      },
+      {
+        "en": "dolphin show",
+        "zh": "海豚表演"
+      }
+    ],
+    "image": "/assets/language/animal_dolphin.svg",
+    "emojiFallback": "🐬"
   },
-
   {
     "id": "vehicle_car",
     "category": "vehicle",
     "en": "Car",
     "zh": "汽车",
-    "emoji": "🚗",
     "level": 3,
     "pos": "noun",
     "meaning": "一种有四个轮子的交通工具。",
-    "examples": [{ "en": "The car is fast.", "zh": "这辆汽车很快。" }],
+    "examples": [
+      {
+        "en": "The car is fast.",
+        "zh": "这辆汽车很快。"
+      }
+    ],
     "collocations": [
-      { "en": "red car", "zh": "红色汽车" },
-      { "en": "car door", "zh": "车门" }
-    ]
+      {
+        "en": "red car",
+        "zh": "红色汽车"
+      },
+      {
+        "en": "car door",
+        "zh": "车门"
+      }
+    ],
+    "image": "/assets/language/vehicle_car.svg",
+    "emojiFallback": "🚗"
   },
   {
     "id": "vehicle_bus",
     "category": "vehicle",
     "en": "Bus",
     "zh": "公交车",
-    "emoji": "🚌",
     "level": 3,
     "pos": "noun",
     "meaning": "一种能载很多人的大车。",
-    "examples": [{ "en": "We take the bus.", "zh": "我们坐公交车。" }],
+    "examples": [
+      {
+        "en": "We take the bus.",
+        "zh": "我们坐公交车。"
+      }
+    ],
     "collocations": [
-      { "en": "bus stop", "zh": "公交站" },
-      { "en": "school bus", "zh": "校车" }
-    ]
+      {
+        "en": "bus stop",
+        "zh": "公交站"
+      },
+      {
+        "en": "school bus",
+        "zh": "校车"
+      }
+    ],
+    "image": "/assets/language/vehicle_bus.svg",
+    "emojiFallback": "🚌"
   },
   {
     "id": "vehicle_bike",
     "category": "vehicle",
     "en": "Bike",
     "zh": "自行车",
-    "emoji": "🚲",
     "level": 3,
     "pos": "noun",
     "meaning": "一种用脚踩着走的两轮车。",
-    "examples": [{ "en": "I ride my bike.", "zh": "我骑自行车。" }],
+    "examples": [
+      {
+        "en": "I ride my bike.",
+        "zh": "我骑自行车。"
+      }
+    ],
     "collocations": [
-      { "en": "ride a bike", "zh": "骑自行车" },
-      { "en": "bike helmet", "zh": "自行车头盔" }
-    ]
+      {
+        "en": "ride a bike",
+        "zh": "骑自行车"
+      },
+      {
+        "en": "bike helmet",
+        "zh": "自行车头盔"
+      }
+    ],
+    "image": "/assets/language/vehicle_bike.svg",
+    "emojiFallback": "🚲"
   },
   {
     "id": "vehicle_train",
     "category": "vehicle",
     "en": "Train",
     "zh": "火车",
-    "emoji": "🚂",
     "level": 4,
     "pos": "noun",
     "meaning": "一种在铁轨上行驶的长长的车。",
-    "examples": [{ "en": "The train is long.", "zh": "火车很长。" }],
+    "examples": [
+      {
+        "en": "The train is long.",
+        "zh": "火车很长。"
+      }
+    ],
     "collocations": [
-      { "en": "train station", "zh": "火车站" },
-      { "en": "take the train", "zh": "坐火车" }
-    ]
+      {
+        "en": "train station",
+        "zh": "火车站"
+      },
+      {
+        "en": "take the train",
+        "zh": "坐火车"
+      }
+    ],
+    "image": "/assets/language/vehicle_train.svg",
+    "emojiFallback": "🚂"
   },
   {
     "id": "vehicle_plane",
     "category": "vehicle",
     "en": "Plane",
     "zh": "飞机",
-    "emoji": "✈️",
     "level": 4,
     "pos": "noun",
     "meaning": "一种在天空飞行的交通工具。",
-    "examples": [{ "en": "The plane can fly.", "zh": "飞机会飞。" }],
+    "examples": [
+      {
+        "en": "The plane can fly.",
+        "zh": "飞机会飞。"
+      }
+    ],
     "collocations": [
-      { "en": "fly a plane", "zh": "驾驶飞机" },
-      { "en": "plane ticket", "zh": "机票" }
-    ]
+      {
+        "en": "fly a plane",
+        "zh": "驾驶飞机"
+      },
+      {
+        "en": "plane ticket",
+        "zh": "机票"
+      }
+    ],
+    "image": "/assets/language/vehicle_plane.svg",
+    "emojiFallback": "✈️"
   },
   {
     "id": "vehicle_ship",
     "category": "vehicle",
     "en": "Ship",
     "zh": "轮船",
-    "emoji": "🚢",
     "level": 4,
     "pos": "noun",
     "meaning": "一种在海上航行的大船。",
-    "examples": [{ "en": "The ship is on the sea.", "zh": "轮船在海上。" }],
+    "examples": [
+      {
+        "en": "The ship is on the sea.",
+        "zh": "轮船在海上。"
+      }
+    ],
     "collocations": [
-      { "en": "big ship", "zh": "大船" },
-      { "en": "ship captain", "zh": "船长" }
-    ]
+      {
+        "en": "big ship",
+        "zh": "大船"
+      },
+      {
+        "en": "ship captain",
+        "zh": "船长"
+      }
+    ],
+    "image": "/assets/language/vehicle_ship.svg",
+    "emojiFallback": "🚢"
   },
   {
     "id": "vehicle_taxi",
     "category": "vehicle",
     "en": "Taxi",
     "zh": "出租车",
-    "emoji": "🚕",
     "level": 3,
     "pos": "noun",
     "meaning": "一种可以打车坐的汽车。",
-    "examples": [{ "en": "We call a taxi.", "zh": "我们叫一辆出租车。" }],
+    "examples": [
+      {
+        "en": "We call a taxi.",
+        "zh": "我们叫一辆出租车。"
+      }
+    ],
     "collocations": [
-      { "en": "taxi driver", "zh": "出租车司机" },
-      { "en": "take a taxi", "zh": "打车" }
-    ]
+      {
+        "en": "taxi driver",
+        "zh": "出租车司机"
+      },
+      {
+        "en": "take a taxi",
+        "zh": "打车"
+      }
+    ],
+    "image": "/assets/language/vehicle_taxi.svg",
+    "emojiFallback": "🚕"
   },
   {
     "id": "vehicle_truck",
     "category": "vehicle",
     "en": "Truck",
     "zh": "卡车",
-    "emoji": "🚚",
     "level": 4,
     "pos": "noun",
     "meaning": "一种用来运货的大车。",
-    "examples": [{ "en": "The truck carries boxes.", "zh": "卡车运箱子。" }],
+    "examples": [
+      {
+        "en": "The truck carries boxes.",
+        "zh": "卡车运箱子。"
+      }
+    ],
     "collocations": [
-      { "en": "big truck", "zh": "大卡车" },
-      { "en": "truck driver", "zh": "卡车司机" }
-    ]
+      {
+        "en": "big truck",
+        "zh": "大卡车"
+      },
+      {
+        "en": "truck driver",
+        "zh": "卡车司机"
+      }
+    ],
+    "image": "/assets/language/vehicle_truck.svg",
+    "emojiFallback": "🚚"
   },
   {
     "id": "vehicle_helicopter",
     "category": "vehicle",
     "en": "Helicopter",
     "zh": "直升机",
-    "emoji": "🚁",
     "level": 5,
     "pos": "noun",
     "meaning": "一种能垂直起降的飞行器。",
-    "examples": [{ "en": "The helicopter is in the sky.", "zh": "直升机在天空中。" }],
+    "examples": [
+      {
+        "en": "The helicopter is in the sky.",
+        "zh": "直升机在天空中。"
+      }
+    ],
     "collocations": [
-      { "en": "rescue helicopter", "zh": "救援直升机" },
-      { "en": "helicopter ride", "zh": "乘坐直升机" }
-    ]
+      {
+        "en": "rescue helicopter",
+        "zh": "救援直升机"
+      },
+      {
+        "en": "helicopter ride",
+        "zh": "乘坐直升机"
+      }
+    ],
+    "image": "/assets/language/vehicle_helicopter.svg",
+    "emojiFallback": "🚁"
   },
   {
     "id": "vehicle_rocket",
     "category": "vehicle",
     "en": "Rocket",
     "zh": "火箭",
-    "emoji": "🚀",
     "level": 4,
     "pos": "noun",
     "meaning": "一种飞得很快、能去太空的飞行器。",
-    "examples": [{ "en": "The rocket goes to space.", "zh": "火箭飞向太空。" }],
+    "examples": [
+      {
+        "en": "The rocket goes to space.",
+        "zh": "火箭飞向太空。"
+      }
+    ],
     "collocations": [
-      { "en": "space rocket", "zh": "航天火箭" },
-      { "en": "rocket launch", "zh": "火箭发射" }
-    ]
+      {
+        "en": "space rocket",
+        "zh": "航天火箭"
+      },
+      {
+        "en": "rocket launch",
+        "zh": "火箭发射"
+      }
+    ],
+    "image": "/assets/language/vehicle_rocket.svg",
+    "emojiFallback": "🚀"
   },
   {
     "id": "vehicle_subway",
     "category": "vehicle",
     "en": "Subway",
     "zh": "地铁",
-    "emoji": "🚇",
     "level": 5,
     "pos": "noun",
     "meaning": "一种在地下运行的快速列车。",
-    "examples": [{ "en": "We take the subway.", "zh": "我们坐地铁。" }],
+    "examples": [
+      {
+        "en": "We take the subway.",
+        "zh": "我们坐地铁。"
+      }
+    ],
     "collocations": [
-      { "en": "subway station", "zh": "地铁站" },
-      { "en": "subway line", "zh": "地铁线路" }
-    ]
+      {
+        "en": "subway station",
+        "zh": "地铁站"
+      },
+      {
+        "en": "subway line",
+        "zh": "地铁线路"
+      }
+    ],
+    "image": "/assets/language/vehicle_subway.svg",
+    "emojiFallback": "🚇"
   },
   {
     "id": "vehicle_ambulance",
     "category": "vehicle",
     "en": "Ambulance",
     "zh": "救护车",
-    "emoji": "🚑",
     "level": 5,
     "pos": "noun",
     "meaning": "一种用来急救、送病人的车。",
-    "examples": [{ "en": "The ambulance helps people.", "zh": "救护车帮助人们。" }],
+    "examples": [
+      {
+        "en": "The ambulance helps people.",
+        "zh": "救护车帮助人们。"
+      }
+    ],
     "collocations": [
-      { "en": "call an ambulance", "zh": "叫救护车" },
-      { "en": "ambulance siren", "zh": "救护车警笛" }
-    ]
+      {
+        "en": "call an ambulance",
+        "zh": "叫救护车"
+      },
+      {
+        "en": "ambulance siren",
+        "zh": "救护车警笛"
+      }
+    ],
+    "image": "/assets/language/vehicle_ambulance.svg",
+    "emojiFallback": "🚑"
   },
-
   {
     "id": "color_red",
     "category": "color",
     "en": "Red",
     "zh": "红色",
-    "emoji": "🔴",
     "level": 3,
     "pos": "adj",
     "meaning": "红色。",
-    "examples": [{ "en": "The apple is red.", "zh": "苹果是红色的。" }],
+    "examples": [
+      {
+        "en": "The apple is red.",
+        "zh": "苹果是红色的。"
+      }
+    ],
     "collocations": [
-      { "en": "red apple", "zh": "红苹果" },
-      { "en": "red balloon", "zh": "红气球" }
-    ]
+      {
+        "en": "red apple",
+        "zh": "红苹果"
+      },
+      {
+        "en": "red balloon",
+        "zh": "红气球"
+      }
+    ],
+    "image": "/assets/language/color_red.svg",
+    "emojiFallback": "🔴"
   },
   {
     "id": "color_blue",
     "category": "color",
     "en": "Blue",
     "zh": "蓝色",
-    "emoji": "🔵",
     "level": 3,
     "pos": "adj",
     "meaning": "蓝色。",
-    "examples": [{ "en": "The sky is blue.", "zh": "天空是蓝色的。" }],
+    "examples": [
+      {
+        "en": "The sky is blue.",
+        "zh": "天空是蓝色的。"
+      }
+    ],
     "collocations": [
-      { "en": "blue sky", "zh": "蓝天" },
-      { "en": "blue car", "zh": "蓝色汽车" }
-    ]
+      {
+        "en": "blue sky",
+        "zh": "蓝天"
+      },
+      {
+        "en": "blue car",
+        "zh": "蓝色汽车"
+      }
+    ],
+    "image": "/assets/language/color_blue.svg",
+    "emojiFallback": "🔵"
   },
   {
     "id": "color_green",
     "category": "color",
     "en": "Green",
     "zh": "绿色",
-    "emoji": "🟢",
     "level": 3,
     "pos": "adj",
     "meaning": "绿色。",
-    "examples": [{ "en": "The leaf is green.", "zh": "叶子是绿色的。" }],
+    "examples": [
+      {
+        "en": "The leaf is green.",
+        "zh": "叶子是绿色的。"
+      }
+    ],
     "collocations": [
-      { "en": "green tree", "zh": "绿树" },
-      { "en": "green grass", "zh": "绿草" }
-    ]
+      {
+        "en": "green tree",
+        "zh": "绿树"
+      },
+      {
+        "en": "green grass",
+        "zh": "绿草"
+      }
+    ],
+    "image": "/assets/language/color_green.svg",
+    "emojiFallback": "🟢"
   },
   {
     "id": "color_yellow",
     "category": "color",
     "en": "Yellow",
     "zh": "黄色",
-    "emoji": "🟡",
     "level": 3,
     "pos": "adj",
     "meaning": "黄色。",
-    "examples": [{ "en": "The banana is yellow.", "zh": "香蕉是黄色的。" }],
+    "examples": [
+      {
+        "en": "The banana is yellow.",
+        "zh": "香蕉是黄色的。"
+      }
+    ],
     "collocations": [
-      { "en": "yellow banana", "zh": "黄香蕉" },
-      { "en": "yellow sun", "zh": "黄色太阳" }
-    ]
+      {
+        "en": "yellow banana",
+        "zh": "黄香蕉"
+      },
+      {
+        "en": "yellow sun",
+        "zh": "黄色太阳"
+      }
+    ],
+    "image": "/assets/language/color_yellow.svg",
+    "emojiFallback": "🟡"
   },
   {
     "id": "color_purple",
     "category": "color",
     "en": "Purple",
     "zh": "紫色",
-    "emoji": "🟣",
     "level": 4,
     "pos": "adj",
     "meaning": "紫色。",
-    "examples": [{ "en": "The grape is purple.", "zh": "葡萄是紫色的。" }],
+    "examples": [
+      {
+        "en": "The grape is purple.",
+        "zh": "葡萄是紫色的。"
+      }
+    ],
     "collocations": [
-      { "en": "purple grape", "zh": "紫葡萄" },
-      { "en": "purple flower", "zh": "紫花" }
-    ]
+      {
+        "en": "purple grape",
+        "zh": "紫葡萄"
+      },
+      {
+        "en": "purple flower",
+        "zh": "紫花"
+      }
+    ],
+    "image": "/assets/language/color_purple.svg",
+    "emojiFallback": "🟣"
   },
   {
     "id": "color_black",
     "category": "color",
     "en": "Black",
     "zh": "黑色",
-    "emoji": "⚫",
     "level": 3,
     "pos": "adj",
     "meaning": "黑色。",
-    "examples": [{ "en": "The cat is black.", "zh": "这只猫是黑色的。" }],
+    "examples": [
+      {
+        "en": "The cat is black.",
+        "zh": "这只猫是黑色的。"
+      }
+    ],
     "collocations": [
-      { "en": "black cat", "zh": "黑猫" },
-      { "en": "black hair", "zh": "黑头发" }
-    ]
+      {
+        "en": "black cat",
+        "zh": "黑猫"
+      },
+      {
+        "en": "black hair",
+        "zh": "黑头发"
+      }
+    ],
+    "image": "/assets/language/color_black.svg",
+    "emojiFallback": "⚫"
   },
   {
     "id": "color_white",
     "category": "color",
     "en": "White",
     "zh": "白色",
-    "emoji": "⚪",
     "level": 3,
     "pos": "adj",
     "meaning": "白色。",
-    "examples": [{ "en": "The rabbit is white.", "zh": "兔子是白色的。" }],
+    "examples": [
+      {
+        "en": "The rabbit is white.",
+        "zh": "兔子是白色的。"
+      }
+    ],
     "collocations": [
-      { "en": "white rabbit", "zh": "白兔" },
-      { "en": "white cloud", "zh": "白云" }
-    ]
+      {
+        "en": "white rabbit",
+        "zh": "白兔"
+      },
+      {
+        "en": "white cloud",
+        "zh": "白云"
+      }
+    ],
+    "image": "/assets/language/color_white.svg",
+    "emojiFallback": "⚪"
   },
   {
     "id": "color_orange",
     "category": "color",
     "en": "Orange",
     "zh": "橙色",
-    "emoji": "🟠",
     "level": 4,
     "pos": "adj",
     "meaning": "橙色。",
-    "examples": [{ "en": "The orange balloon is orange.", "zh": "橙色的气球是橙色的。" }],
+    "examples": [
+      {
+        "en": "The orange balloon is orange.",
+        "zh": "橙色的气球是橙色的。"
+      }
+    ],
     "collocations": [
-      { "en": "orange balloon", "zh": "橙色气球" },
-      { "en": "orange cat", "zh": "橘猫" }
-    ]
+      {
+        "en": "orange balloon",
+        "zh": "橙色气球"
+      },
+      {
+        "en": "orange cat",
+        "zh": "橘猫"
+      }
+    ],
+    "image": "/assets/language/color_orange.svg",
+    "emojiFallback": "🟠"
   },
   {
     "id": "color_pink",
     "category": "color",
     "en": "Pink",
     "zh": "粉色",
-    "emoji": "🩷",
     "level": 4,
     "pos": "adj",
     "meaning": "粉色。",
-    "examples": [{ "en": "The flower is pink.", "zh": "花是粉色的。" }],
+    "examples": [
+      {
+        "en": "The flower is pink.",
+        "zh": "花是粉色的。"
+      }
+    ],
     "collocations": [
-      { "en": "pink flower", "zh": "粉花" },
-      { "en": "pink dress", "zh": "粉色连衣裙" }
-    ]
+      {
+        "en": "pink flower",
+        "zh": "粉花"
+      },
+      {
+        "en": "pink dress",
+        "zh": "粉色连衣裙"
+      }
+    ],
+    "image": "/assets/language/color_pink.svg",
+    "emojiFallback": "💗"
   },
   {
     "id": "color_brown",
     "category": "color",
     "en": "Brown",
     "zh": "棕色",
-    "emoji": "🟤",
     "level": 5,
     "pos": "adj",
     "meaning": "棕色。",
-    "examples": [{ "en": "The bear is brown.", "zh": "熊是棕色的。" }],
+    "examples": [
+      {
+        "en": "The bear is brown.",
+        "zh": "熊是棕色的。"
+      }
+    ],
     "collocations": [
-      { "en": "brown bear", "zh": "棕熊" },
-      { "en": "brown hair", "zh": "棕色头发" }
-    ]
+      {
+        "en": "brown bear",
+        "zh": "棕熊"
+      },
+      {
+        "en": "brown hair",
+        "zh": "棕色头发"
+      }
+    ],
+    "image": "/assets/language/color_brown.svg",
+    "emojiFallback": "🟤"
   },
   {
     "id": "color_gray",
     "category": "color",
     "en": "Gray",
     "zh": "灰色",
-    "emoji": "⚙️",
     "level": 5,
     "pos": "adj",
     "meaning": "灰色。",
-    "examples": [{ "en": "The cloud is gray.", "zh": "云是灰色的。" }],
+    "examples": [
+      {
+        "en": "The cloud is gray.",
+        "zh": "云是灰色的。"
+      }
+    ],
     "collocations": [
-      { "en": "gray cloud", "zh": "灰云" },
-      { "en": "gray cat", "zh": "灰猫" }
-    ]
+      {
+        "en": "gray cloud",
+        "zh": "灰云"
+      },
+      {
+        "en": "gray cat",
+        "zh": "灰猫"
+      }
+    ],
+    "image": "/assets/language/color_gray.svg",
+    "emojiFallback": "⚙️"
   },
-
   {
     "id": "nature_sun",
     "category": "nature",
     "en": "Sun",
     "zh": "太阳",
-    "emoji": "☀️",
     "level": 3,
     "pos": "noun",
     "meaning": "白天在天上的大火球，会发光发热。",
-    "examples": [{ "en": "The sun is bright.", "zh": "太阳很明亮。" }],
+    "examples": [
+      {
+        "en": "The sun is bright.",
+        "zh": "太阳很明亮。"
+      }
+    ],
     "collocations": [
-      { "en": "sunlight", "zh": "阳光" },
-      { "en": "sunny day", "zh": "晴天" }
-    ]
+      {
+        "en": "sunlight",
+        "zh": "阳光"
+      },
+      {
+        "en": "sunny day",
+        "zh": "晴天"
+      }
+    ],
+    "image": "/assets/language/nature_sun.svg",
+    "emojiFallback": "☀️"
   },
   {
     "id": "nature_moon",
     "category": "nature",
     "en": "Moon",
     "zh": "月亮",
-    "emoji": "🌙",
     "level": 3,
     "pos": "noun",
     "meaning": "夜晚在天上的圆圆的天体，会发出柔和的光。",
-    "examples": [{ "en": "The moon is in the sky.", "zh": "月亮在天上。" }],
+    "examples": [
+      {
+        "en": "The moon is in the sky.",
+        "zh": "月亮在天上。"
+      }
+    ],
     "collocations": [
-      { "en": "full moon", "zh": "满月" },
-      { "en": "moonlight", "zh": "月光" }
-    ]
+      {
+        "en": "full moon",
+        "zh": "满月"
+      },
+      {
+        "en": "moonlight",
+        "zh": "月光"
+      }
+    ],
+    "image": "/assets/language/nature_moon.svg",
+    "emojiFallback": "🌙"
   },
   {
     "id": "nature_star",
     "category": "nature",
     "en": "Star",
     "zh": "星星",
-    "emoji": "⭐️",
     "level": 3,
     "pos": "noun",
     "meaning": "夜空里一闪一闪的小亮点。",
-    "examples": [{ "en": "I see a star.", "zh": "我看见一颗星星。" }],
+    "examples": [
+      {
+        "en": "I see a star.",
+        "zh": "我看见一颗星星。"
+      }
+    ],
     "collocations": [
-      { "en": "bright star", "zh": "亮星" },
-      { "en": "starry sky", "zh": "星空" }
-    ]
+      {
+        "en": "bright star",
+        "zh": "亮星"
+      },
+      {
+        "en": "starry sky",
+        "zh": "星空"
+      }
+    ],
+    "image": "/assets/language/nature_star.svg",
+    "emojiFallback": "⭐️"
   },
   {
     "id": "nature_cloud",
     "category": "nature",
     "en": "Cloud",
     "zh": "云",
-    "emoji": "☁️",
     "level": 3,
     "pos": "noun",
     "meaning": "天空中白白的或灰灰的水汽团。",
-    "examples": [{ "en": "The cloud is white.", "zh": "云是白色的。" }],
+    "examples": [
+      {
+        "en": "The cloud is white.",
+        "zh": "云是白色的。"
+      }
+    ],
     "collocations": [
-      { "en": "white cloud", "zh": "白云" },
-      { "en": "dark cloud", "zh": "乌云" }
-    ]
+      {
+        "en": "white cloud",
+        "zh": "白云"
+      },
+      {
+        "en": "dark cloud",
+        "zh": "乌云"
+      }
+    ],
+    "image": "/assets/language/nature_cloud.svg",
+    "emojiFallback": "☁️"
   },
   {
     "id": "nature_rain",
     "category": "nature",
     "en": "Rain",
     "zh": "雨",
-    "emoji": "🌧️",
     "level": 3,
     "pos": "noun",
     "meaning": "从天空落下来的小水滴。",
-    "examples": [{ "en": "It is raining.", "zh": "正在下雨。" }],
+    "examples": [
+      {
+        "en": "It is raining.",
+        "zh": "正在下雨。"
+      }
+    ],
     "collocations": [
-      { "en": "rainy day", "zh": "雨天" },
-      { "en": "rain drop", "zh": "雨滴" }
-    ]
+      {
+        "en": "rainy day",
+        "zh": "雨天"
+      },
+      {
+        "en": "rain drop",
+        "zh": "雨滴"
+      }
+    ],
+    "image": "/assets/language/nature_rain.svg",
+    "emojiFallback": "🌧️"
   },
   {
     "id": "nature_snow",
     "category": "nature",
     "en": "Snow",
     "zh": "雪",
-    "emoji": "❄️",
     "level": 3,
     "pos": "noun",
     "meaning": "冬天从天空飘落的白色小冰晶。",
-    "examples": [{ "en": "Snow is white.", "zh": "雪是白色的。" }],
+    "examples": [
+      {
+        "en": "Snow is white.",
+        "zh": "雪是白色的。"
+      }
+    ],
     "collocations": [
-      { "en": "snowman", "zh": "雪人" },
-      { "en": "snowflake", "zh": "雪花" }
-    ]
+      {
+        "en": "snowman",
+        "zh": "雪人"
+      },
+      {
+        "en": "snowflake",
+        "zh": "雪花"
+      }
+    ],
+    "image": "/assets/language/nature_snow.svg",
+    "emojiFallback": "❄️"
   },
   {
     "id": "nature_wind",
     "category": "nature",
     "en": "Wind",
     "zh": "风",
-    "emoji": "🌬️",
     "level": 4,
     "pos": "noun",
     "meaning": "空气流动起来就变成了风。",
-    "examples": [{ "en": "The wind is strong.", "zh": "风很大。" }],
+    "examples": [
+      {
+        "en": "The wind is strong.",
+        "zh": "风很大。"
+      }
+    ],
     "collocations": [
-      { "en": "strong wind", "zh": "大风" },
-      { "en": "cold wind", "zh": "冷风" }
-    ]
+      {
+        "en": "strong wind",
+        "zh": "大风"
+      },
+      {
+        "en": "cold wind",
+        "zh": "冷风"
+      }
+    ],
+    "image": "/assets/language/nature_wind.svg",
+    "emojiFallback": "🌬️"
   },
   {
     "id": "nature_tree",
     "category": "nature",
     "en": "Tree",
     "zh": "树",
-    "emoji": "🌳",
     "level": 3,
     "pos": "noun",
     "meaning": "一种高高的植物，有树干和树叶。",
-    "examples": [{ "en": "The tree is tall.", "zh": "树很高。" }],
+    "examples": [
+      {
+        "en": "The tree is tall.",
+        "zh": "树很高。"
+      }
+    ],
     "collocations": [
-      { "en": "tall tree", "zh": "高树" },
-      { "en": "tree leaf", "zh": "树叶" }
-    ]
+      {
+        "en": "tall tree",
+        "zh": "高树"
+      },
+      {
+        "en": "tree leaf",
+        "zh": "树叶"
+      }
+    ],
+    "image": "/assets/language/nature_tree.svg",
+    "emojiFallback": "🌳"
   },
   {
     "id": "nature_flower",
     "category": "nature",
     "en": "Flower",
     "zh": "花",
-    "emoji": "🌸",
     "level": 3,
     "pos": "noun",
     "meaning": "植物开出的漂亮部分，常常有香味。",
-    "examples": [{ "en": "The flower is beautiful.", "zh": "花很美。" }],
+    "examples": [
+      {
+        "en": "The flower is beautiful.",
+        "zh": "花很美。"
+      }
+    ],
     "collocations": [
-      { "en": "flower garden", "zh": "花园" },
-      { "en": "pink flower", "zh": "粉色的花" }
-    ]
+      {
+        "en": "flower garden",
+        "zh": "花园"
+      },
+      {
+        "en": "pink flower",
+        "zh": "粉色的花"
+      }
+    ],
+    "image": "/assets/language/nature_flower.svg",
+    "emojiFallback": "🌸"
   },
   {
     "id": "nature_rainbow",
     "category": "nature",
     "en": "Rainbow",
     "zh": "彩虹",
-    "emoji": "🌈",
     "level": 5,
     "pos": "noun",
     "meaning": "雨后天空出现的七彩弯弯。",
-    "examples": [{ "en": "A rainbow appears after rain.", "zh": "下雨后会出现彩虹。" }],
+    "examples": [
+      {
+        "en": "A rainbow appears after rain.",
+        "zh": "下雨后会出现彩虹。"
+      }
+    ],
     "collocations": [
-      { "en": "rainbow colors", "zh": "彩虹颜色" },
-      { "en": "see a rainbow", "zh": "看见彩虹" }
-    ]
+      {
+        "en": "rainbow colors",
+        "zh": "彩虹颜色"
+      },
+      {
+        "en": "see a rainbow",
+        "zh": "看见彩虹"
+      }
+    ],
+    "image": "/assets/language/nature_rainbow.svg",
+    "emojiFallback": "🌈"
   },
   {
     "id": "nature_mountain",
     "category": "nature",
     "en": "Mountain",
     "zh": "山",
-    "emoji": "⛰️",
     "level": 5,
     "pos": "noun",
     "meaning": "高高的地形，像大大的石头堆起来。",
-    "examples": [{ "en": "The mountain is high.", "zh": "山很高。" }],
+    "examples": [
+      {
+        "en": "The mountain is high.",
+        "zh": "山很高。"
+      }
+    ],
     "collocations": [
-      { "en": "high mountain", "zh": "高山" },
-      { "en": "mountain top", "zh": "山顶" }
-    ]
+      {
+        "en": "high mountain",
+        "zh": "高山"
+      },
+      {
+        "en": "mountain top",
+        "zh": "山顶"
+      }
+    ],
+    "image": "/assets/language/nature_mountain.svg",
+    "emojiFallback": "⛰️"
   },
   {
     "id": "nature_ocean",
     "category": "nature",
     "en": "Ocean",
     "zh": "海洋",
-    "emoji": "🌊",
     "level": 5,
     "pos": "noun",
     "meaning": "很大很大的海。",
-    "examples": [{ "en": "The ocean is blue.", "zh": "海洋是蓝色的。" }],
+    "examples": [
+      {
+        "en": "The ocean is blue.",
+        "zh": "海洋是蓝色的。"
+      }
+    ],
     "collocations": [
-      { "en": "ocean wave", "zh": "海浪" },
-      { "en": "deep ocean", "zh": "深海" }
-    ]
+      {
+        "en": "ocean wave",
+        "zh": "海浪"
+      },
+      {
+        "en": "deep ocean",
+        "zh": "深海"
+      }
+    ],
+    "image": "/assets/language/nature_ocean.svg",
+    "emojiFallback": "🌊"
   },
-
   {
     "id": "action_run",
     "category": "action",
     "en": "Run",
     "zh": "跑",
-    "emoji": "🏃",
     "level": 3,
     "pos": "verb",
     "meaning": "用双脚快速移动。",
-    "examples": [{ "en": "I can run fast.", "zh": "我可以跑得很快。" }],
+    "examples": [
+      {
+        "en": "I can run fast.",
+        "zh": "我可以跑得很快。"
+      }
+    ],
     "collocations": [
-      { "en": "run fast", "zh": "跑得快" },
-      { "en": "run to school", "zh": "跑去学校" }
-    ]
+      {
+        "en": "run fast",
+        "zh": "跑得快"
+      },
+      {
+        "en": "run to school",
+        "zh": "跑去学校"
+      }
+    ],
+    "image": "/assets/language/action_run.svg",
+    "emojiFallback": "🏃"
   },
   {
     "id": "action_walk",
     "category": "action",
     "en": "Walk",
     "zh": "走",
-    "emoji": "🚶",
     "level": 3,
     "pos": "verb",
     "meaning": "用脚一步一步慢慢前进。",
-    "examples": [{ "en": "We walk to the park.", "zh": "我们走去公园。" }],
+    "examples": [
+      {
+        "en": "We walk to the park.",
+        "zh": "我们走去公园。"
+      }
+    ],
     "collocations": [
-      { "en": "walk slowly", "zh": "慢慢走" },
-      { "en": "go for a walk", "zh": "去散步" }
-    ]
+      {
+        "en": "walk slowly",
+        "zh": "慢慢走"
+      },
+      {
+        "en": "go for a walk",
+        "zh": "去散步"
+      }
+    ],
+    "image": "/assets/language/action_walk.svg",
+    "emojiFallback": "🚶"
   },
   {
     "id": "action_jump",
     "category": "action",
     "en": "Jump",
     "zh": "跳",
-    "emoji": "🤾",
     "level": 3,
     "pos": "verb",
     "meaning": "脚离开地面向上或向前弹起。",
-    "examples": [{ "en": "I can jump high.", "zh": "我可以跳得很高。" }],
+    "examples": [
+      {
+        "en": "I can jump high.",
+        "zh": "我可以跳得很高。"
+      }
+    ],
     "collocations": [
-      { "en": "jump high", "zh": "跳得高" },
-      { "en": "jump rope", "zh": "跳绳" }
-    ]
+      {
+        "en": "jump high",
+        "zh": "跳得高"
+      },
+      {
+        "en": "jump rope",
+        "zh": "跳绳"
+      }
+    ],
+    "image": "/assets/language/action_jump.svg",
+    "emojiFallback": "🤾"
   },
   {
     "id": "action_eat",
     "category": "action",
     "en": "Eat",
     "zh": "吃",
-    "emoji": "🍽️",
     "level": 3,
     "pos": "verb",
     "meaning": "把食物放进嘴里嚼一嚼吞下去。",
-    "examples": [{ "en": "I eat an apple.", "zh": "我吃一个苹果。" }],
+    "examples": [
+      {
+        "en": "I eat an apple.",
+        "zh": "我吃一个苹果。"
+      }
+    ],
     "collocations": [
-      { "en": "eat breakfast", "zh": "吃早饭" },
-      { "en": "eat slowly", "zh": "慢慢吃" }
-    ]
+      {
+        "en": "eat breakfast",
+        "zh": "吃早饭"
+      },
+      {
+        "en": "eat slowly",
+        "zh": "慢慢吃"
+      }
+    ],
+    "image": "/assets/language/action_eat.svg",
+    "emojiFallback": "🍽️"
   },
   {
     "id": "action_drink",
     "category": "action",
     "en": "Drink",
     "zh": "喝",
-    "emoji": "🥤",
     "level": 3,
     "pos": "verb",
     "meaning": "把水或饮料喝进肚子里。",
-    "examples": [{ "en": "Please drink water.", "zh": "请喝水。" }],
+    "examples": [
+      {
+        "en": "Please drink water.",
+        "zh": "请喝水。"
+      }
+    ],
     "collocations": [
-      { "en": "drink water", "zh": "喝水" },
-      { "en": "drink milk", "zh": "喝牛奶" }
-    ]
+      {
+        "en": "drink water",
+        "zh": "喝水"
+      },
+      {
+        "en": "drink milk",
+        "zh": "喝牛奶"
+      }
+    ],
+    "image": "/assets/language/action_drink.svg",
+    "emojiFallback": "🥤"
   },
   {
     "id": "action_read",
     "category": "action",
     "en": "Read",
     "zh": "读",
-    "emoji": "📖",
     "level": 3,
     "pos": "verb",
     "meaning": "看书或文字，把内容读出来或读懂。",
-    "examples": [{ "en": "I read a book.", "zh": "我读一本书。" }],
+    "examples": [
+      {
+        "en": "I read a book.",
+        "zh": "我读一本书。"
+      }
+    ],
     "collocations": [
-      { "en": "read a book", "zh": "读书" },
-      { "en": "read aloud", "zh": "大声读" }
-    ]
+      {
+        "en": "read a book",
+        "zh": "读书"
+      },
+      {
+        "en": "read aloud",
+        "zh": "大声读"
+      }
+    ],
+    "image": "/assets/language/action_read.svg",
+    "emojiFallback": "📖"
   },
   {
     "id": "action_write",
     "category": "action",
     "en": "Write",
     "zh": "写",
-    "emoji": "✍️",
     "level": 4,
     "pos": "verb",
     "meaning": "用笔写字或写句子。",
-    "examples": [{ "en": "I write my name.", "zh": "我写下我的名字。" }],
+    "examples": [
+      {
+        "en": "I write my name.",
+        "zh": "我写下我的名字。"
+      }
+    ],
     "collocations": [
-      { "en": "write a letter", "zh": "写信" },
-      { "en": "write neatly", "zh": "写得整齐" }
-    ]
+      {
+        "en": "write a letter",
+        "zh": "写信"
+      },
+      {
+        "en": "write neatly",
+        "zh": "写得整齐"
+      }
+    ],
+    "image": "/assets/language/action_write.svg",
+    "emojiFallback": "✍️"
   },
   {
     "id": "action_sing",
     "category": "action",
     "en": "Sing",
     "zh": "唱",
-    "emoji": "🎤",
     "level": 3,
     "pos": "verb",
     "meaning": "用声音把歌曲唱出来。",
-    "examples": [{ "en": "I sing a song.", "zh": "我唱一首歌。" }],
+    "examples": [
+      {
+        "en": "I sing a song.",
+        "zh": "我唱一首歌。"
+      }
+    ],
     "collocations": [
-      { "en": "sing a song", "zh": "唱歌" },
-      { "en": "sing together", "zh": "一起唱" }
-    ]
+      {
+        "en": "sing a song",
+        "zh": "唱歌"
+      },
+      {
+        "en": "sing together",
+        "zh": "一起唱"
+      }
+    ],
+    "image": "/assets/language/action_sing.svg",
+    "emojiFallback": "🎤"
   },
   {
     "id": "action_dance",
     "category": "action",
     "en": "Dance",
     "zh": "跳舞",
-    "emoji": "💃",
     "level": 4,
     "pos": "verb",
     "meaning": "跟着音乐做动作。",
-    "examples": [{ "en": "We dance happily.", "zh": "我们开心地跳舞。" }],
+    "examples": [
+      {
+        "en": "We dance happily.",
+        "zh": "我们开心地跳舞。"
+      }
+    ],
     "collocations": [
-      { "en": "dance party", "zh": "舞会" },
-      { "en": "dance slowly", "zh": "慢慢跳" }
-    ]
+      {
+        "en": "dance party",
+        "zh": "舞会"
+      },
+      {
+        "en": "dance slowly",
+        "zh": "慢慢跳"
+      }
+    ],
+    "image": "/assets/language/action_dance.svg",
+    "emojiFallback": "💃"
   },
   {
     "id": "action_sleep",
     "category": "action",
     "en": "Sleep",
     "zh": "睡觉",
-    "emoji": "😴",
     "level": 3,
     "pos": "verb",
     "meaning": "闭上眼睛休息，让身体恢复精力。",
-    "examples": [{ "en": "I sleep at night.", "zh": "我在晚上睡觉。" }],
+    "examples": [
+      {
+        "en": "I sleep at night.",
+        "zh": "我在晚上睡觉。"
+      }
+    ],
     "collocations": [
-      { "en": "go to sleep", "zh": "去睡觉" },
-      { "en": "sleep well", "zh": "睡得好" }
-    ]
+      {
+        "en": "go to sleep",
+        "zh": "去睡觉"
+      },
+      {
+        "en": "sleep well",
+        "zh": "睡得好"
+      }
+    ],
+    "image": "/assets/language/action_sleep.svg",
+    "emojiFallback": "😴"
   },
   {
     "id": "action_play",
     "category": "action",
     "en": "Play",
     "zh": "玩",
-    "emoji": "🧸",
     "level": 3,
     "pos": "verb",
     "meaning": "做有趣的活动，开心地玩耍。",
-    "examples": [{ "en": "We play together.", "zh": "我们一起玩。" }],
+    "examples": [
+      {
+        "en": "We play together.",
+        "zh": "我们一起玩。"
+      }
+    ],
     "collocations": [
-      { "en": "play games", "zh": "玩游戏" },
-      { "en": "play outside", "zh": "在外面玩" }
-    ]
+      {
+        "en": "play games",
+        "zh": "玩游戏"
+      },
+      {
+        "en": "play outside",
+        "zh": "在外面玩"
+      }
+    ],
+    "image": "/assets/language/action_play.svg",
+    "emojiFallback": "🧸"
   },
   {
     "id": "action_draw",
     "category": "action",
     "en": "Draw",
     "zh": "画画",
-    "emoji": "🎨",
     "level": 4,
     "pos": "verb",
     "meaning": "用笔画出图形或图画。",
-    "examples": [{ "en": "I draw a cat.", "zh": "我画一只猫。" }],
+    "examples": [
+      {
+        "en": "I draw a cat.",
+        "zh": "我画一只猫。"
+      }
+    ],
     "collocations": [
-      { "en": "draw a picture", "zh": "画一幅画" },
-      { "en": "draw with a pencil", "zh": "用铅笔画" }
-    ]
+      {
+        "en": "draw a picture",
+        "zh": "画一幅画"
+      },
+      {
+        "en": "draw with a pencil",
+        "zh": "用铅笔画"
+      }
+    ],
+    "image": "/assets/language/action_draw.svg",
+    "emojiFallback": "🎨"
   }
 ]
-

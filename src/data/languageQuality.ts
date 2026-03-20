@@ -17,7 +17,8 @@ export interface LanguageWordEntry {
   category: WordCategory;
   en: string;
   zh: string;
-  emoji: string;
+  image: string;
+  emojiFallback?: string;
   level: number;
   pos: WordPos;
   meaning: string;
@@ -73,8 +74,8 @@ export const evaluateLanguageWordEntry = (entry: LanguageWordEntry): LanguageQua
     score -= 20;
   }
 
-  if (!isNonEmpty(entry.emoji)) {
-    issues.push('缺少 emoji');
+  if (!isNonEmpty(entry.image)) {
+    issues.push('缺少 image');
     score -= 10;
   }
 

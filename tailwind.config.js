@@ -42,12 +42,12 @@ export default {
         'candy-card': '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
         'candy-btn': '0 6px 0 #7C3AED, 0 10px 10px rgba(0,0,0,0.2)', // Purple bottom shade
         'candy-btn-active': '0 0 0 #7C3AED, inset 0 2px 5px rgba(0,0,0,0.2)',
-        'pop-purple': '0 10px 20px -5px rgba(139, 92, 246, 0.4)',
-        'pop-pink': '0 10px 20px -5px rgba(236, 72, 153, 0.4)',
-        'pop-orange': '0 10px 20px -5px rgba(249, 115, 22, 0.4)',
-        'pop-green': '0 10px 20px -5px rgba(132, 204, 22, 0.4)',
-        'pop-cyan': '0 10px 20px -5px rgba(6, 182, 212, 0.4)',
-        'pop-yellow': '0 10px 20px -5px rgba(250, 204, 21, 0.4)',
+        'pop-purple': '0 14px 28px -16px rgba(139, 92, 246, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.65)',
+        'pop-pink': '0 14px 28px -16px rgba(236, 72, 153, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.65)',
+        'pop-orange': '0 14px 28px -16px rgba(249, 115, 22, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.65)',
+        'pop-green': '0 14px 28px -16px rgba(132, 204, 22, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.65)',
+        'pop-cyan': '0 14px 28px -16px rgba(6, 182, 212, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.65)',
+        'pop-yellow': '0 14px 28px -16px rgba(250, 204, 21, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.65)',
       },
       borderRadius: {
         '3xl': '1.5rem',

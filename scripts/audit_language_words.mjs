@@ -53,7 +53,7 @@ for (const w of words) {
   if (!isNonEmptyString(w?.category)) issues.push(`${prefix} 缺少 category`);
   if (!isNonEmptyString(w?.en) || !looksLikeEnglishWord(w.en)) issues.push(`${prefix} en 不合法：${w?.en}`);
   if (!isNonEmptyString(w?.zh)) issues.push(`${prefix} 缺少 zh`);
-  if (!isNonEmptyString(w?.emoji)) issues.push(`${prefix} 缺少 emoji`);
+  if (!isNonEmptyString(w?.image)) issues.push(`${prefix} 缺少 image`);
   if (typeof w?.level !== 'number' || !Number.isFinite(w.level)) issues.push(`${prefix} level 不合法`);
   if (!isNonEmptyString(w?.pos)) issues.push(`${prefix} 缺少 pos`);
   if (!isNonEmptyString(w?.meaning) || w.meaning.trim().length < 2) issues.push(`${prefix} meaning 过短或缺失`);

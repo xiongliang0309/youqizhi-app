@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Volume2, Star, RefreshCw, Grid } from 'lucide-react';
+import { ArrowLeft, Volume2, RefreshCw, Grid } from 'lucide-react';
 import { generateWordCards, type WordCard, type WordCategory } from '../data/generator';
 import { useSpeech } from '../hooks/useSpeech';
 
@@ -11,14 +11,27 @@ const CHARACTERS = {
   pip: { name: '皮普', emoji: '🐭', color: 'bg-blue-100 border-blue-300' }
 };
 
-const CATEGORIES: { id: WordCategory; name: string; icon: string; pill: string; shadow: string; border: string }[] = [
+const CATEGORIES: {
+  id: WordCategory;
+  name: string;
+  icon: string;
+  pill: string;
+  shadow: string;
+  border: string;
+  overlay: string;
+  orbA: string;
+  orbB: string;
+}[] = [
   {
     id: 'fruit',
     name: '水果',
     icon: '🍎',
     pill: 'bg-accent-rose/15 text-accent-rose',
     shadow: 'shadow-pop-pink',
-    border: 'border-accent-rose/30'
+    border: 'border-accent-rose/30',
+    overlay: 'from-accent-rose/20 via-white/0 to-accent-cyan/14',
+    orbA: 'bg-accent-rose/18',
+    orbB: 'bg-primary/14'
   },
   {
     id: 'animal',
@@ -26,7 +39,10 @@ const CATEGORIES: { id: WordCategory; name: string; icon: string; pill: string; 
     icon: '🐶',
     pill: 'bg-accent-tangerine/15 text-accent-tangerine',
     shadow: 'shadow-pop-orange',
-    border: 'border-accent-tangerine/30'
+    border: 'border-accent-tangerine/30',
+    overlay: 'from-accent-tangerine/20 via-white/0 to-accent-yellow/16',
+    orbA: 'bg-accent-tangerine/18',
+    orbB: 'bg-accent-yellow/16'
   },
   {
     id: 'vehicle',
@@ -34,7 +50,10 @@ const CATEGORIES: { id: WordCategory; name: string; icon: string; pill: string; 
     icon: '🚗',
     pill: 'bg-accent-cyan/15 text-accent-cyan',
     shadow: 'shadow-pop-cyan',
-    border: 'border-accent-cyan/30'
+    border: 'border-accent-cyan/30',
+    overlay: 'from-accent-cyan/20 via-white/0 to-primary/14',
+    orbA: 'bg-accent-cyan/18',
+    orbB: 'bg-primary/12'
   },
   {
     id: 'color',
@@ -42,7 +61,10 @@ const CATEGORIES: { id: WordCategory; name: string; icon: string; pill: string; 
     icon: '🎨',
     pill: 'bg-primary/12 text-primary',
     shadow: 'shadow-pop-purple',
-    border: 'border-primary/30'
+    border: 'border-primary/30',
+    overlay: 'from-primary/18 via-white/0 to-secondary/14',
+    orbA: 'bg-primary/16',
+    orbB: 'bg-secondary/14'
   },
   {
     id: 'nature',
@@ -50,7 +72,10 @@ const CATEGORIES: { id: WordCategory; name: string; icon: string; pill: string; 
     icon: '🌳',
     pill: 'bg-accent-mint/15 text-accent-mint',
     shadow: 'shadow-pop-green',
-    border: 'border-accent-mint/30'
+    border: 'border-accent-mint/30',
+    overlay: 'from-accent-mint/20 via-white/0 to-accent-cyan/12',
+    orbA: 'bg-accent-mint/18',
+    orbB: 'bg-accent-cyan/12'
   },
   {
     id: 'action',
@@ -58,7 +83,10 @@ const CATEGORIES: { id: WordCategory; name: string; icon: string; pill: string; 
     icon: '🏃',
     pill: 'bg-accent-yellow/18 text-text-main',
     shadow: 'shadow-pop-yellow',
-    border: 'border-accent-yellow/30'
+    border: 'border-accent-yellow/30',
+    overlay: 'from-accent-yellow/24 via-white/0 to-accent-tangerine/14',
+    orbA: 'bg-accent-yellow/18',
+    orbB: 'bg-accent-tangerine/12'
   },
 ];
 
@@ -87,6 +115,11 @@ export const Language: React.FC = () => {
   }, [selectedCategory]);
 
   const currentWord = words[currentIndex];
+
+  const isImageAsset = (value: string | undefined) => {
+    if (!value) return false;
+    return value.startsWith('/') || value.startsWith('http://') || value.startsWith('https://');
+  };
 
   const handleNext = () => {
     if (currentIndex < words.length - 1) {
@@ -190,27 +223,26 @@ export const Language: React.FC = () => {
             {CATEGORIES.map(cat => (
               <motion.button
                 key={cat.id}
-                whileHover={{ y: -6, scale: 1.02 }}
+                whileHover={{ y: -4, scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`group relative overflow-hidden rounded-5xl border-4 border-white bg-white/75 p-4 text-left shadow-candy-card ring-1 ring-black/5 transition-all hover:bg-white sm:p-5 ${cat.shadow}`}
+                className={`group relative flex items-center gap-4 rounded-[1.75rem] border-2 border-white/70 bg-gradient-to-br from-white/85 via-white/70 to-white/60 p-4 text-left ring-1 ring-black/5 backdrop-blur-md transition-all duration-200 ease-out hover:from-white/90 hover:via-white/75 hover:to-white/65 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20 sm:p-5 ${cat.border} ${cat.shadow}`}
               >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex min-w-0 flex-col">
-                    <span className={`inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-extrabold ${cat.pill} ${cat.border} border`}
-                    >
-                      主题
-                    </span>
-                    <span className="mt-2 text-lg font-black text-text-main sm:text-xl">{cat.name}</span>
-                    <span className="mt-1 text-xs font-bold text-text-light sm:text-sm">点一下开始学习</span>
-                  </div>
-                  <div className="relative grid h-14 w-14 place-items-center rounded-4xl bg-background-surface shadow-sm ring-1 ring-black/5 transition-transform group-hover:rotate-3 sm:h-16 sm:w-16">
-                    <span className="text-3xl sm:text-4xl">{cat.icon}</span>
-                  </div>
+                <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${cat.overlay} opacity-90`} />
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-white/70 via-white/10 to-transparent opacity-80" />
+                <div className={`pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full ${cat.orbA} blur-3xl opacity-70`} />
+                <div className={`pointer-events-none absolute -left-14 -bottom-14 h-36 w-36 rounded-full ${cat.orbB} blur-3xl opacity-60`} />
+                <div className="relative grid h-14 w-14 flex-none place-items-center overflow-hidden rounded-4xl bg-white/75 shadow-sm ring-1 ring-black/5 backdrop-blur-sm transition-transform duration-200 ease-out group-hover:scale-[1.03] sm:h-16 sm:w-16">
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/80 to-white/0" />
+                  <span className="relative text-3xl drop-shadow-sm sm:text-4xl">{cat.icon}</span>
                 </div>
 
-                <div className="pointer-events-none absolute -right-8 -top-10 h-24 w-24 rounded-full bg-primary/8 blur-2xl" />
-                <div className="pointer-events-none absolute -bottom-10 -left-10 h-28 w-28 rounded-full bg-accent-cyan/10 blur-2xl" />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="truncate text-base font-black text-text-main sm:text-lg">{cat.name}</span>
+                  </div>
+                  <div className="mt-1 text-xs font-bold text-text-light sm:text-sm">开始学习</div>
+                </div>
               </motion.button>
             ))}
           </div>
@@ -287,24 +319,10 @@ export const Language: React.FC = () => {
               exit={{ opacity: 0, x: -50, scale: 0.9 }}
               className={`mx-auto w-full max-w-[34rem] max-h-full overflow-hidden rounded-[2.75rem] border-[6px] border-white bg-white/85 p-6 shadow-candy-card ring-1 ring-black/5 backdrop-blur-sm sm:p-8 [@media(max-height:720px)]:p-5 ${activeCategory?.shadow ?? ''}`}
             >
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold ${activeCategory?.pill ?? 'bg-primary/10 text-primary'}`}>
-                      {activeCategory?.name ?? '单词卡'}
-                    </span>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-accent-yellow/25 px-3 py-1 text-xs font-extrabold text-text-main">
-                      <Star className="h-3.5 w-3.5" />
-                      读一读
-                    </span>
-                  </div>
-                  <h3 className="mt-3 font-heading text-[clamp(1.5rem,4.8vw,2.2rem)] font-black text-text-main tracking-tight">
-                    今天学这个
-                  </h3>
-                </div>
+              <div className="flex items-start justify-end">
                 <button
                   onClick={handleRegenerate}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-sm ring-1 ring-black/5 transition-colors hover:bg-white sm:hidden"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/70 shadow-sm ring-1 ring-black/5 backdrop-blur transition-all duration-200 ease-out hover:bg-white/90 hover:shadow-md active:scale-[0.98] sm:hidden"
                   aria-label="换一批"
                 >
                   <RefreshCw className="h-4 w-4 text-text-body" />
@@ -313,13 +331,23 @@ export const Language: React.FC = () => {
 
               <button
                 onClick={playSound}
-                  className="mt-6 w-full rounded-5xl bg-gradient-to-br from-background-surface to-background-soft p-5 text-center shadow-sm ring-1 ring-black/5 transition-transform active:scale-[0.99] sm:p-7 [@media(max-height:720px)]:mt-4 [@media(max-height:720px)]:p-4"
+                  className="mt-4 w-full rounded-5xl bg-gradient-to-br from-background-surface to-background-soft p-5 text-center shadow-sm ring-1 ring-black/5 transition-transform active:scale-[0.99] sm:mt-6 sm:p-7 [@media(max-height:720px)]:mt-4 [@media(max-height:720px)]:p-4"
                 aria-label="播放发音"
               >
                 <div className="mx-auto grid place-items-center">
-                    <div className="text-[clamp(3.8rem,min(16vw,14svh),8.5rem)] leading-none drop-shadow-2xl">
-                    {currentWord.image}
-                  </div>
+                    <div className="leading-none drop-shadow-2xl">
+                      {isImageAsset(currentWord.image) ? (
+                        <img
+                          src={currentWord.image}
+                          alt={currentWord.translation}
+                          className="h-[clamp(3.8rem,min(16vw,14svh),8.5rem)] w-[clamp(3.8rem,min(16vw,14svh),8.5rem)] select-none"
+                          draggable={false}
+                          loading="eager"
+                        />
+                      ) : (
+                        <span className="text-[clamp(3.8rem,min(16vw,14svh),8.5rem)]">{currentWord.image}</span>
+                      )}
+                    </div>
                   <div className="mt-5 text-center">
                       <div className="break-words font-heading text-[clamp(1.6rem,min(9vw,6.2svh),3.2rem)] font-black leading-[1.05] text-text-main">
                       {currentWord.word}
@@ -367,7 +395,7 @@ export const Language: React.FC = () => {
               <div className="mt-6 flex items-center justify-center">
                 <button
                   onClick={playSound}
-                  className="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-accent-yellow to-accent-tangerine px-6 py-3 text-base font-extrabold text-white shadow-pop-orange transition-transform active:scale-[0.98] [@media(max-height:720px)]:px-5 [@media(max-height:720px)]:py-2.5 [@media(max-height:720px)]:text-sm"
+                  className="hidden sm:inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-accent-yellow to-accent-tangerine px-6 py-3 text-base font-extrabold text-white shadow-pop-orange transition-transform active:scale-[0.98] [@media(max-height:720px)]:px-5 [@media(max-height:720px)]:py-2.5 [@media(max-height:720px)]:text-sm"
                 >
                   <span className="grid h-9 w-9 place-items-center rounded-full bg-white/20">
                     <Volume2 className="h-5 w-5" />
@@ -381,17 +409,25 @@ export const Language: React.FC = () => {
       </div>
 
       <div className="sticky bottom-0 z-10 border-t border-white/60 bg-white/75 backdrop-blur-md">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-4 [@media(max-height:720px)]:py-2">
+        <div className="mx-auto grid w-full max-w-7xl grid-cols-3 items-center gap-3 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] sm:flex sm:justify-between sm:px-6 sm:py-4 sm:pb-4 [@media(max-height:720px)]:py-2">
           <button
             onClick={handlePrev}
             disabled={currentIndex === 0}
-            className={`h-12 rounded-4xl px-5 text-sm font-extrabold transition-all sm:h-14 sm:px-6 sm:text-base [@media(max-height:720px)]:h-11 [@media(max-height:720px)]:px-4 [@media(max-height:720px)]:text-sm ${
+            className={`justify-self-start h-12 rounded-4xl px-5 text-sm font-extrabold transition-all sm:h-14 sm:px-6 sm:text-base [@media(max-height:720px)]:h-11 [@media(max-height:720px)]:px-4 [@media(max-height:720px)]:text-sm ${
               currentIndex === 0
                 ? 'bg-background-soft text-text-light ring-1 ring-black/5'
                 : 'bg-white text-text-main shadow-sm ring-1 ring-black/5 hover:bg-background-surface'
             }`}
           >
             上一个
+          </button>
+
+          <button
+            onClick={playSound}
+            className="justify-self-center inline-flex h-14 w-14 items-center justify-center rounded-[1.75rem] bg-gradient-to-r from-accent-yellow to-accent-tangerine text-white shadow-pop-orange transition-transform active:scale-[0.98] sm:hidden"
+            aria-label="听发音"
+          >
+            <Volume2 className="h-6 w-6" />
           </button>
 
           <div className="hidden items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-sm font-extrabold text-text-body shadow-sm ring-1 ring-black/5 sm:flex">
@@ -401,7 +437,7 @@ export const Language: React.FC = () => {
 
           <button
             onClick={handleNext}
-            className="h-12 rounded-4xl bg-gradient-to-r from-primary to-secondary px-6 text-sm font-extrabold text-white shadow-pop-purple transition-transform active:scale-[0.99] sm:h-14 sm:px-8 sm:text-base [@media(max-height:720px)]:h-11 [@media(max-height:720px)]:px-5 [@media(max-height:720px)]:text-sm"
+            className="justify-self-end h-12 rounded-4xl bg-gradient-to-r from-primary to-secondary px-6 text-sm font-extrabold text-white shadow-pop-purple transition-transform active:scale-[0.99] sm:h-14 sm:px-8 sm:text-base [@media(max-height:720px)]:h-11 [@media(max-height:720px)]:px-5 [@media(max-height:720px)]:text-sm"
           >
             {currentIndex === words.length - 1 ? '完成' : '下一个'}
           </button>

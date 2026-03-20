@@ -12,6 +12,7 @@
     "preview": "vite preview",
     "test": "node scripts/edge_tts_selftest.js",
     "audit:language": "node scripts/audit_language_words.mjs",
+    "build:language-images": "node scripts/build_language_images_from_twemoji.mjs",
     "upload:songs-audio": "node scripts/upload_songs_audio_to_storage.js",
     "migrate:data": "node scripts/migrate_to_supabase.js"
   },

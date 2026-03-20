@@ -443,7 +443,7 @@ export const generateWordCards = (count: number = 50, category?: WordCategory): 
       id: `${entry.id}_${i}`,
       word: entry.en,
       translation: entry.zh,
-      image: entry.emoji,
+      image: entry.image || entry.emojiFallback || '❓',
       category: entry.category,
       pos: entry.pos,
       meaning: entry.meaning,

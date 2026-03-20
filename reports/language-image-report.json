@@ -1,0 +1,363 @@
+{
+  "summary": {
+    "total": 70,
+    "success": 70,
+    "failed": 0,
+    "successRate": 1,
+    "assetsDir": "public/assets/language",
+    "note": "使用 Twemoji SVG（矢量，可无损缩放）作为卡通风格图片来源。"
+  },
+  "successes": [
+    {
+      "id": "fruit_apple",
+      "output": "/assets/language/fruit_apple.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "fruit_banana",
+      "output": "/assets/language/fruit_banana.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "fruit_orange",
+      "output": "/assets/language/fruit_orange.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "fruit_grape",
+      "output": "/assets/language/fruit_grape.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "fruit_watermelon",
+      "output": "/assets/language/fruit_watermelon.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "fruit_lemon",
+      "output": "/assets/language/fruit_lemon.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "fruit_strawberry",
+      "output": "/assets/language/fruit_strawberry.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "fruit_peach",
+      "output": "/assets/language/fruit_peach.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "fruit_pear",
+      "output": "/assets/language/fruit_pear.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "fruit_pineapple",
+      "output": "/assets/language/fruit_pineapple.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "fruit_mango",
+      "output": "/assets/language/fruit_mango.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "fruit_cherry",
+      "output": "/assets/language/fruit_cherry.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "animal_cat",
+      "output": "/assets/language/animal_cat.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "animal_dog",
+      "output": "/assets/language/animal_dog.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "animal_rabbit",
+      "output": "/assets/language/animal_rabbit.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "animal_elephant",
+      "output": "/assets/language/animal_elephant.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "animal_lion",
+      "output": "/assets/language/animal_lion.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "animal_panda",
+      "output": "/assets/language/animal_panda.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "animal_monkey",
+      "output": "/assets/language/animal_monkey.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "animal_giraffe",
+      "output": "/assets/language/animal_giraffe.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "animal_zebra",
+      "output": "/assets/language/animal_zebra.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "animal_turtle",
+      "output": "/assets/language/animal_turtle.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "animal_dolphin",
+      "output": "/assets/language/animal_dolphin.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "vehicle_car",
+      "output": "/assets/language/vehicle_car.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "vehicle_bus",
+      "output": "/assets/language/vehicle_bus.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "vehicle_bike",
+      "output": "/assets/language/vehicle_bike.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "vehicle_train",
+      "output": "/assets/language/vehicle_train.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "vehicle_plane",
+      "output": "/assets/language/vehicle_plane.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "vehicle_ship",
+      "output": "/assets/language/vehicle_ship.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "vehicle_taxi",
+      "output": "/assets/language/vehicle_taxi.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "vehicle_truck",
+      "output": "/assets/language/vehicle_truck.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "vehicle_helicopter",
+      "output": "/assets/language/vehicle_helicopter.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "vehicle_rocket",
+      "output": "/assets/language/vehicle_rocket.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "vehicle_subway",
+      "output": "/assets/language/vehicle_subway.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "vehicle_ambulance",
+      "output": "/assets/language/vehicle_ambulance.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "color_red",
+      "output": "/assets/language/color_red.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "color_blue",
+      "output": "/assets/language/color_blue.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "color_green",
+      "output": "/assets/language/color_green.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "color_yellow",
+      "output": "/assets/language/color_yellow.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "color_purple",
+      "output": "/assets/language/color_purple.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "color_black",
+      "output": "/assets/language/color_black.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "color_white",
+      "output": "/assets/language/color_white.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "color_orange",
+      "output": "/assets/language/color_orange.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "color_pink",
+      "output": "/assets/language/color_pink.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "color_brown",
+      "output": "/assets/language/color_brown.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "color_gray",
+      "output": "/assets/language/color_gray.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "nature_sun",
+      "output": "/assets/language/nature_sun.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "nature_moon",
+      "output": "/assets/language/nature_moon.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "nature_star",
+      "output": "/assets/language/nature_star.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "nature_cloud",
+      "output": "/assets/language/nature_cloud.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "nature_rain",
+      "output": "/assets/language/nature_rain.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "nature_snow",
+      "output": "/assets/language/nature_snow.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "nature_wind",
+      "output": "/assets/language/nature_wind.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "nature_tree",
+      "output": "/assets/language/nature_tree.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "nature_flower",
+      "output": "/assets/language/nature_flower.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "nature_rainbow",
+      "output": "/assets/language/nature_rainbow.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "nature_mountain",
+      "output": "/assets/language/nature_mountain.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "nature_ocean",
+      "output": "/assets/language/nature_ocean.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "action_run",
+      "output": "/assets/language/action_run.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "action_walk",
+      "output": "/assets/language/action_walk.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "action_jump",
+      "output": "/assets/language/action_jump.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "action_eat",
+      "output": "/assets/language/action_eat.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "action_drink",
+      "output": "/assets/language/action_drink.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "action_read",
+      "output": "/assets/language/action_read.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "action_write",
+      "output": "/assets/language/action_write.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "action_sing",
+      "output": "/assets/language/action_sing.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "action_dance",
+      "output": "/assets/language/action_dance.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "action_sleep",
+      "output": "/assets/language/action_sleep.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "action_play",
+      "output": "/assets/language/action_play.svg",
+      "mode": "cached"
+    },
+    {
+      "id": "action_draw",
+      "output": "/assets/language/action_draw.svg",
+      "mode": "cached"
+    }
+  ],
+  "failures": []
+}
