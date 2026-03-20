@@ -204,9 +204,12 @@ export async function edgeTtsSpeak(text: string, options: EdgeTtsSpeakOptions = 
     currentNodes = { source: src, master };
 
     src.start();
-    src.onended = () => {
-      if (currentNodes?.source === src) currentNodes = null;
-    };
+    await new Promise<void>((resolve) => {
+      src.onended = () => {
+        if (currentNodes?.source === src) currentNodes = null;
+        resolve();
+      };
+    });
   };
 
   const decodeToBuffer = async (arr: ArrayBuffer) => {
@@ -225,6 +228,15 @@ export async function edgeTtsSpeak(text: string, options: EdgeTtsSpeakOptions = 
     audio.src = url;
     try {
       await audio.play();
+      await new Promise<void>((resolve) => {
+        const onEnd = () => {
+          audio.removeEventListener('ended', onEnd);
+          audio.removeEventListener('error', onEnd);
+          resolve();
+        };
+        audio.addEventListener('ended', onEnd);
+        audio.addEventListener('error', onEnd);
+      });
     } finally {
       setTimeout(() => URL.revokeObjectURL(url), 30_000);
     }

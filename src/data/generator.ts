@@ -1,6 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { CLASSIC_STORIES } from './storyData';
 import BEILEHU_SONGS from './beilehu_songs.json'; // 引入下载的儿歌元数据
+import LANGUAGE_WORDS from './languageWords.json';
+import { isLanguageWordEntryAcceptable, type LanguageWordEntry } from './languageQuality';
 
 // --- 基础类型定义 ---
 export type WordCategory = 'fruit' | 'animal' | 'color' | 'vehicle' | 'nature' | 'action';
@@ -11,6 +13,10 @@ export interface WordCard {
   translation: string;
   image: string;
   category: WordCategory;
+  pos?: 'noun' | 'verb' | 'adj';
+  meaning?: string;
+  examples?: Array<{ en: string; zh: string }>;
+  collocations?: Array<{ en: string; zh: string }>;
 }
 
 export type LogicCategory = 'pattern' | 'count' | 'math' | 'compare';
@@ -88,38 +94,7 @@ const ENTITIES = {
   ]
 };
 
-const ADJECTIVES = [
-  { cn: '大大的', en: 'Big' },
-  { cn: '小小的', en: 'Small' },
-  { cn: '快乐的', en: 'Happy' },
-  { cn: '伤心的', en: 'Sad' },
-  { cn: '快速的', en: 'Fast' },
-  { cn: '缓慢的', en: 'Slow' },
-  { cn: '美丽的', en: 'Beautiful' },
-];
-
-// --- 预设基础数据 (保留) ---
-const baseWords = { /* ... (保留原有结构，此处简化以节省篇幅，实际运行时会使用完整列表) ... */
-  fruit: [
-    { en: 'Apple', zh: '苹果', emoji: '🍎', level: 3 }, { en: 'Banana', zh: '香蕉', emoji: '🍌', level: 3 },
-    { en: 'Grape', zh: '葡萄', emoji: '🍇', level: 3 }, { en: 'Orange', zh: '橘子', emoji: '🍊', level: 3 },
-    { en: 'Watermelon', zh: '西瓜', emoji: '🍉', level: 4 }, { en: 'Lemon', zh: '柠檬', emoji: '🍋', level: 4 },
-    { en: 'Peach', zh: '桃子', emoji: '🍑', level: 4 }, { en: 'Strawberry', zh: '草莓', emoji: '🍓', level: 4 }
-  ],
-  animal: ENTITIES.animals.map(a => ({ en: a.en, zh: a.name, emoji: a.emoji, level: 3 })), // 复用实体库
-  color: ENTITIES.colors.map(c => ({ en: c.en, zh: c.name, emoji: c.emoji, level: 3 })),
-  vehicle: ENTITIES.vehicles.map(v => ({ en: v.en, zh: v.name, emoji: v.emoji, level: 4 })),
-  nature: [
-    { en: 'Sun', zh: '太阳', emoji: '☀️', level: 5 }, { en: 'Moon', zh: '月亮', emoji: '🌙', level: 5 },
-    { en: 'Star', zh: '星星', emoji: '⭐️', level: 5 }, { en: 'Flower', zh: '花朵', emoji: '🌸', level: 5 },
-    { en: 'Tree', zh: '树木', emoji: '🌳', level: 5 }, { en: 'Rain', zh: '下雨', emoji: '🌧️', level: 5 }
-  ],
-  action: [
-    { en: 'Run', zh: '跑', emoji: '🏃', level: 6 }, { en: 'Walk', zh: '走', emoji: '🚶', level: 6 },
-    { en: 'Sleep', zh: '睡觉', emoji: '😴', level: 6 }, { en: 'Eat', zh: '吃', emoji: '🍽️', level: 6 },
-    { en: 'Read', zh: '阅读', emoji: '📖', level: 6 }, { en: 'Write', zh: '写字', emoji: '✍️', level: 6 }
-  ]
-};
+const LANGUAGE_WORD_BANK: LanguageWordEntry[] = (LANGUAGE_WORDS as unknown as LanguageWordEntry[]).filter(isLanguageWordEntryAcceptable);
 
 // --- 知识库 (保留原有高质量内容) ---
 const SCIENCE_KNOWLEDGE_BASE = {
@@ -448,55 +423,35 @@ function shuffle(array: any[]) {
 
 // 1. [升级] 单词生成器 - 组合生成法
 export const generateWordCards = (count: number = 50, category?: WordCategory): WordCard[] => {
-  const cards: WordCard[] = [];
   const learningLevel = 4;
-  
-  // 1. 获取基础词汇
-  const targetCategories = category ? [category] : (Object.keys(baseWords) as Array<keyof typeof baseWords>);
-  const baseItems: any[] = [];
-  targetCategories.forEach(cat => {
-    // @ts-ignore
-    const items = baseWords[cat];
-    if (items) items.forEach((item: any) => { if (item.level <= learningLevel + 1) baseItems.push({ ...item, category: cat }); });
-  });
+  const pool = category ? LANGUAGE_WORD_BANK.filter(w => w.category === category) : LANGUAGE_WORD_BANK;
+  const filtered = pool.filter(w => w.level <= learningLevel + 1);
+  const usable = filtered.length > 0 ? filtered : pool;
 
-  // 2. 如果请求数量小于基础词汇量，直接随机返回
-  if (count <= baseItems.length) {
-    return shuffle(baseItems).slice(0, count).map((item, idx) => ({
-      id: `word_${idx}`,
-      word: item.en,
-      translation: item.zh,
-      image: item.emoji,
-      category: item.category
-    }));
-  }
+  if (usable.length === 0 || count <= 0) return [];
 
-  // 3. 如果请求数量大，开启“组合模式” (Adjective + Noun)
-  // 例如：Red Apple, Big Elephant
+  const shuffled = shuffle(usable);
+  const cards: WordCard[] = [];
+
   for (let i = 0; i < count; i++) {
-    const item = baseItems[i % baseItems.length];
-    
-    // 30% 概率生成组合词，70% 概率生成基础词（带编号以去重）
-    if (Math.random() > 0.3) {
-      const adj = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
-      cards.push({
-        id: `word_combo_${i}`,
-        word: `${adj.en} ${item.en}`,
-        translation: `${adj.cn}${item.zh}`,
-        image: item.emoji,
-        category: item.category
-      });
-    } else {
-      cards.push({
-        id: `word_base_${i}`,
-        word: item.en,
-        translation: item.zh,
-        image: item.emoji,
-        category: item.category
-      });
-    }
+    const entry = shuffled[i % shuffled.length];
+    const example = entry.examples[Math.floor(Math.random() * entry.examples.length)];
+
+    const collocations = shuffle(entry.collocations).slice(0, 2);
+
+    cards.push({
+      id: `${entry.id}_${i}`,
+      word: entry.en,
+      translation: entry.zh,
+      image: entry.emoji,
+      category: entry.category,
+      pos: entry.pos,
+      meaning: entry.meaning,
+      examples: example ? [example] : [],
+      collocations
+    });
   }
-  
+
   return cards;
 };
 
