@@ -21,6 +21,7 @@
     "@faker-js/faker": "^10.3.0",
     "@fontsource/baloo-2": "^5.2.7",
     "@fontsource/comic-neue": "^5.2.7",
+    "@fontsource/lxgw-wenkai": "^5.2.5",
     "@fontsource/nunito": "^5.2.7",
     "@supabase/supabase-js": "^2.99.2",
     "axios": "^1.6.2",

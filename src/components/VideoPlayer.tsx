@@ -9,9 +9,10 @@ interface VideoPlayerProps {
   onClose: () => void;
   onNext?: () => void;
   isHls?: boolean; // 新增：是否是 HLS 流
+  posterUrl?: string;
 }
 
-export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClose, isHls }) => {
+export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClose, isHls, posterUrl }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const hlsRef = useRef<Hls | null>(null);
@@ -135,6 +136,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClo
           preload="none"
           playsInline
           src={isHls ? undefined : videoUrl}
+          poster={posterUrl}
           className="w-full h-full object-contain"
           onTimeUpdate={handleTimeUpdate}
           onEnded={() => setIsPlaying(false)}

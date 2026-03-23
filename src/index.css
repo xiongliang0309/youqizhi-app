@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .font-kaishu {
+    font-family: "LXGW WenKai", "KaiTi", "Kaiti SC", "STKaiti", "STXingkai", "Xingkai SC", serif;
+  }
+  .font-xingkai {
+    font-family: "LXGW WenKai", "KaiTi", "Kaiti SC", "STKaiti", "STXingkai", "Xingkai SC", serif;
+  }
+}
+
 @layer base {
   body {
     @apply font-sans bg-background-cloud text-text-body antialiased;

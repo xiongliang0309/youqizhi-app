@@ -5,6 +5,8 @@ import { ArrowLeft, Play, Film, Globe, Microscope, Search, Tv } from 'lucide-rea
 import CARTOONS_DATA from '../data/cartoons.json';
 import { VideoPlayer } from '../components/VideoPlayer';
 
+const GLOBAL_VIDEO_COVER = '/videos/thumbs/bluey_cover_common.jpeg';
+
 // 定义分类
 const CATEGORIES = [
   { id: 'all', name: '全部动画', icon: Tv, color: 'bg-blue-500 text-white' },
@@ -43,6 +45,7 @@ export const Animation: React.FC = () => {
             videoUrl={currentVideo.video}
             title={currentVideo.title}
             isHls={currentVideo.isHls}
+            posterUrl={GLOBAL_VIDEO_COVER}
             onClose={() => setCurrentVideo(null)}
           />
         )}
@@ -106,7 +109,7 @@ export const Animation: React.FC = () => {
                         {/* 封面区域 */}
                         <div className="relative aspect-video bg-gray-100 overflow-hidden">
                             <img
-                              src={cartoon.cover}
+                              src={GLOBAL_VIDEO_COVER}
                               alt={cartoon.title}
                               loading="lazy"
                               decoding="async"

@@ -83,7 +83,7 @@ async function main() {
     const COVER_URL = "https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg"; // 网易云音乐图床，相对稳定
     
     // 先下载通用封面
-    const commonCoverName = "bluey_cover_common.jpg";
+    const commonCoverName = "bluey_cover_common.jpeg";
     const commonCoverPath = path.join(THUMB_DIR, commonCoverName);
     
     try {

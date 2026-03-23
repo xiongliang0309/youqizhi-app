@@ -36,6 +36,8 @@ export default {
         sans: ['"Nunito"', '"Comic Neue"', 'sans-serif'], // Swapped priority
         heading: ['"Baloo 2"', 'cursive'],
         brand: ['"Comic Neue"', '"Baloo 2"', 'cursive'],
+        kaishu: ['"LXGW WenKai"', '"KaiTi"', '"Kaiti SC"', '"STKaiti"', '"STXingkai"', '"Xingkai SC"', 'serif'],
+        xingkai: ['"LXGW WenKai"', '"KaiTi"', '"Kaiti SC"', '"STKaiti"', '"STXingkai"', '"Xingkai SC"', 'serif'],
       },
       boxShadow: {
         // V2 Shadows - Colored & Bouncy

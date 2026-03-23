@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Music, Scroll, Volume2, Search, Filter, Play, Pause } from 'lucide-react';
+import { ArrowLeft, Music, Scroll, Search, Play, Pause, Sparkles, Star } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useSpeech } from '../hooks/useSpeech';
 import { MusicPlayer } from '../components/MusicPlayer';
@@ -24,6 +24,69 @@ const CATEGORIES: { id: CultureCategory; name: string; icon: any; color: string 
   { id: 'song', name: '快乐儿歌', icon: Music, color: 'bg-orange-50 text-orange-800' },
 ];
 
+const POEM_THEMES = [
+  {
+    cardBg: 'bg-rose-50',
+    tintA: 'from-[#FF6B6B]/18',
+    tintB: 'to-[#FFE66D]/14',
+    iconBg: 'bg-[#FF6B6B]',
+    iconRing: 'ring-rose-200',
+    shadow: 'shadow-pop-pink',
+    play: 'text-[#FF6B6B]',
+    authorPill: 'bg-rose-50/80 border-rose-100 text-rose-800',
+    titleText: 'text-rose-800',
+    bodyText: 'text-rose-900',
+  },
+  {
+    cardBg: 'bg-cyan-50',
+    tintA: 'from-[#4ECDC4]/18',
+    tintB: 'to-[#FFE66D]/14',
+    iconBg: 'bg-[#4ECDC4]',
+    iconRing: 'ring-cyan-200',
+    shadow: 'shadow-pop-cyan',
+    play: 'text-[#4ECDC4]',
+    authorPill: 'bg-cyan-50/80 border-cyan-100 text-cyan-800',
+    titleText: 'text-teal-800',
+    bodyText: 'text-teal-900',
+  },
+  {
+    cardBg: 'bg-yellow-50',
+    tintA: 'from-[#FFE66D]/22',
+    tintB: 'to-[#FF6B6B]/12',
+    iconBg: 'bg-[#FFE66D]',
+    iconRing: 'ring-yellow-200',
+    shadow: 'shadow-pop-yellow',
+    play: 'text-amber-700',
+    authorPill: 'bg-yellow-50/80 border-yellow-100 text-amber-800',
+    titleText: 'text-amber-900',
+    bodyText: 'text-amber-950',
+  },
+  {
+    cardBg: 'bg-violet-50',
+    tintA: 'from-primary/18',
+    tintB: 'to-secondary/12',
+    iconBg: 'bg-primary',
+    iconRing: 'ring-violet-200',
+    shadow: 'shadow-pop-purple',
+    play: 'text-primary',
+    authorPill: 'bg-primary/10 border-primary/15 text-primary',
+    titleText: 'text-violet-900',
+    bodyText: 'text-violet-950',
+  },
+  {
+    cardBg: 'bg-orange-50',
+    tintA: 'from-accent-tangerine/18',
+    tintB: 'to-[#FFE66D]/12',
+    iconBg: 'bg-accent-tangerine',
+    iconRing: 'ring-orange-200',
+    shadow: 'shadow-pop-orange',
+    play: 'text-accent-tangerine',
+    authorPill: 'bg-orange-50/80 border-orange-100 text-orange-800',
+    titleText: 'text-orange-900',
+    bodyText: 'text-orange-950',
+  },
+] as const;
+
 // 儿歌子分类
 const SONG_FILTERS = [
   { id: 'all', name: '全部', icon: '🎵' },
@@ -36,6 +99,7 @@ export const Culture: React.FC = () => {
   const navigate = useNavigate();
   const { speak, cancel } = useSpeech();
   const [selectedCategory, setSelectedCategory] = useState<CultureCategory | null>(null);
+  const isPoemMode = selectedCategory === 'poem'
   
   // 状态：搜索和筛选
   const [searchQuery, setSearchQuery] = useState('');
@@ -153,7 +217,6 @@ export const Culture: React.FC = () => {
   const [visibleCount, setVisibleCount] = useState(10);
   const [loading, setLoading] = useState(false);
 
-  // 滚动加载更多
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const bottom = e.currentTarget.scrollHeight - e.currentTarget.scrollTop <= e.currentTarget.clientHeight + 50;
     if (bottom && !loading && visibleCount < filteredCards.length) {
@@ -235,7 +298,26 @@ export const Culture: React.FC = () => {
 
   if (!selectedCategory) {
     return (
-      <div className="min-h-screen bg-[#FFFBF0] flex flex-col font-serif p-4 md:p-8">
+      <div className="min-h-full bg-background-cloud font-sans selection:bg-accent-yellow/50 relative overflow-x-hidden p-4 md:p-8">
+        <div className="fixed inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-20 -left-20 w-96 h-96 bg-accent-mint/18 rounded-full blur-3xl" />
+          <div className="absolute top-1/3 -right-20 w-80 h-80 bg-primary/16 rounded-full blur-3xl" />
+          <div className="absolute -bottom-24 left-10 w-80 h-80 bg-secondary/16 rounded-full blur-3xl" />
+          <motion.div
+            animate={{ y: [0, -18, 0], rotate: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 6 }}
+            className="absolute top-36 left-16 opacity-25"
+          >
+            <Sparkles size={40} className="text-accent-yellow" />
+          </motion.div>
+          <motion.div
+            animate={{ y: [0, 18, 0], rotate: [0, -10, 0] }}
+            transition={{ repeat: Infinity, duration: 7 }}
+            className="absolute bottom-36 right-16 opacity-25"
+          >
+            <Star size={40} className="text-accent-rose fill-current" />
+          </motion.div>
+        </div>
         <header className="flex items-center mb-8">
           <button onClick={() => navigate('/')} className="bg-white p-3 rounded-full shadow-md hover:bg-stone-50">
             <ArrowLeft className="text-gray-600" />
@@ -243,7 +325,7 @@ export const Culture: React.FC = () => {
           <h2 className="ml-4 text-2xl font-black text-gray-800">国学经典</h2>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto w-full relative z-10">
           {CATEGORIES.map(cat => (
             <motion.div
               key={cat.id}
@@ -262,7 +344,26 @@ export const Culture: React.FC = () => {
   }
 
   return (
-    <div className="h-screen bg-[#FFFBF0] flex flex-col font-serif overflow-hidden">
+    <div className="h-full min-h-0 bg-background-cloud font-sans selection:bg-accent-yellow/50 relative overflow-hidden flex flex-col">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-20 -left-24 w-96 h-96 bg-accent-mint/18 rounded-full blur-3xl" />
+        <div className="absolute top-1/3 -right-24 w-80 h-80 bg-primary/16 rounded-full blur-3xl" />
+        <div className="absolute -bottom-28 left-10 w-80 h-80 bg-secondary/16 rounded-full blur-3xl" />
+        <motion.div
+          animate={{ y: [0, -16, 0], rotate: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 6 }}
+          className="absolute top-40 left-20 opacity-20"
+        >
+          <Sparkles size={36} className="text-accent-yellow" />
+        </motion.div>
+        <motion.div
+          animate={{ y: [0, 16, 0], rotate: [0, -10, 0] }}
+          transition={{ repeat: Infinity, duration: 7 }}
+          className="absolute bottom-40 right-20 opacity-20"
+        >
+          <Star size={36} className="text-accent-rose fill-current" />
+        </motion.div>
+      </div>
       {/* 音乐播放器层 */}
       <AnimatePresence>
         {currentSongIndex !== null && cards[currentSongIndex] && (
@@ -275,18 +376,26 @@ export const Culture: React.FC = () => {
         )}
       </AnimatePresence>
 
-      <div className="p-4 md:p-6 flex flex-col gap-4 bg-white/50 backdrop-blur-sm sticky top-0 z-10 shadow-sm">
+      <div className="p-4 md:p-6 bg-white/55 backdrop-blur-xl shadow-[0_2px_8px_rgba(0,0,0,0.08)] border-b border-black/10 shrink-0 relative z-10 overflow-hidden">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-accent-rose/10 via-accent-cyan/10 to-accent-yellow/12" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/40 to-white/20" />
+          <div className="absolute -top-16 -left-20 h-44 w-44 rounded-full bg-secondary/12 blur-3xl" />
+          <div className="absolute -top-14 -right-24 h-48 w-48 rounded-full bg-primary/12 blur-3xl" />
+        </div>
+
+        <div className="relative z-10 flex flex-col gap-4">
         <div className="flex items-center">
             <button onClick={() => setSelectedCategory(null)} className="bg-white p-3 rounded-full shadow-md hover:bg-stone-50">
             <ArrowLeft className="text-gray-600" />
             </button>
-            <h2 className="ml-4 text-xl font-bold text-gray-800">
+            <h2 className={`ml-4 text-xl font-bold text-gray-800 ${isPoemMode ? 'font-kaishu' : ''}`}>
             {CATEGORIES.find(c => c.id === selectedCategory)?.name}
             </h2>
             {loadingData && (
                <span className="ml-2 w-4 h-4 border-2 border-orange-500 border-t-transparent rounded-full animate-spin"></span>
             )}
-            <span className="ml-auto text-sm text-gray-400 font-medium bg-white px-3 py-1 rounded-full border border-gray-100">
+            <span className={`ml-auto text-sm text-gray-500 font-medium bg-white/75 backdrop-blur-sm px-3 py-1 rounded-full border border-white/70 ring-1 ring-black/5 ${isPoemMode ? 'font-kaishu' : ''}`}>
             共 {filteredCards.length} 首
             </span>
         </div>
@@ -301,7 +410,7 @@ export const Culture: React.FC = () => {
                     placeholder={selectedCategory === 'poem' ? "搜索古诗..." : "搜索儿歌..."}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 rounded-xl border-none bg-white shadow-sm focus:ring-2 focus:ring-orange-200 outline-none transition-all"
+                    className="w-full pl-10 pr-4 py-2 rounded-xl border-none bg-white/80 shadow-sm ring-1 ring-black/5 focus:ring-2 focus:ring-primary/25 outline-none transition-all"
                 />
             </div>
 
@@ -325,18 +434,31 @@ export const Culture: React.FC = () => {
                 </div>
             )}
         </div>
+        </div>
       </div>
 
-      <div 
-        className="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth"
+      <div
+        className="flex-1 min-h-0 overflow-y-auto p-4 md:p-8 scroll-smooth overscroll-contain relative"
+        style={{ WebkitOverflowScrolling: 'touch' }}
         onScroll={handleScroll}
       >
-        <div className={`grid gap-6 max-w-5xl mx-auto w-full pb-20 ${
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-white/12 via-white/0 to-white/18" />
+          <div className="absolute -top-24 left-10 h-80 w-80 rounded-full bg-accent-cyan/10 blur-3xl" />
+          <div className="absolute top-40 -right-28 h-96 w-96 rounded-full bg-accent-rose/10 blur-3xl" />
+          <div className="absolute -bottom-28 left-1/3 h-96 w-96 rounded-full bg-accent-yellow/12 blur-3xl" />
+        </div>
+
+        <div className="relative z-10 mx-auto w-full max-w-6xl rounded-[2.5rem] bg-white/35 backdrop-blur-sm ring-1 ring-black/5 p-4 sm:p-6 md:p-8">
+        <div className={`grid gap-6 w-full pb-20 ${
           selectedCategory === 'song' 
             ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4' 
             : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
         }`}>
           {filteredCards.slice(0, visibleCount).map((card, idx) => (
+            (() => {
+              const poemTheme = POEM_THEMES[idx % POEM_THEMES.length];
+              return (
             <motion.div
               key={card.id}
               initial={{ opacity: 0, y: 30 }}
@@ -347,10 +469,10 @@ export const Culture: React.FC = () => {
                     handleReadAll(card);
                 }
               }}
-              className={`rounded-[2rem] shadow-md border border-stone-100 flex flex-col items-center text-center relative overflow-hidden group hover:shadow-lg transition-shadow cursor-pointer ${
+              className={`rounded-[2rem] border-4 border-white ring-1 ring-black/5 flex flex-col items-center text-center relative group cursor-pointer ${
                 selectedCategory === 'song' 
-                    ? 'bg-white p-4 aspect-[3/4] justify-center' 
-                    : 'bg-[#FDFBF7] h-[28rem]' // 古诗卡片固定高度
+                    ? 'bg-white p-4 aspect-[3/4] justify-center shadow-md' 
+                    : `${poemTheme.cardBg} ${poemTheme.shadow} h-[24rem] sm:h-[26rem] lg:h-[28rem]`
               }`}
             >
               {selectedCategory === 'song' ? (
@@ -374,45 +496,50 @@ export const Culture: React.FC = () => {
               ) : (
                 // --- 古诗卡片样式 (重构) ---
                 <>
-                  {/* 背景图 */}
-                  <div className="absolute inset-0 z-0">
-                      <img src={card.image} alt={card.title} className="w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-110" />
-                      {/* 渐变遮罩，保证文字清晰 */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent" />
+                  <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-[2rem]">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/92 via-white/78 to-white/68" />
+                    <div className={`absolute inset-0 bg-gradient-to-br ${poemTheme.tintA} via-white/0 ${poemTheme.tintB}`} />
+                    <div className="absolute top-0 inset-x-0 h-20 bg-gradient-to-b from-white/55 to-transparent" />
+                    <div className="absolute -top-14 -right-16 h-44 w-44 rounded-full bg-white/40 blur-3xl" />
+                    <div className="absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-white/35 blur-3xl" />
                   </div>
 
                   {/* 内容层 */}
-                  <div className="relative z-10 w-full h-full flex flex-col p-6">
-                      {/* 标题区 */}
-                      <div className="text-center mb-6">
-                          <h3 className="text-2xl font-black text-gray-900 mb-2 tracking-widest drop-shadow-sm font-serif">{card.title}</h3>
-                          <div className="inline-block px-3 py-1 bg-red-50/80 backdrop-blur-sm rounded-full border border-red-100">
-                              <span className="text-sm font-bold text-red-800">[{card.author}]</span>
+                  <div className="relative z-10 w-full h-full flex flex-col p-5 sm:p-6 font-kaishu">
+                      <div className="text-center">
+                        <h3 className={`mx-auto max-w-[18rem] sm:max-w-[22rem] text-2xl sm:text-3xl font-black tracking-tight font-kaishu ${poemTheme.titleText}`}>
+                          {card.title}
+                        </h3>
+                        <div className="mt-2 flex justify-center">
+                          <div className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold backdrop-blur-sm border ${poemTheme.authorPill}`}>
+                            {card.author ? card.author : '佚名'}
                           </div>
+                        </div>
                       </div>
 
-                      {/* 诗句区 (竖排风格) */}
-                      <div className="flex-1 flex justify-center items-center">
-                          <div className="grid grid-cols-2 gap-x-8 gap-y-4 text-lg font-bold text-gray-800 tracking-widest leading-loose font-serif">
-                             {card.content.map((line, lIdx) => (
-                                 <div key={lIdx} className="whitespace-nowrap drop-shadow-sm text-center">
-                                     {line}
-                                 </div>
-                             ))}
+                      <div className="mt-4 flex-1 flex items-center justify-center">
+                        <div className="w-full rounded-[1.75rem] bg-white/75 ring-1 ring-black/5 p-4 sm:p-5 shadow-sm">
+                          <div className={`grid grid-cols-1 gap-y-3 text-[clamp(1.2rem,2.4vw,1.55rem)] font-black tracking-widest leading-[1.75] font-kaishu ${poemTheme.bodyText}`}>
+                            {card.content.map((line, lIdx) => (
+                              <div key={lIdx} className="text-center break-words">
+                                {line}
+                              </div>
+                            ))}
                           </div>
+                        </div>
                       </div>
 
                       {/* 播放控制区 */}
-                      <div className="mt-auto pt-4 flex justify-center">
+                      <div className="mt-4 flex justify-center pb-10 sm:pb-12">
                           <button 
                             onClick={(e) => {
                                 e.stopPropagation();
                                 handlePlayPoemAudio(card);
                             }}
-                            className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all transform hover:scale-105 active:scale-95 ${
+                            className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center shadow-lg transition-all transform hover:scale-105 active:scale-95 ${
                                 activeCardId === card.id && isPlayingAudio
-                                    ? 'bg-red-500 text-white animate-pulse'
-                                    : 'bg-white text-red-500 border-2 border-red-100'
+                                    ? `${poemTheme.iconBg} text-white animate-pulse`
+                                    : `bg-white ${poemTheme.play} border-2 border-white/60 ring-1 ring-black/5`
                             }`}
                           >
                              {activeCardId === card.id && isPlayingAudio 
@@ -425,6 +552,8 @@ export const Culture: React.FC = () => {
                 </>
               )}
             </motion.div>
+              );
+            })()
           ))}
           
           {loading && (
@@ -445,6 +574,7 @@ export const Culture: React.FC = () => {
                 <p>没有找到相关内容哦~</p>
              </div>
           )}
+        </div>
         </div>
       </div>
     </div>
