@@ -21,6 +21,7 @@ export const Animation: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentVideo, setCurrentVideo] = useState<any | null>(null);
+  const [autoPlay, setAutoPlay] = useState(false);
 
   // 过滤视频
   const filteredCartoons = CARTOONS_DATA.filter((cartoon: any) => {
@@ -28,6 +29,16 @@ export const Animation: React.FC = () => {
     const matchesSearch = cartoon.title.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  const playNext = () => {
+    if (!currentVideo) return;
+    const list = filteredCartoons.length > 0 ? filteredCartoons : CARTOONS_DATA;
+    const index = list.findIndex((item: any) => item.id === currentVideo.id);
+    const next = index >= 0 ? list[(index + 1) % list.length] : list[0];
+    if (!next) return;
+    setAutoPlay(true);
+    setCurrentVideo(next);
+  };
 
   return (
     <div className="min-h-screen bg-[#E0F7FA] flex flex-col font-sans relative overflow-hidden">
@@ -46,7 +57,12 @@ export const Animation: React.FC = () => {
             title={currentVideo.title}
             isHls={currentVideo.isHls}
             posterUrl={GLOBAL_VIDEO_COVER}
-            onClose={() => setCurrentVideo(null)}
+            autoPlay={autoPlay}
+            onNext={playNext}
+            onClose={() => {
+              setCurrentVideo(null);
+              setAutoPlay(false);
+            }}
           />
         )}
       </AnimatePresence>
@@ -104,7 +120,10 @@ export const Animation: React.FC = () => {
                         exit={{ opacity: 0, scale: 0.9 }}
                         transition={{ delay: idx * 0.05 }}
                         className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all group cursor-pointer border-4 border-white hover:border-blue-200"
-                        onClick={() => setCurrentVideo(cartoon)}
+                        onClick={() => {
+                          setAutoPlay(false);
+                          setCurrentVideo(cartoon);
+                        }}
                     >
                         {/* 封面区域 */}
                         <div className="relative aspect-video bg-gray-100 overflow-hidden">

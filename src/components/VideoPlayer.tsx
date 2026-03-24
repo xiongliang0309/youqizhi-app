@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Play, Pause, Maximize, Volume2, VolumeX, RotateCcw } from 'lucide-react';
+import { X, Play, Pause, Maximize, Minimize2, Volume2, VolumeX, RotateCcw } from 'lucide-react';
 import Hls from 'hls.js';
 
 interface VideoPlayerProps {
@@ -10,13 +10,16 @@ interface VideoPlayerProps {
   onNext?: () => void;
   isHls?: boolean; // 新增：是否是 HLS 流
   posterUrl?: string;
+  autoPlay?: boolean;
 }
 
-export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClose, isHls, posterUrl }) => {
+export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClose, onNext, isHls, posterUrl, autoPlay }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const hlsRef = useRef<Hls | null>(null);
   const startedLoadRef = useRef(false);
+  const autoPlayRef = useRef(false);
   
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -24,6 +27,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClo
   const [duration, setDuration] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
   const [showControls, setShowControls] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // 初始化播放器 (支持 HLS)，默认不自动播放/不自动拉流，等用户点击播放再开始加载
@@ -57,6 +61,41 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClo
     };
   }, [videoUrl, isHls]);
 
+  useEffect(() => {
+    autoPlayRef.current = Boolean(autoPlay);
+  }, [autoPlay]);
+
+  useEffect(() => {
+    if (!autoPlayRef.current) return;
+    const tryAutoPlay = async () => {
+      const video = videoRef.current;
+      if (!video) return;
+      if (isHls && hlsRef.current && !startedLoadRef.current) {
+        startedLoadRef.current = true;
+        hlsRef.current.startLoad();
+      }
+      try {
+        await video.play();
+        setIsPlaying(true);
+      } catch {
+        setIsPlaying(false);
+      }
+    };
+    const id = window.setTimeout(() => void tryAutoPlay(), 200);
+    return () => window.clearTimeout(id);
+  }, [videoUrl, isHls]);
+
+  useEffect(() => {
+    const onFsChange = () => {
+      const fsElement = document.fullscreenElement;
+      setIsFullscreen(Boolean(fsElement));
+    };
+
+    document.addEventListener('fullscreenchange', onFsChange);
+    onFsChange();
+    return () => document.removeEventListener('fullscreenchange', onFsChange);
+  }, []);
+
   // 自动隐藏控制栏
   const resetControlsTimeout = () => {
     setShowControls(true);
@@ -75,11 +114,39 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClo
           startedLoadRef.current = true;
           hlsRef.current.startLoad();
         }
-        videoRef.current.play();
+        videoRef.current.play().catch(() => {
+          setIsPlaying(false);
+        });
       }
       setIsPlaying(!isPlaying);
       resetControlsTimeout();
     }
+  };
+
+  const toggleFullscreen = async () => {
+    const root = containerRef.current;
+    if (!root) return;
+
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+      return;
+    }
+
+    try {
+      await root.requestFullscreen();
+    } catch {
+      return;
+    }
+  };
+
+  const handleClose = async () => {
+    if (document.fullscreenElement) {
+      try {
+        await document.exitFullscreen();
+      } catch {
+      }
+    }
+    onClose();
   };
 
   const handleTimeUpdate = () => {
@@ -130,7 +197,13 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClo
       onMouseMove={resetControlsTimeout}
       onClick={resetControlsTimeout}
     >
-      <div className="relative w-full h-full max-w-6xl max-h-screen aspect-video bg-black shadow-2xl overflow-hidden group">
+      <div
+        ref={containerRef}
+        className={[
+          'relative w-full h-full bg-black shadow-2xl overflow-hidden group',
+          isFullscreen ? 'max-w-none max-h-none aspect-auto' : 'max-w-6xl max-h-screen aspect-video',
+        ].join(' ')}
+      >
         <video
           ref={videoRef}
           preload="none"
@@ -139,7 +212,10 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClo
           poster={posterUrl}
           className="w-full h-full object-contain"
           onTimeUpdate={handleTimeUpdate}
-          onEnded={() => setIsPlaying(false)}
+          onEnded={() => {
+            setIsPlaying(false);
+            onNext?.();
+          }}
           onClick={togglePlay}
         />
 
@@ -154,7 +230,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClo
             >
               <h2 className="text-white text-lg font-bold truncate px-2">{title}</h2>
               <button 
-                onClick={onClose}
+                onClick={() => void handleClose()}
                 className="p-2 rounded-full bg-white/20 hover:bg-white/40 text-white transition-colors"
               >
                 <X size={24} />
@@ -220,7 +296,9 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClo
                   <button onClick={toggleMute} className="text-white hover:text-orange-400 transition-colors">
                     {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
                   </button>
-                  {/* 全屏暂不实现，浏览器限制较多 */}
+                  <button onClick={() => void toggleFullscreen()} className="text-white hover:text-orange-400 transition-colors">
+                    {isFullscreen ? <Minimize2 size={24} /> : <Maximize size={24} />}
+                  </button>
                 </div>
               </div>
             </motion.div>
