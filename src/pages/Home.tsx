@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useInteraction } from '../hooks/useInteraction';
 import { motion } from 'framer-motion';
 import { BookOpen, Brain, Palette, CheckCircle, Lightbulb, Music, Book, Star, Zap, Tv, Cloud, Sun, Sparkles } from 'lucide-react';
 
@@ -97,6 +98,7 @@ const MODULES = [
 
 const ModuleCard = ({ title, icon: Icon, color, bg, shadow, border, path, delay, desc }: any) => {
   const navigate = useNavigate();
+  const { playPop } = useInteraction();
 
   // 简化版背景色，不再使用过多的装饰元素
   // 仅保留淡淡的色彩倾向
@@ -120,10 +122,13 @@ const ModuleCard = ({ title, icon: Icon, color, bg, shadow, border, path, delay,
       transition={{ delay, type: "spring", stiffness: 300, damping: 20 }}
       whileHover={{ scale: 1.05, rotate: -2, y: -5 }}
       whileTap={{ scale: 0.95 }}
-      onClick={() => navigate(path)}
+      onClick={() => {
+        playPop();
+        setTimeout(() => navigate(path), 150);
+      }}
       className={`relative h-48 sm:h-52 md:h-56 lg:h-60 w-full cursor-pointer group`}
     >
-      {/* 卡片主体 - 纯净版 */}
+      {/* 卡片主体 - 恢复原版背景和悬浮效果 */}
       <div className={`absolute inset-0 ${cardBg} rounded-[2rem] border-4 border-white ${shadow} p-6 flex flex-col items-center justify-center overflow-hidden z-10 transition-all duration-300 group-hover:bg-white`}>
         
         {/* 去掉复杂的装饰圆点，改为顶部柔和光晕 */}

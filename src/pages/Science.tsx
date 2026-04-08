@@ -61,7 +61,7 @@ export const Science: React.FC = () => {
               whileHover={{ scale: 1.03, rotate: idx % 2 === 0 ? -1 : 1 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`${cat.color} p-10 rounded-[2.5rem] shadow-xl flex flex-col items-center justify-center h-80 border-8 border-white cursor-pointer relative overflow-hidden group`}
+              className={`candy-card ${cat.color} p-6 md:p-8 flex flex-col items-center justify-center aspect-square md:aspect-video border-4 border-white/40 group cursor-pointer relative overflow-hidden`}
             >
               <div className="absolute top-0 left-0 w-full h-full bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
               <cat.icon size={80} className="mb-6 drop-shadow-md" />
@@ -76,8 +76,8 @@ export const Science: React.FC = () => {
   return (
     <div className="h-screen bg-[#F0FFF4] flex flex-col font-sans overflow-hidden">
       <div className="p-4 md:p-6 flex items-center bg-white/60 backdrop-blur-md sticky top-0 z-10 shadow-sm border-b border-green-100">
-        <button onClick={() => setSelectedCategory(null)} className="bg-white p-3 rounded-full shadow-md hover:bg-green-50 transition-colors">
-          <ArrowLeft className="text-gray-600" />
+        <button onClick={() => setSelectedCategory(null)} className="candy-btn bg-white text-green-600 border-green-200 p-3">
+          <ArrowLeft className="w-6 h-6 stroke-[3]" />
         </button>
         <h2 className="ml-4 text-2xl font-black text-gray-800">
           {CATEGORIES.find(c => c.id === selectedCategory)?.name}
@@ -99,7 +99,7 @@ export const Science: React.FC = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: (idx % 12) * 0.05 }}
               whileHover={{ y: -8, shadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)" }}
-              className="bg-white p-6 rounded-[2rem] shadow-lg border-2 border-green-50 flex flex-col h-full transform transition-all duration-300"
+              className="candy-card p-6 border-2 border-green-50 flex flex-col h-full transform transition-all duration-300"
             >
               <div className="text-7xl mb-6 self-center bg-green-50 w-24 h-24 flex items-center justify-center rounded-full shadow-inner">{card.image}</div>
               
@@ -110,11 +110,11 @@ export const Science: React.FC = () => {
               </div>
 
               <button 
-                onClick={() => handleRead(card)}
-                className="w-full py-3 bg-gradient-to-r from-green-400 to-emerald-500 text-white rounded-xl font-bold hover:shadow-lg active:scale-95 transition-all flex items-center justify-center shadow-md shadow-green-200"
-              >
-                <span className="mr-2 text-xl">🔊</span> 听讲解
-              </button>
+                  onClick={() => handleRead(card)} 
+                  className="w-full py-3 candy-btn bg-green-500 text-white border-green-400 flex items-center justify-center mt-auto"
+                >
+                  <span className="mr-2 text-xl">🔊</span> 听讲解
+                </button>
             </motion.div>
           ))}
           
