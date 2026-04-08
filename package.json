@@ -14,7 +14,9 @@
     "audit:language": "node scripts/audit_language_words.mjs",
     "build:language-images": "node scripts/build_language_images_from_twemoji.mjs",
     "upload:songs-audio": "node scripts/upload_songs_audio_to_storage.js",
+    "upload:cartoons-videos": "node scripts/upload_cartoons_videos_to_storage.js",
     "migrate:language": "node scripts/migrate_language_words_to_supabase.js",
+    "migrate:cartoons": "node scripts/migrate_cartoons_to_supabase.js",
     "migrate:data": "node scripts/migrate_to_supabase.js"
   },
   "dependencies": {
@@ -25,6 +27,7 @@
     "@fontsource/nunito": "^5.2.7",
     "@supabase/supabase-js": "^2.99.2",
     "axios": "^1.6.2",
+    "canvas-confetti": "^1.9.4",
     "framer-motion": "^10.16.4",
     "hls.js": "^1.6.15",
     "lucide-react": "^0.292.0",
@@ -36,6 +39,7 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
+    "@types/canvas-confetti": "^1.9.0",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react": "^4.2.0",

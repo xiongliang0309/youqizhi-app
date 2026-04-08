@@ -1,11 +1,13 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Volume2, RefreshCw, Grid } from 'lucide-react';
+import { ArrowLeft, Volume2, RefreshCw, Grid, Mic } from 'lucide-react';
+import confetti from 'canvas-confetti';
 import { generateWordCards, generateWordCardsFromBank, type WordCard, type WordCategory } from '../data/generator';
 import { fetchLanguageWordsFromSupabase } from '../data/languageSupabase';
 import type { LanguageWordEntry } from '../data/languageQuality';
 import { useSpeech } from '../hooks/useSpeech';
+import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 
 const CHARACTERS = {
   tommy: { name: '小猫汤米', emoji: '🐱', color: 'bg-orange-100 border-orange-300' },
@@ -106,6 +108,169 @@ export const Language: React.FC = () => {
   const [isWordsLoading, setIsWordsLoading] = useState(false);
   const loadSeqRef = React.useRef(0);
 
+  // 语音跟读状态
+  const { isRecording, transcript, startRecording, stopRecording, hasError } = useSpeechRecognition('en-US');
+  const [assessmentResult, setAssessmentResult] = useState<{ stars: number, message: string } | null>(null);
+
+  const activeCategory = useMemo(() => {
+    if (!selectedCategory) return null;
+    return CATEGORIES.find(c => c.id === selectedCategory) ?? null;
+  }, [selectedCategory]);
+
+  const currentWord = words[currentIndex] || null;
+
+  // 播放跟读错误反馈音效
+  const playErrorSound = () => {
+    try {
+      // 需要用户交互后才能创建/恢复 AudioContext，直接实例化可能会在某些浏览器报错
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      const audioContext = new AudioContext();
+      
+      // 如果处于 suspended 状态（如 Safari 策略限制），尝试恢复
+      if (audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+      
+      // 第一个音符：较高的音
+      const osc1 = audioContext.createOscillator();
+      const gain1 = audioContext.createGain();
+      osc1.type = 'triangle';
+      osc1.frequency.setValueAtTime(300, audioContext.currentTime);
+      osc1.frequency.exponentialRampToValueAtTime(250, audioContext.currentTime + 0.15);
+      gain1.gain.setValueAtTime(0.1, audioContext.currentTime);
+      gain1.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+      osc1.connect(gain1);
+      gain1.connect(audioContext.destination);
+      osc1.start(audioContext.currentTime);
+      osc1.stop(audioContext.currentTime + 0.15);
+
+      // 第二个音符：较低的音，形成"噔-咚"的错误提示感
+      const osc2 = audioContext.createOscillator();
+      const gain2 = audioContext.createGain();
+      osc2.type = 'triangle';
+      osc2.frequency.setValueAtTime(200, audioContext.currentTime + 0.15);
+      osc2.frequency.exponentialRampToValueAtTime(150, audioContext.currentTime + 0.4);
+      gain2.gain.setValueAtTime(0.15, audioContext.currentTime + 0.15);
+      gain2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+      osc2.connect(gain2);
+      gain2.connect(audioContext.destination);
+      osc2.start(audioContext.currentTime + 0.15);
+      osc2.stop(audioContext.currentTime + 0.4);
+      
+    } catch (e) {
+      console.warn('AudioContext not supported or failed', e);
+    }
+  };
+
+  // 播放跟读正确反馈音效
+  const playSuccessSound = () => {
+    try {
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      const audioContext = new AudioContext();
+      
+      if (audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+      
+      // 第一个音符
+      const osc1 = audioContext.createOscillator();
+      const gain1 = audioContext.createGain();
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+      gain1.gain.setValueAtTime(0.1, audioContext.currentTime);
+      gain1.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+      osc1.connect(gain1);
+      gain1.connect(audioContext.destination);
+      osc1.start(audioContext.currentTime);
+      osc1.stop(audioContext.currentTime + 0.1);
+
+      // 第二个音符
+      const osc2 = audioContext.createOscillator();
+      const gain2 = audioContext.createGain();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+      gain2.gain.setValueAtTime(0.1, audioContext.currentTime + 0.1);
+      gain2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+      osc2.connect(gain2);
+      gain2.connect(audioContext.destination);
+      osc2.start(audioContext.currentTime + 0.1);
+      osc2.stop(audioContext.currentTime + 0.2);
+
+      // 第三个音符：形成"叮-叮-咚"的欢快感
+      const osc3 = audioContext.createOscillator();
+      const gain3 = audioContext.createGain();
+      osc3.type = 'sine';
+      osc3.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+      gain3.gain.setValueAtTime(0.15, audioContext.currentTime + 0.2);
+      gain3.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+      osc3.connect(gain3);
+      gain3.connect(audioContext.destination);
+      osc3.start(audioContext.currentTime + 0.2);
+      osc3.stop(audioContext.currentTime + 0.4);
+      
+    } catch (e) {
+      console.warn('AudioContext not supported or failed', e);
+    }
+  };
+
+  // 处理语音识别结果
+  useEffect(() => {
+    // 只有在录音结束（isRecording === false）且有识别结果（transcript）时才进行评测
+    if (!isRecording && transcript && currentWord) {
+      const cleanTranscript = transcript.toLowerCase().replace(/[^\w\s]/gi, '').trim();
+      const targetWord = currentWord.word.toLowerCase().replace(/[^\w\s]/gi, '').trim();
+      
+      let stars = 1;
+      let message = "再试一次哦！";
+      
+      if (cleanTranscript === targetWord) {
+        stars = 3;
+        message = "太棒啦！完全正确！";
+        playSuccessSound();
+        // 触发满屏撒花特效
+        confetti({
+          particleCount: 150,
+          spread: 80,
+          origin: { y: 0.6 },
+          colors: ['#FFC107', '#00BCD4', '#E91E63', '#4CAF50']
+        });
+      } else if (cleanTranscript.includes(targetWord) || targetWord.includes(cleanTranscript) || 
+                 (cleanTranscript.length > 2 && targetWord.length > 2 && 
+                 (cleanTranscript.substring(0, 3) === targetWord.substring(0, 3)))) {
+        stars = 2;
+        message = "很接近了！继续加油！";
+        playSuccessSound();
+      } else {
+        // 错误时播放反馈音
+        playErrorSound();
+      }
+
+      setAssessmentResult({ stars, message });
+
+      // 3秒后清除结果
+      setTimeout(() => {
+        setAssessmentResult(null);
+      }, 2000); // 调整为2秒
+    }
+  }, [isRecording, transcript, currentWord]);
+
+  // 新增一个 effect 来处理“没听清”的情况
+  useEffect(() => {
+    // 这个 effect 用于处理用户按了按钮但没说话（或者识别失败）的情况
+    // 依赖于 hook 内部的 transcript 状态。如果 hook 结束时 transcript 是空的，说明没听清
+    if (!isRecording && !transcript && hasError) {
+      setAssessmentResult({
+        stars: 0,
+        message: "没听清哦，请大声再试一次"
+      });
+      playErrorSound();
+      
+      setTimeout(() => {
+        setAssessmentResult(null);
+      }, 2000); // 调整为2秒
+    }
+  }, [isRecording, transcript, hasError]);
+
   // 当选择分类时，生成新数据
   useEffect(() => {
     if (selectedCategory) {
@@ -137,13 +302,6 @@ export const Language: React.FC = () => {
       });
     }
   }, [selectedCategory]);
-
-  const activeCategory = useMemo(() => {
-    if (!selectedCategory) return null;
-    return CATEGORIES.find(c => c.id === selectedCategory) ?? null;
-  }, [selectedCategory]);
-
-  const currentWord = words[currentIndex];
 
   const isImageAsset = (value: string | undefined) => {
     if (!value) return false;
@@ -445,28 +603,121 @@ export const Language: React.FC = () => {
                 </div>
               )}
 
-              <div className="mt-6 flex items-center justify-center">
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-4 sm:gap-6">
                 <button
                   onClick={playSound}
-                  className="hidden sm:inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-accent-yellow to-accent-tangerine px-6 py-3 text-base font-extrabold text-white shadow-pop-orange transition-transform active:scale-[0.98] [@media(max-height:720px)]:px-5 [@media(max-height:720px)]:py-2.5 [@media(max-height:720px)]:text-sm"
+                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent-yellow to-accent-tangerine px-5 py-3 text-sm font-extrabold text-white shadow-pop-orange transition-transform active:scale-[0.98] sm:gap-3 sm:px-6 sm:text-base [@media(max-height:720px)]:px-4 [@media(max-height:720px)]:py-2.5"
                 >
-                  <span className="grid h-9 w-9 place-items-center rounded-full bg-white/20">
-                    <Volume2 className="h-5 w-5" />
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-white/20 sm:h-9 sm:w-9">
+                    <Volume2 className="h-4 w-4 sm:h-5 sm:w-5" />
                   </span>
                   听发音
                 </button>
+
+                <button
+                  onPointerDown={startRecording}
+                  onPointerUp={stopRecording}
+                  onPointerLeave={stopRecording}
+                  onPointerCancel={stopRecording}
+                  onContextMenu={(e) => e.preventDefault()}
+                  className={`group relative inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-base font-black text-white transition-all duration-300 active:scale-95 sm:gap-3 sm:px-10 sm:py-5 sm:text-lg [@media(max-height:720px)]:px-6 [@media(max-height:720px)]:py-3.5 ${
+                    isRecording 
+                      ? 'bg-rose-500 shadow-[0_0_20px_rgba(244,63,94,0.6)] ring-4 ring-rose-500/30 scale-105' 
+                      : 'bg-gradient-to-br from-primary via-primary to-secondary shadow-[0_6px_0_rgba(79,70,229,0.3)] hover:-translate-y-1 hover:shadow-[0_8px_0_rgba(79,70,229,0.3)]'
+                  }`}
+                  style={{
+                    transform: isRecording ? 'translateY(4px)' : 'translateY(0)',
+                    boxShadow: isRecording ? '0 0 0 rgba(79,70,229,0.3)' : undefined,
+                    touchAction: 'none'
+                  }}
+                >
+                  {isRecording && (
+                    <>
+                      <span className="absolute inset-0 rounded-full animate-ping bg-rose-400 opacity-60 duration-700" />
+                      <span className="absolute inset-0 rounded-full animate-pulse bg-rose-300 opacity-40 duration-500" />
+                    </>
+                  )}
+                  <span className={`relative flex h-10 w-10 items-center justify-center rounded-full sm:h-12 sm:w-12 transition-all duration-300 ${isRecording ? 'bg-white text-rose-500 scale-110' : 'bg-white/20 text-white'}`}>
+                    <Mic className={`h-5 w-5 sm:h-6 sm:w-6 ${isRecording ? 'animate-bounce' : ''}`} />
+                  </span>
+                  <span className="relative tracking-wide">{isRecording ? '正在听你说...' : '长按读单词'}</span>
+                </button>
               </div>
+
+      <AnimatePresence>
+        {assessmentResult && (
+          <motion.div
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex flex-col items-center justify-center z-50 pointer-events-none"
+          >
+            <div className={`bg-white/95 backdrop-blur-md px-8 py-6 rounded-3xl shadow-2xl border-4 flex flex-col items-center gap-3 ${
+              assessmentResult.stars === 3 ? 'border-green-400 shadow-green-400/20' : 
+              assessmentResult.stars === 2 ? 'border-accent-yellow shadow-accent-yellow/20' : 
+              'border-rose-400 shadow-rose-400/20'
+            }`}>
+              <div className="flex gap-2">
+                {assessmentResult.stars > 0 ? (
+                  [1, 2, 3].map((star) => (
+                    <motion.span
+                      key={star}
+                      initial={{ scale: 0, rotate: -45 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ delay: star * 0.1, type: "spring", stiffness: 300, damping: 20 }}
+                      className={`text-4xl ${
+                        star <= assessmentResult.stars 
+                          ? 'text-accent-yellow drop-shadow-sm' 
+                          : 'text-gray-300'
+                      }`}
+                    >
+                      ⭐
+                    </motion.span>
+                  ))
+                ) : (
+                  <motion.span
+                    initial={{ scale: 0, rotate: -20 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    className="text-4xl"
+                  >
+                    👂
+                  </motion.span>
+                )}
+              </div>
+              <span className={`font-extrabold text-xl ${
+                assessmentResult.stars === 3 ? 'text-green-600' : 
+                assessmentResult.stars === 2 ? 'text-orange-500' : 
+                'text-rose-500'
+              }`}>
+                {assessmentResult.message}
+              </span>
+              {transcript && (
+                <span className="text-base font-bold text-text-light bg-gray-100 px-4 py-1.5 rounded-full mt-1">
+                  你说的是: "{transcript}"
+                </span>
+              )}
+              {assessmentResult.stars < 3 && (
+                <span className="text-sm font-bold text-rose-500/80 mt-1">
+                  💡 点击"听发音"再听一遍，大声读出来哦！
+                </span>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
       <div className="sticky bottom-0 z-10 border-t border-white/60 bg-white/75 backdrop-blur-md">
-        <div className="mx-auto grid w-full max-w-7xl grid-cols-3 items-center gap-3 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] sm:flex sm:justify-between sm:px-6 sm:py-4 sm:pb-4 [@media(max-height:720px)]:py-2">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] sm:px-6 sm:py-4 sm:pb-4 [@media(max-height:720px)]:py-2">
           <button
             onClick={handlePrev}
             disabled={currentIndex === 0}
-            className={`justify-self-start h-12 rounded-4xl px-5 text-sm font-extrabold transition-all sm:h-14 sm:px-6 sm:text-base [@media(max-height:720px)]:h-11 [@media(max-height:720px)]:px-4 [@media(max-height:720px)]:text-sm ${
+            className={`flex-none h-12 rounded-4xl px-5 text-sm font-extrabold transition-all sm:h-14 sm:px-6 sm:text-base [@media(max-height:720px)]:h-11 [@media(max-height:720px)]:px-4 [@media(max-height:720px)]:text-sm ${
               currentIndex === 0
                 ? 'bg-background-soft text-text-light ring-1 ring-black/5'
                 : 'bg-white text-text-main shadow-sm ring-1 ring-black/5 hover:bg-background-surface'
@@ -475,13 +726,42 @@ export const Language: React.FC = () => {
             上一个
           </button>
 
-          <button
-            onClick={playSound}
-            className="justify-self-center inline-flex h-14 w-14 items-center justify-center rounded-[1.75rem] bg-gradient-to-r from-accent-yellow to-accent-tangerine text-white shadow-pop-orange transition-transform active:scale-[0.98] sm:hidden"
-            aria-label="听发音"
-          >
-            <Volume2 className="h-6 w-6" />
-          </button>
+          <div className="flex gap-3 sm:hidden">
+            <button
+              onClick={playSound}
+              className="inline-flex h-14 w-14 items-center justify-center rounded-[1.75rem] bg-gradient-to-r from-accent-yellow to-accent-tangerine text-white shadow-pop-orange transition-transform active:scale-[0.98]"
+              aria-label="听发音"
+            >
+              <Volume2 className="h-6 w-6" />
+            </button>
+
+            <button
+              onPointerDown={startRecording}
+              onPointerUp={stopRecording}
+              onPointerLeave={stopRecording}
+              onPointerCancel={stopRecording}
+              onContextMenu={(e) => e.preventDefault()}
+              className={`inline-flex h-14 w-14 items-center justify-center rounded-[1.75rem] text-white transition-all duration-300 active:scale-95 ${
+                isRecording 
+                  ? 'bg-rose-500 shadow-[0_0_20px_rgba(244,63,94,0.6)] ring-4 ring-rose-500/30 scale-105' 
+                  : 'bg-gradient-to-br from-primary via-primary to-secondary shadow-[0_4px_0_rgba(79,70,229,0.3)] hover:-translate-y-1'
+              }`}
+              style={{
+                transform: isRecording ? 'translateY(4px)' : undefined,
+                boxShadow: isRecording ? 'none' : undefined,
+                touchAction: 'none'
+              }}
+              aria-label="跟读"
+            >
+              {isRecording && (
+                <>
+                  <span className="absolute inset-0 rounded-[1.75rem] animate-ping bg-rose-400 opacity-60 duration-700" />
+                  <span className="absolute inset-0 rounded-[1.75rem] animate-pulse bg-rose-300 opacity-40 duration-500" />
+                </>
+              )}
+              <Mic className={`relative h-6 w-6 ${isRecording ? 'animate-bounce' : ''}`} />
+            </button>
+          </div>
 
           <div className="hidden items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-sm font-extrabold text-text-body shadow-sm ring-1 ring-black/5 sm:flex">
             <span>进度</span>
@@ -490,7 +770,7 @@ export const Language: React.FC = () => {
 
           <button
             onClick={handleNext}
-            className="justify-self-end h-12 rounded-4xl bg-gradient-to-r from-primary to-secondary px-6 text-sm font-extrabold text-white shadow-pop-purple transition-transform active:scale-[0.99] sm:h-14 sm:px-8 sm:text-base [@media(max-height:720px)]:h-11 [@media(max-height:720px)]:px-5 [@media(max-height:720px)]:text-sm"
+            className="flex-none h-12 rounded-4xl bg-gradient-to-r from-primary to-secondary px-6 text-sm font-extrabold text-white shadow-pop-purple transition-transform active:scale-[0.99] sm:h-14 sm:px-8 sm:text-base [@media(max-height:720px)]:h-11 [@media(max-height:720px)]:px-5 [@media(max-height:720px)]:text-sm"
           >
             {currentIndex === words.length - 1 ? '完成' : '下一个'}
           </button>

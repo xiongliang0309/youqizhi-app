@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Trash2, Save, Palette, Image as ImageIcon, Download, Loader2, X, Check } from 'lucide-react';
+import { ArrowLeft, Trash2, Save, Palette, Image as ImageIcon, Download } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { supabase } from '../lib/supabase';
 
 const TEMPLATES = [
   {
@@ -37,15 +36,6 @@ interface GalleryItem {
   timestamp: number;
 }
 
-const getDeviceId = () => {
-  let id = localStorage.getItem('device_id');
-  if (!id) {
-    id = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString();
-    localStorage.setItem('device_id', id);
-  }
-  return id;
-};
-
 type ViewMode = 'home' | 'canvas' | 'gallery';
 
 export const Art: React.FC = () => {
@@ -58,46 +48,14 @@ export const Art: React.FC = () => {
   const [lineWidth, setLineWidth] = useState(12);
   const [isDrawing, setIsDrawing] = useState(false);
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
-  const [isSaving, setIsSaving] = useState(false);
-  const [isLoadingGallery, setIsLoadingGallery] = useState(false);
-  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
-
-  // 从 Supabase 获取云端画廊
-  const fetchGallery = async () => {
-    setIsLoadingGallery(true);
-    try {
-      const deviceId = getDeviceId();
-      const { data, error } = await supabase
-        .from('artworks')
-        .select('*')
-        .eq('device_id', deviceId)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      
-      if (data) {
-        const items = data.map(item => ({
-          id: item.id,
-          dataUrl: item.image_url,
-          timestamp: new Date(item.created_at).getTime()
-        }));
-        setGallery(items);
-        // 同步到本地缓存以防离线
-        localStorage.setItem('youqizhi_gallery', JSON.stringify(items));
-      }
-    } catch (e) {
-      console.warn('获取云端画廊失败，回退到本地缓存', e);
-      const saved = localStorage.getItem('youqizhi_gallery');
-      if (saved) {
-        try { setGallery(JSON.parse(saved)); } catch (err) {}
-      }
-    } finally {
-      setIsLoadingGallery(false);
-    }
-  };
 
   useEffect(() => {
-    fetchGallery();
+    const saved = localStorage.getItem('youqizhi_gallery');
+    if (saved) {
+      try {
+        setGallery(JSON.parse(saved));
+      } catch (e) {}
+    }
   }, []);
 
   const saveGallery = (items: GalleryItem[]) => {
@@ -151,7 +109,7 @@ export const Art: React.FC = () => {
     let x, y;
 
     if ('touches' in e) {
-      // 在 CSS 中使用了 touch-none，所以不需要 e.preventDefault()
+      e.preventDefault(); // 防止滚动
       x = e.touches[0].clientX - rect.left;
       y = e.touches[0].clientY - rect.top;
     } else {
@@ -178,19 +136,14 @@ export const Art: React.FC = () => {
   };
 
   const handleSave = () => {
-    if (isSaving) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    setIsSaving(true);
     const tempCanvas = document.createElement('canvas');
     tempCanvas.width = canvas.width;
     tempCanvas.height = canvas.height;
     const ctx = tempCanvas.getContext('2d');
-    if (!ctx) {
-      setIsSaving(false);
-      return;
-    }
+    if (!ctx) return;
 
     // 1. 绘制白色背景
     ctx.fillStyle = '#ffffff';
@@ -199,94 +152,38 @@ export const Art: React.FC = () => {
     // 2. 绘制用户涂鸦
     ctx.drawImage(canvas, 0, 0);
 
-    const finishSave = async (dataUrl: string) => {
-      try {
-        // 将 dataUrl 转换为 Blob
-        const res = await fetch(dataUrl);
-        const blob = await res.blob();
-        
-        // 生成唯一文件名
-        const deviceId = getDeviceId();
-        const fileName = `${deviceId}_${Date.now()}.png`;
-
-        // 1. 上传图片到 Supabase Storage
-        const { error: uploadError } = await supabase.storage
-          .from('artworks')
-          .upload(fileName, blob, {
-            contentType: 'image/png',
-            cacheControl: '3600',
-            upsert: false
-          });
-
-        if (uploadError) throw uploadError;
-
-        // 获取公开访问链接
-        const { data: { publicUrl } } = supabase.storage
-          .from('artworks')
-          .getPublicUrl(fileName);
-
-        // 2. 将记录插入到 Supabase Database
-        const { data: insertData, error: dbError } = await supabase
-          .from('artworks')
-          .insert({
-            device_id: deviceId,
-            image_url: publicUrl,
-            template_id: selectedTemplate || null
-          })
-          .select()
-          .single();
-
-        if (dbError) throw dbError;
-
-        const newItem: GalleryItem = {
-          id: insertData.id,
-          dataUrl: publicUrl,
-          timestamp: new Date(insertData.created_at).getTime()
-        };
-        
-        saveGallery([newItem, ...gallery]);
-        
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#FFC107', '#00BCD4', '#E91E63', '#4CAF50']
-        });
-        
-        setTimeout(() => {
-          setView('gallery');
-        }, 1000);
-      } catch (e) {
-        console.error('保存到云端失败', e);
-        alert('保存失败，请检查网络连接');
-      } finally {
-        setIsSaving(false);
-      }
+    const finishSave = (dataUrl: string) => {
+      const newItem: GalleryItem = {
+        id: Date.now().toString(),
+        dataUrl,
+        timestamp: Date.now()
+      };
+      saveGallery([newItem, ...gallery]);
+      
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#FFC107', '#00BCD4', '#E91E63', '#4CAF50']
+      });
+      
+      setTimeout(() => {
+        setView('gallery');
+      }, 1000);
     };
 
     // 3. 绘制线稿（如果有）
     if (selectedTemplate) {
       const template = TEMPLATES.find(t => t.id === selectedTemplate);
-      const svgElement = canvas.parentElement?.querySelector('svg');
-      
-      if (template && svgElement) {
-        // 获取 SVG 在 Canvas 容器内的实际位置和大小
-        const canvasRect = canvas.getBoundingClientRect();
-        const svgRect = svgElement.getBoundingClientRect();
-        
-        const dx = svgRect.left - canvasRect.left;
-        const dy = svgRect.top - canvasRect.top;
-        const dw = svgRect.width;
-        const dh = svgRect.height;
-
+      if (template) {
         const img = new Image();
         img.onload = () => {
           // 使用正片叠底模式将线稿印上去
           ctx.globalCompositeOperation = 'multiply';
-          ctx.drawImage(img, dx, dy, dw, dh);
+          ctx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
           finishSave(tempCanvas.toDataURL('image/png'));
         };
-        img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(template.svg)}`;
+        img.src = \`data:image/svg+xml;charset=utf-8,\${encodeURIComponent(template.svg)}\`;
         return;
       }
     }
@@ -294,26 +191,8 @@ export const Art: React.FC = () => {
     finishSave(tempCanvas.toDataURL('image/png'));
   };
 
-  const deleteItem = async (id: string, dataUrl: string) => {
-    // 乐观删除，先更新 UI
-    const updatedGallery = gallery.filter(item => item.id !== id);
-    saveGallery(updatedGallery);
-    setDeleteConfirmId(null); // 关闭确认框
-
-    try {
-      // 从 Supabase Database 中删除
-      await supabase.from('artworks').delete().eq('id', id);
-
-      // 从 Supabase Storage 中删除
-      const urlParts = dataUrl.split('/');
-      const fileName = urlParts[urlParts.length - 1];
-      if (fileName) {
-        await supabase.storage.from('artworks').remove([fileName]);
-      }
-    } catch (e) {
-      console.error('删除云端作品失败', e);
-      // 这里可以选择恢复 UI
-    }
+  const deleteItem = (id: string) => {
+    saveGallery(gallery.filter(item => item.id !== id));
   };
 
   const colors = ['#000000', '#ffffff', '#EF4444', '#F97316', '#EAB308', '#22C55E', '#3B82F6', '#A855F7', '#EC4899', '#8B5CF6'];
@@ -428,12 +307,7 @@ export const Art: React.FC = () => {
   const renderGallery = () => (
     <div className="flex-1 p-6 overflow-y-auto">
       <div className="max-w-6xl mx-auto">
-        {isLoadingGallery && gallery.length === 0 ? (
-          <div className="text-center py-20 flex flex-col items-center">
-            <Loader2 size={48} className="animate-spin text-purple-400 mb-4" />
-            <h3 className="text-xl font-bold text-gray-500">正在从云端加载画作...</h3>
-          </div>
-        ) : gallery.length === 0 ? (
+        {gallery.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4">🖼️</div>
             <h3 className="text-2xl font-bold text-gray-500">画廊还是空的哦</h3>
@@ -455,43 +329,21 @@ export const Art: React.FC = () => {
                     {new Date(item.timestamp).toLocaleDateString()}
                   </span>
                   <div className="flex gap-2">
-                    {deleteConfirmId === item.id ? (
-                      <div className="flex gap-1 bg-red-50 rounded-full px-2 items-center">
-                        <span className="text-xs text-red-500 font-bold px-1">确认删除?</span>
-                        <button 
-                          onClick={() => deleteItem(item.id, item.dataUrl)}
-                          className="p-1.5 text-white bg-red-400 hover:bg-red-500 rounded-full transition-colors"
-                          title="确认删除"
-                        >
-                          <Check size={14} />
-                        </button>
-                        <button 
-                          onClick={() => setDeleteConfirmId(null)}
-                          className="p-1.5 text-gray-500 hover:bg-gray-200 rounded-full transition-colors"
-                          title="取消"
-                        >
-                          <X size={14} />
-                        </button>
-                      </div>
-                    ) : (
-                      <>
-                        <a 
-                          href={item.dataUrl} 
-                          download={`youqizhi_art_${item.timestamp}.png`}
-                          className="p-2 text-purple-500 hover:bg-purple-50 rounded-full transition-colors"
-                          title="下载"
-                        >
-                          <Download size={18} />
-                        </a>
-                        <button 
-                          onClick={() => setDeleteConfirmId(item.id)}
-                          className="p-2 text-red-400 hover:bg-red-50 rounded-full transition-colors"
-                          title="删除"
-                        >
-                          <Trash2 size={18} />
-                        </button>
-                      </>
-                    )}
+                    <a 
+                      href={item.dataUrl} 
+                      download={`youqizhi_art_${item.timestamp}.png`}
+                      className="p-2 text-purple-500 hover:bg-purple-50 rounded-full transition-colors"
+                      title="下载"
+                    >
+                      <Download size={18} />
+                    </a>
+                    <button 
+                      onClick={() => deleteItem(item.id)}
+                      className="p-2 text-red-400 hover:bg-red-50 rounded-full transition-colors"
+                      title="删除"
+                    >
+                      <Trash2 size={18} />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -526,9 +378,9 @@ export const Art: React.FC = () => {
               <button onClick={clearCanvas} className="p-2 md:p-3 bg-red-100 text-red-500 rounded-xl hover:bg-red-200 active:scale-95 transition-transform shadow-sm">
                 <Trash2 size={24} />
               </button>
-              <button onClick={handleSave} disabled={isSaving} className={`p-2 md:p-3 bg-green-100 text-green-600 rounded-xl active:scale-95 transition-transform shadow-sm flex items-center gap-1 font-bold ${isSaving ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-200'}`}>
-                {isSaving ? <Loader2 size={24} className="animate-spin" /> : <Save size={24} />}
-                <span className="hidden md:inline">{isSaving ? '保存中' : '保存'}</span>
+              <button onClick={handleSave} className="p-2 md:p-3 bg-green-100 text-green-600 rounded-xl hover:bg-green-200 active:scale-95 transition-transform shadow-sm flex items-center gap-1 font-bold">
+                <Save size={24} />
+                <span className="hidden md:inline">保存</span>
               </button>
             </>
           )}

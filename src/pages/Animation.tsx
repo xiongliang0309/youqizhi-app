@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Play, Film, Globe, Microscope, Search, Tv } from 'lucide-react';
 import CARTOONS_DATA from '../data/cartoons.json';
 import { VideoPlayer } from '../components/VideoPlayer';
+import { supabase } from '../lib/supabase';
 
 const GLOBAL_VIDEO_COVER = '/videos/thumbs/bluey_cover_common.jpeg';
 
@@ -22,17 +23,63 @@ export const Animation: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentVideo, setCurrentVideo] = useState<any | null>(null);
   const [autoPlay, setAutoPlay] = useState(false);
+  const [cartoons, setCartoons] = useState<any[]>(CARTOONS_DATA as any[]);
+  const [loadingData, setLoadingData] = useState(false);
 
   // 过滤视频
-  const filteredCartoons = CARTOONS_DATA.filter((cartoon: any) => {
-    const matchesCategory = activeCategory === 'all' || cartoon.category === activeCategory;
-    const matchesSearch = cartoon.title.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  const filteredCartoons = useMemo(() => {
+    return cartoons.filter((cartoon: any) => {
+      const matchesCategory = activeCategory === 'all' || cartoon.category === activeCategory;
+      const matchesSearch = String(cartoon.title ?? '').toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [cartoons, activeCategory, searchQuery]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const run = async () => {
+      setLoadingData(true);
+      try {
+        const { data, error } = await supabase
+          .from('cartoons')
+          .select('id,title,category,cover,video,is_hls,duration,author')
+          .order('id')
+          .limit(2000);
+
+        if (error) throw error;
+
+        const rows = (data ?? []) as any[];
+        if (!cancelled && rows.length) {
+          setCartoons(
+            rows.map((row) => ({
+              id: row.id,
+              title: row.title,
+              category: row.category,
+              cover: row.cover,
+              video: row.video,
+              isHls: Boolean(row.is_hls),
+              duration: row.duration,
+              author: row.author,
+            })),
+          );
+        }
+      } catch (error) {
+        console.error('Error fetching cartoons from Supabase:', error);
+        if (!cancelled) setCartoons(CARTOONS_DATA as any[]);
+      } finally {
+        if (!cancelled) setLoadingData(false);
+      }
+    };
+
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const playNext = () => {
     if (!currentVideo) return;
-    const list = filteredCartoons.length > 0 ? filteredCartoons : CARTOONS_DATA;
+    const list = filteredCartoons.length > 0 ? filteredCartoons : cartoons;
     const index = list.findIndex((item: any) => item.id === currentVideo.id);
     const next = index >= 0 ? list[(index + 1) % list.length] : list[0];
     if (!next) return;
@@ -128,7 +175,7 @@ export const Animation: React.FC = () => {
                         {/* 封面区域 */}
                         <div className="relative aspect-video bg-gray-100 overflow-hidden">
                             <img
-                              src={GLOBAL_VIDEO_COVER}
+                              src={cartoon.cover || GLOBAL_VIDEO_COVER}
                               alt={cartoon.title}
                               loading="lazy"
                               decoding="async"
@@ -166,7 +213,7 @@ export const Animation: React.FC = () => {
         {filteredCartoons.length === 0 && (
             <div className="flex flex-col items-center justify-center h-64 text-gray-400">
                 <Tv size={64} className="mb-4 opacity-50" />
-                <p>没有找到相关动画片哦~</p>
+                <p>{loadingData ? '加载中...' : '没有找到相关动画片哦~'}</p>
             </div>
         )}
       </div>
