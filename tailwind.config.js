@@ -50,6 +50,10 @@ export default {
         'pop-green': '0 14px 28px -16px rgba(132, 204, 22, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.65)',
         'pop-cyan': '0 14px 28px -16px rgba(6, 182, 212, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.65)',
         'pop-yellow': '0 14px 28px -16px rgba(250, 204, 21, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.65)',
+        'pop-pink-soft': '0 14px 28px -20px rgba(236, 72, 153, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.75)',
+        'pop-green-soft': '0 14px 28px -20px rgba(132, 204, 22, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.75)',
+        'pop-cyan-soft': '0 14px 28px -20px rgba(6, 182, 212, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.75)',
+        'pop-yellow-soft': '0 14px 28px -20px rgba(250, 204, 21, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.75)',
       },
       borderRadius: {
         '3xl': '1.5rem',

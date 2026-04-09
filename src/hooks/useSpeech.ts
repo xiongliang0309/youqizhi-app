@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect, useRef } from 'react';
 import { AzureTTS } from '../services/AzureTTS';
 
-export type SpeechVoiceHint = 'boy' | 'girl' | 'male' | 'female';
+export type SpeechVoiceHint = 'boy' | 'girl' | 'male' | 'female' | 'mature_male' | 'mature_female';
 
 export type SpeakOptions = {
   voiceHint?: SpeechVoiceHint;
@@ -29,12 +29,22 @@ export const useSpeech = () => {
             stopRef.current = () => azureTTS.current.stop();
             
             const voiceHint = options.voiceHint;
-            const role = voiceHint === 'boy' || voiceHint === 'male' ? 'Boy' : voiceHint === 'girl' || voiceHint === 'female' ? 'Girl' : undefined;
-            const voiceName = voiceHint === 'boy' || voiceHint === 'male'
-              ? 'zh-CN-YunxiNeural'
-              : voiceHint === 'girl' || voiceHint === 'female'
-                ? 'zh-CN-XiaoxiaoNeural'
-                : undefined;
+            // 匹配 Azure 的角色，对于女孩采用成熟一点的女声
+            let role = voiceHint === 'boy' || voiceHint === 'male' ? 'Boy' : voiceHint === 'girl' || voiceHint === 'female' ? 'OlderAdultFemale' : undefined;
+            if (voiceHint === 'mature_male') role = 'OlderAdultMale';
+            if (voiceHint === 'mature_female') role = 'OlderAdultFemale';
+            
+            // 采用比较成熟、温柔的女声，比如 XiaoyouNeural, 或者 XiaoxiaoNeural 不带 Girl 角色
+            let voiceName = 'zh-CN-XiaoxiaoNeural';
+            if (voiceHint === 'boy' || voiceHint === 'male') {
+                voiceName = 'zh-CN-YunxiNeural';
+            } else if (voiceHint === 'girl' || voiceHint === 'female') {
+                voiceName = 'zh-CN-XiaoxiaoNeural'; 
+            } else if (voiceHint === 'mature_male') {
+                voiceName = 'zh-CN-YunxiNeural';
+            } else if (voiceHint === 'mature_female') {
+                voiceName = 'zh-CN-XiaoxiaoNeural';
+            }
 
             await azureTTS.current.speak(text, style, role, voiceName);
             
@@ -57,22 +67,22 @@ export const useSpeech = () => {
     const voices = window.speechSynthesis.getVoices();
 
     // 优先选择更自然、更适合儿童的语音包
-    // 根据需求调整为：优先匹配男童音色 (Boy Voice)
-    const preferredVoices = options.voiceHint === 'boy' || options.voiceHint === 'male'
-      ? [
-          'Microsoft Yunxi Online (Natural)',
-          'Microsoft Yunyang Online (Natural)',
-          'Microsoft Xiaoxiao Online (Natural)',
-          'Google 普通话（中国大陆）',
-          'zh-CN',
-        ]
-      : [
-          'Microsoft Xiaoxiao Online (Natural)',
-          'Microsoft Yaoyao Online (Natural)',
-          'Microsoft Yunxi Online (Natural)',
-          'Google 普通话（中国大陆）',
-          'zh-CN',
-        ];
+        // 根据需求调整为：优先匹配对应音色
+        const preferredVoices = (options.voiceHint === 'boy' || options.voiceHint === 'male' || options.voiceHint === 'mature_male')
+          ? [
+              'Microsoft Yunxi Online (Natural)',
+              'Microsoft Yunyang Online (Natural)',
+              'Microsoft Xiaoxiao Online (Natural)',
+              'Google 普通话（中国大陆）',
+              'zh-CN',
+            ]
+          : [
+              'Microsoft Xiaoxiao Online (Natural)',
+              'Microsoft Yaoyao Online (Natural)',
+              'Microsoft Yunxi Online (Natural)',
+              'Google 普通话（中国大陆）',
+              'zh-CN',
+            ];
 
     let selectedVoice: SpeechSynthesisVoice | null = null;
     
@@ -124,27 +134,47 @@ export const useSpeech = () => {
         let rate = 1.0;
         let pitch = 1.0;
 
-        if (options.voiceHint === 'boy' || options.voiceHint === 'male') {
-            if (selectedVoice?.name.includes('Yunxi') || selectedVoice?.name.includes('Yunyang')) {
-                rate = 1.05;
-                pitch = 1.3;
-            } else if (selectedVoice?.name.includes('Microsoft') || selectedVoice?.name.includes('Google')) {
-                rate = 1.03;
-                pitch = 1.22;
-            } else {
+        // 如果调用方没有明确指定男/女，十万个为什么模块传入了 'girl'
+        if (options.voiceHint === 'girl' || options.voiceHint === 'female') {
+            if (selectedVoice?.name.includes('Xiaoxiao')) {
                 rate = 1.0;
-                pitch = 1.2;
-            }
-        } else {
-            if (selectedVoice?.name.includes('Microsoft')) {
-                rate = 1.05;
-                pitch = 1.18;
+                pitch = 1.02; // Xiaoxiao 原声已经比较好听，微调
+            } else if (selectedVoice?.name.includes('Microsoft')) {
+                rate = 1.0;
+                pitch = 1.05;
             } else if (selectedVoice?.name.includes('Google')) {
-                rate = 1.03;
-                pitch = 1.15;
+                rate = 1.0;
+                pitch = 1.05;
             } else {
                 rate = 1.0;
-                pitch = 1.12;
+                pitch = 1.05;
+            }
+        } else if (options.voiceHint === 'boy' || options.voiceHint === 'male') {
+            if (selectedVoice?.name.includes('Yunxi') || selectedVoice?.name.includes('Yunyang')) {
+                rate = 1.0;
+                pitch = 1.05;
+            } else if (selectedVoice?.name.includes('Microsoft') || selectedVoice?.name.includes('Google')) {
+                rate = 1.0;
+                pitch = 1.05;
+            } else {
+                rate = 1.0;
+                pitch = 1.05;
+            }
+        } else if (options.voiceHint === 'mature_female') {
+            if (selectedVoice?.name.includes('Xiaoxiao')) {
+                rate = 0.95; // 语速稍慢，显得沉稳
+                pitch = 0.95; // 音调稍低，显得成熟
+            } else {
+                rate = 0.95;
+                pitch = 0.95;
+            }
+        } else if (options.voiceHint === 'mature_male') {
+             if (selectedVoice?.name.includes('Yunxi') || selectedVoice?.name.includes('Yunyang')) {
+                rate = 0.95;
+                pitch = 0.95; 
+            } else {
+                rate = 0.95;
+                pitch = 0.95;
             }
         }
 
@@ -153,20 +183,20 @@ export const useSpeech = () => {
         const lastChar = sentence.trim().slice(-1);
 
         if (lastChar === '?' || lastChar === '？' || sentence.includes('吗') || sentence.includes('呢')) {
-            // 疑问句：语调上扬，显得好奇
-            pitch *= 1.1;
-            rate *= 1.05;
+            // 疑问句：语调微上扬
+            pitch *= 1.05;
+            rate *= 1.02;
         } else if (lastChar === '!' || lastChar === '！') {
-            // 感叹句：语调高昂，显得活泼、兴奋
-            pitch *= 1.15;
-            rate *= 1.1;
+            // 感叹句：语调微高昂
+            pitch *= 1.08;
+            rate *= 1.05;
         } else if (lastChar === ',' || lastChar === '，') {
-            // 逗号：保持平稳，略微停顿感
-            pitch *= 1.02; 
+            // 逗号：保持平稳
+            pitch *= 1.01; 
         } else if (lastChar === '.' || lastChar === '。') {
-            // 句号：语调自然降落，表示结束
-            pitch *= 0.95;
-            rate *= 0.95;
+            // 句号：语调自然降落
+            pitch *= 0.98;
+            rate *= 0.98;
         }
 
         utterance.rate = Math.min(Math.max(rate, 0.5), 1.5);
