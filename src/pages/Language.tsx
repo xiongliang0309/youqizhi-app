@@ -374,16 +374,16 @@ export const Language: React.FC = () => {
   // --- 视图 1: 分类选择页 ---
   if (!selectedCategory) {
     return (
-      <div className="min-h-full bg-background-cloud font-sans relative overflow-x-hidden selection:bg-accent-yellow/50">
+      <div className="h-full flex flex-col bg-background-cloud font-sans relative overflow-hidden selection:bg-accent-yellow/50">
         <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-primary/15 blur-3xl animate-blob" />
         <div className="pointer-events-none absolute top-32 -left-24 h-80 w-80 rounded-full bg-accent-cyan/14 blur-3xl animate-blob" />
         <div className="pointer-events-none absolute -bottom-20 right-0 h-72 w-72 rounded-full bg-accent-yellow/18 blur-3xl animate-blob" />
 
-        <div className="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 sm:py-7">
-          <header className="flex items-center gap-3 sm:gap-4">
+        <div className="flex-1 min-h-0 mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 sm:py-6 flex flex-col">
+          <header className="flex-none flex items-center gap-3 sm:gap-4 pb-2">
             <button
               onClick={() => navigate('/')}
-              className="h-11 w-11 rounded-full bg-white/90 shadow-md ring-1 ring-black/5 transition-colors hover:bg-white"
+              className="flex-none h-10 w-10 sm:h-11 sm:w-11 rounded-full bg-white/90 shadow-md ring-1 ring-black/5 transition-colors hover:bg-white"
               aria-label="返回主页"
             >
               <ArrowLeft className="mx-auto h-5 w-5 text-text-body" />
@@ -391,18 +391,18 @@ export const Language: React.FC = () => {
 
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <span className="text-2xl">{CHARACTERS.tommy.emoji}</span>
-                <span className="rounded-full bg-white/70 px-3 py-1.5 text-sm font-extrabold text-text-body shadow-sm ring-1 ring-black/5">
+                <span className="text-xl sm:text-2xl">{CHARACTERS.tommy.emoji}</span>
+                <span className="rounded-full bg-white/70 px-2 py-1 sm:px-3 sm:py-1.5 text-xs sm:text-sm font-extrabold text-text-body shadow-sm ring-1 ring-black/5">
                   汤米陪你学单词
                 </span>
                 <span className="hidden sm:inline-flex rounded-full bg-primary/10 px-3 py-1.5 text-sm font-extrabold text-primary ring-1 ring-primary/15">
                   轻松 · 有趣 · 记得牢
                 </span>
               </div>
-              <h1 className="mt-3 font-heading text-[clamp(1.8rem,4vw,2.6rem)] font-black tracking-tight text-text-main">
+              <h1 className="mt-2 sm:mt-3 font-heading text-[clamp(1.4rem,4vw,2.6rem)] font-black tracking-tight text-text-main leading-tight">
                 你想学什么？
               </h1>
-              <p className="mt-1 text-sm font-bold text-text-light sm:text-base">
+              <p className="mt-1 text-xs sm:text-sm font-bold text-text-light">
                 先选一个主题，再跟着卡片大声读出来
               </p>
             </div>
@@ -413,29 +413,28 @@ export const Language: React.FC = () => {
             </div>
           </header>
 
-          <div className="mt-7 grid grid-cols-2 gap-4 sm:mt-9 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4">
+          <div className="flex-1 min-h-0 mt-4 sm:mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 content-start overflow-y-auto overflow-x-hidden pb-6">
             {CATEGORIES.map(cat => (
               <motion.button
                 key={cat.id}
-                whileHover={{ y: -4, scale: 1.01 }}
+                whileHover={{ y: -2, scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`group relative flex items-center gap-4 rounded-[1.75rem] border-2 border-white/70 bg-gradient-to-br from-white/85 via-white/70 to-white/60 p-4 text-left ring-1 ring-black/5 backdrop-blur-md transition-all duration-200 ease-out hover:from-white/90 hover:via-white/75 hover:to-white/65 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20 sm:p-5 ${cat.border} ${cat.shadow}`}
+                className={`group relative flex items-center gap-3 sm:gap-4 rounded-[1.25rem] sm:rounded-[1.75rem] border-2 border-white/70 bg-gradient-to-br from-white/85 via-white/70 to-white/60 p-3 sm:p-5 text-left ring-1 ring-black/5 backdrop-blur-md transition-all duration-200 ease-out hover:from-white/90 hover:via-white/75 hover:to-white/65 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20 ${cat.border} ${cat.shadow}`}
               >
-                <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${cat.overlay} opacity-90`} />
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-white/70 via-white/10 to-transparent opacity-80" />
+                <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${cat.overlay} opacity-90 rounded-[1.25rem] sm:rounded-[1.75rem]`} />
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-white/70 via-white/10 to-transparent opacity-80 rounded-t-[1.25rem] sm:rounded-t-[1.75rem]" />
                 <div className={`pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full ${cat.orbA} blur-3xl opacity-70`} />
                 <div className={`pointer-events-none absolute -left-14 -bottom-14 h-36 w-36 rounded-full ${cat.orbB} blur-3xl opacity-60`} />
-                <div className="relative grid h-14 w-14 flex-none place-items-center overflow-hidden rounded-4xl bg-white/75 shadow-sm ring-1 ring-black/5 backdrop-blur-sm transition-transform duration-200 ease-out group-hover:scale-[1.03] sm:h-16 sm:w-16">
+                
+                <div className="relative grid h-10 w-10 sm:h-14 sm:w-14 flex-none place-items-center overflow-hidden rounded-full bg-white/75 shadow-sm ring-1 ring-black/5 backdrop-blur-sm transition-transform duration-200 ease-out group-hover:scale-[1.03]">
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/80 to-white/0" />
-                  <span className="relative text-3xl drop-shadow-sm sm:text-4xl">{cat.icon}</span>
+                  <span className="relative text-2xl sm:text-3xl drop-shadow-sm">{cat.icon}</span>
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="truncate text-base font-black text-text-main sm:text-lg">{cat.name}</span>
-                  </div>
-                  <div className="mt-1 text-xs font-bold text-text-light sm:text-sm">开始学习</div>
+                  <div className="truncate text-[clamp(0.9rem,3.5vw,1.1rem)] sm:text-lg font-black text-text-main leading-tight">{cat.name}</div>
+                  <div className="mt-0.5 text-[10px] sm:text-sm font-bold text-text-light">开始学习</div>
                 </div>
               </motion.button>
             ))}
@@ -443,10 +442,10 @@ export const Language: React.FC = () => {
         </div>
 
         <div className="pointer-events-none absolute bottom-4 left-4 opacity-40 sm:bottom-6 sm:left-8">
-          <span className="text-7xl sm:text-8xl">{CHARACTERS.pip.emoji}</span>
+          <span className="text-6xl sm:text-8xl">{CHARACTERS.pip.emoji}</span>
         </div>
         <div className="pointer-events-none absolute bottom-4 right-4 opacity-40 sm:bottom-6 sm:right-8">
-          <span className="text-7xl sm:text-8xl">{CHARACTERS.posy.emoji}</span>
+          <span className="text-6xl sm:text-8xl">{CHARACTERS.posy.emoji}</span>
         </div>
       </div>
     );
@@ -459,11 +458,11 @@ export const Language: React.FC = () => {
       <div className="pointer-events-none absolute top-40 -left-24 h-80 w-80 rounded-full bg-accent-cyan/14 blur-3xl animate-blob" />
       <div className="pointer-events-none absolute -bottom-20 right-0 h-72 w-72 rounded-full bg-accent-yellow/18 blur-3xl animate-blob" />
 
-      <div className="sticky top-0 z-10 border-b border-white/60 bg-white/65 backdrop-blur-md">
-        <div className="mx-auto flex w-full max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 sm:py-4 [@media(max-height:720px)]:py-2">
+      <div className="flex-none z-10 border-b border-white/60 bg-white/65 backdrop-blur-md">
+        <div className="mx-auto flex w-full max-w-7xl items-center gap-3 px-4 py-2 sm:px-6 sm:py-3">
           <button
             onClick={() => setSelectedCategory(null)}
-            className="h-11 w-11 rounded-full bg-white/95 shadow-md ring-1 ring-black/5 transition-colors hover:bg-white"
+            className="flex-none h-10 w-10 sm:h-11 sm:w-11 rounded-full bg-white/95 shadow-md ring-1 ring-black/5 transition-colors hover:bg-white"
             aria-label="返回主题选择"
           >
             <Grid className="mx-auto h-5 w-5 text-text-body" />
@@ -472,14 +471,14 @@ export const Language: React.FC = () => {
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               <span className="text-xl sm:text-2xl">{activeCategory?.icon}</span>
-              <h2 className="truncate font-heading text-xl font-black text-text-main sm:text-2xl">
+              <h2 className="truncate font-heading text-[clamp(1.1rem,4vw,1.5rem)] font-black text-text-main sm:text-2xl">
                 {activeCategory?.name}
               </h2>
               <span className={`hidden sm:inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold ${activeCategory?.pill ?? 'bg-primary/10 text-primary'}`}>
                 轻轻点卡片发音
               </span>
             </div>
-            <div className="mt-1 flex items-center gap-2 text-xs font-bold text-text-light sm:text-sm">
+            <div className="mt-0.5 flex items-center gap-2 text-[10px] sm:text-sm font-bold text-text-light">
               <span>
                 {currentIndex + 1} / {words.length}
               </span>
@@ -490,7 +489,7 @@ export const Language: React.FC = () => {
 
           <button
             onClick={handleRegenerate}
-            className="hidden h-11 items-center gap-2 rounded-full bg-white/90 px-4 text-sm font-extrabold text-text-body shadow-sm ring-1 ring-black/5 transition-colors hover:bg-white sm:inline-flex"
+            className="hidden h-10 sm:h-11 items-center gap-2 rounded-full bg-white/90 px-4 text-sm font-extrabold text-text-body shadow-sm ring-1 ring-black/5 transition-colors hover:bg-white sm:inline-flex"
           >
             <RefreshCw className="h-4 w-4" />
             换一批
@@ -503,7 +502,7 @@ export const Language: React.FC = () => {
         </div>
       </div>
 
-      <div className="mx-auto flex w-full max-w-7xl flex-1 min-h-0 flex-col overflow-hidden px-4 py-4 sm:px-6 sm:py-6 [@media(max-height:720px)]:py-2">
+      <div className="mx-auto flex w-full max-w-7xl flex-1 min-h-0 flex-col px-4 py-3 sm:px-6 sm:py-4 justify-center items-center">
         <AnimatePresence mode="wait">
           {currentWord && (
             <motion.div
@@ -511,74 +510,70 @@ export const Language: React.FC = () => {
               initial={{ opacity: 0, x: 50, scale: 0.9 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: -50, scale: 0.9 }}
-              className={`mx-auto w-full max-w-[34rem] max-h-full overflow-hidden rounded-[2.75rem] border-[6px] border-white bg-white/85 p-6 shadow-candy-card ring-1 ring-black/5 backdrop-blur-sm sm:p-8 [@media(max-height:720px)]:p-5 ${activeCategory?.shadow ?? ''}`}
+              className={`w-full max-w-[34rem] h-full max-h-[44rem] flex flex-col overflow-hidden rounded-[2rem] sm:rounded-[2.75rem] border-[4px] sm:border-[6px] border-white bg-white/85 p-4 sm:p-6 shadow-candy-card ring-1 ring-black/5 backdrop-blur-sm ${activeCategory?.shadow ?? ''}`}
             >
-              <div className="flex items-start justify-end">
+              <div className="flex-none flex items-start justify-end">
                 <button
                   onClick={handleRegenerate}
                   disabled={isWordsLoading}
-                  className={`inline-flex h-10 w-10 items-center justify-center rounded-full shadow-sm ring-1 ring-black/5 backdrop-blur transition-all duration-200 ease-out sm:hidden ${
+                  className={`inline-flex h-8 w-8 items-center justify-center rounded-full shadow-sm ring-1 ring-black/5 backdrop-blur transition-all duration-200 ease-out sm:hidden ${
                     isWordsLoading
                       ? 'cursor-not-allowed bg-white/50 opacity-70'
                       : 'bg-white/70 hover:bg-white/90 hover:shadow-md active:scale-[0.98]'
                   }`}
                   aria-label="换一批"
                 >
-                  <RefreshCw className={`h-4 w-4 text-text-body ${isWordsLoading ? 'animate-spin' : ''}`} />
+                  <RefreshCw className={`h-3.5 w-3.5 text-text-body ${isWordsLoading ? 'animate-spin' : ''}`} />
                 </button>
               </div>
 
               {isWordsLoading ? (
-                <div className="mt-4 w-full rounded-5xl bg-gradient-to-br from-background-surface to-background-soft p-5 text-center shadow-sm ring-1 ring-black/5 sm:mt-6 sm:p-7 [@media(max-height:720px)]:mt-4 [@media(max-height:720px)]:p-4">
-                  <div className="mx-auto grid place-items-center">
-                    <div className="h-[clamp(3.8rem,min(16vw,14svh),8.5rem)] w-[clamp(3.8rem,min(16vw,14svh),8.5rem)] rounded-4xl bg-white/70 ring-1 ring-black/5 animate-pulse" />
-                    <div className="mt-5 w-full max-w-[18rem] space-y-3">
-                      <div className="mx-auto h-8 w-3/4 rounded-full bg-white/70 ring-1 ring-black/5 animate-pulse" />
-                      <div className="mx-auto h-5 w-2/3 rounded-full bg-white/60 ring-1 ring-black/5 animate-pulse" />
-                    </div>
+                <div className="flex-1 min-h-0 mt-2 sm:mt-4 w-full rounded-3xl sm:rounded-5xl bg-gradient-to-br from-background-surface to-background-soft p-4 flex flex-col items-center justify-center shadow-sm ring-1 ring-black/5">
+                  <div className="h-[clamp(4rem,min(16vw,14svh),8.5rem)] w-[clamp(4rem,min(16vw,14svh),8.5rem)] rounded-3xl sm:rounded-4xl bg-white/70 ring-1 ring-black/5 animate-pulse" />
+                  <div className="mt-4 sm:mt-5 w-full max-w-[18rem] space-y-3">
+                    <div className="mx-auto h-6 sm:h-8 w-3/4 rounded-full bg-white/70 ring-1 ring-black/5 animate-pulse" />
+                    <div className="mx-auto h-4 sm:h-5 w-2/3 rounded-full bg-white/60 ring-1 ring-black/5 animate-pulse" />
                   </div>
                 </div>
               ) : currentWord ? (
                 <button
                   onClick={playSound}
-                  className="mt-4 w-full rounded-5xl bg-gradient-to-br from-background-surface to-background-soft p-5 text-center shadow-sm ring-1 ring-black/5 transition-transform active:scale-[0.99] sm:mt-6 sm:p-7 [@media(max-height:720px)]:mt-4 [@media(max-height:720px)]:p-4"
+                  className="flex-1 min-h-0 mt-2 sm:mt-4 w-full flex flex-col items-center justify-center rounded-3xl sm:rounded-5xl bg-gradient-to-br from-background-surface to-background-soft p-3 sm:p-5 shadow-sm ring-1 ring-black/5 transition-transform active:scale-[0.99]"
                   aria-label="播放发音"
                 >
-                  <div className="mx-auto grid place-items-center">
-                    <div className="leading-none drop-shadow-2xl">
-                      {isImageAsset(currentWord.image) ? (
-                        <img
-                          src={currentWord.image}
-                          alt={currentWord.translation}
-                          className="h-[clamp(3.8rem,min(16vw,14svh),8.5rem)] w-[clamp(3.8rem,min(16vw,14svh),8.5rem)] select-none"
-                          draggable={false}
-                          loading="eager"
-                        />
-                      ) : (
-                        <span className="text-[clamp(3.8rem,min(16vw,14svh),8.5rem)]">{currentWord.image}</span>
-                      )}
+                  <div className="leading-none drop-shadow-2xl flex-none">
+                    {isImageAsset(currentWord.image) ? (
+                      <img
+                        src={currentWord.image}
+                        alt={currentWord.translation}
+                        className="h-[clamp(3.5rem,min(15vw,13svh),8rem)] w-[clamp(3.5rem,min(15vw,13svh),8rem)] object-contain select-none"
+                        draggable={false}
+                        loading="eager"
+                      />
+                    ) : (
+                      <span className="text-[clamp(3.5rem,min(15vw,13svh),8rem)] leading-none">{currentWord.image}</span>
+                    )}
+                  </div>
+                  <div className="mt-3 sm:mt-4 text-center flex-none">
+                    <div className="break-words font-heading text-[clamp(1.4rem,min(8vw,5.5svh),2.8rem)] font-black leading-[1.05] text-text-main">
+                      {currentWord.word}
                     </div>
-                    <div className="mt-5 text-center">
-                      <div className="break-words font-heading text-[clamp(1.6rem,min(9vw,6.2svh),3.2rem)] font-black leading-[1.05] text-text-main">
-                        {currentWord.word}
-                      </div>
-                      <div className="mt-2 break-words text-[clamp(1rem,min(4.8vw,4.3svh),1.55rem)] font-extrabold text-text-light">
-                        {currentWord.translation}
-                      </div>
+                    <div className="mt-1.5 break-words text-[clamp(0.9rem,min(4vw,3.5svh),1.4rem)] font-extrabold text-text-light">
+                      {currentWord.translation}
                     </div>
                   </div>
                 </button>
               ) : null}
 
-              {((currentWord.examples && currentWord.examples.length > 0) || (currentWord.collocations && currentWord.collocations.length > 0)) && (
-                <div className="mt-5 grid gap-4 rounded-5xl bg-white/70 p-5 shadow-sm ring-1 ring-black/5 sm:mt-6 sm:grid-cols-2 sm:p-6 [@media(max-height:720px)]:mt-4 [@media(max-height:720px)]:gap-3 [@media(max-height:720px)]:p-4">
+              {((currentWord?.examples && currentWord.examples.length > 0) || (currentWord?.collocations && currentWord.collocations.length > 0)) && (
+                <div className="flex-none mt-3 sm:mt-4 grid gap-2 sm:gap-3 rounded-2xl sm:rounded-3xl bg-white/70 p-3 sm:p-4 shadow-sm ring-1 ring-black/5 sm:grid-cols-2 overflow-hidden">
                   {currentWord.examples && currentWord.examples.length > 0 && (
                     <div className="text-left">
-                      <div className="text-xs font-black text-text-light">例句</div>
-                      <div className="mt-1 break-words text-sm font-extrabold text-text-main [@media(max-height:720px)]:text-sm">
+                      <div className="text-[10px] sm:text-xs font-black text-text-light">例句</div>
+                      <div className="mt-0.5 break-words text-xs sm:text-sm font-extrabold text-text-main line-clamp-2">
                         {currentWord.examples[0].en}
                       </div>
-                      <div className="mt-1 break-words text-xs font-bold text-text-light sm:text-sm [@media(max-height:720px)]:text-xs">
+                      <div className="mt-0.5 break-words text-[10px] sm:text-xs font-bold text-text-light line-clamp-1">
                         {currentWord.examples[0].zh}
                       </div>
                     </div>
@@ -586,12 +581,12 @@ export const Language: React.FC = () => {
 
                   {currentWord.collocations && currentWord.collocations.length > 0 && (
                     <div className="text-left sm:col-span-2">
-                      <div className="text-xs font-black text-text-light">搭配</div>
-                      <div className="mt-2 flex flex-wrap gap-2 [@media(max-height:720px)]:gap-1.5">
+                      <div className="text-[10px] sm:text-xs font-black text-text-light">搭配</div>
+                      <div className="mt-1 flex flex-wrap gap-1.5">
                         {currentWord.collocations.slice(0, 3).map(c => (
                           <span
                             key={c.en}
-                            className="inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1.5 text-xs font-extrabold text-text-body ring-1 ring-black/5 [@media(max-height:720px)]:px-2.5 [@media(max-height:720px)]:py-1"
+                            className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2 py-1 text-[10px] sm:text-xs font-extrabold text-text-body ring-1 ring-black/5"
                           >
                             <span className="text-text-main">{c.en}</span>
                             <span className="text-text-light">{c.zh}</span>
@@ -603,13 +598,13 @@ export const Language: React.FC = () => {
                 </div>
               )}
 
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+              <div className="flex-none mt-3 sm:mt-5 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
                 <button
                   onClick={playSound}
-                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent-yellow to-accent-tangerine px-5 py-3 text-sm font-extrabold text-white shadow-pop-orange transition-transform active:scale-[0.98] sm:gap-3 sm:px-6 sm:text-base [@media(max-height:720px)]:px-4 [@media(max-height:720px)]:py-2.5"
+                  className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-gradient-to-r from-accent-yellow to-accent-tangerine px-4 py-2 sm:px-5 sm:py-3 text-xs sm:text-sm font-extrabold text-white shadow-pop-orange transition-transform active:scale-[0.98]"
                 >
-                  <span className="grid h-8 w-8 place-items-center rounded-full bg-white/20 sm:h-9 sm:w-9">
-                    <Volume2 className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span className="grid h-6 w-6 sm:h-8 sm:w-8 place-items-center rounded-full bg-white/20">
+                    <Volume2 className="h-3 w-3 sm:h-4 sm:w-4" />
                   </span>
                   听发音
                 </button>
@@ -620,13 +615,13 @@ export const Language: React.FC = () => {
                   onPointerLeave={stopRecording}
                   onPointerCancel={stopRecording}
                   onContextMenu={(e) => e.preventDefault()}
-                  className={`group relative inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-base font-black text-white transition-all duration-300 active:scale-95 sm:gap-3 sm:px-10 sm:py-5 sm:text-lg [@media(max-height:720px)]:px-6 [@media(max-height:720px)]:py-3.5 ${
+                  className={`group relative inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 sm:px-8 sm:py-3.5 text-sm sm:text-base font-black text-white transition-all duration-300 active:scale-95 ${
                     isRecording 
                       ? 'bg-rose-500 shadow-[0_0_20px_rgba(244,63,94,0.6)] ring-4 ring-rose-500/30 scale-105' 
-                      : 'bg-gradient-to-br from-primary via-primary to-secondary shadow-[0_6px_0_rgba(79,70,229,0.3)] hover:-translate-y-1 hover:shadow-[0_8px_0_rgba(79,70,229,0.3)]'
+                      : 'bg-gradient-to-br from-primary via-primary to-secondary shadow-[0_4px_0_rgba(79,70,229,0.3)] hover:-translate-y-1 hover:shadow-[0_6px_0_rgba(79,70,229,0.3)]'
                   }`}
                   style={{
-                    transform: isRecording ? 'translateY(4px)' : 'translateY(0)',
+                    transform: isRecording ? 'translateY(2px)' : 'translateY(0)',
                     boxShadow: isRecording ? '0 0 0 rgba(79,70,229,0.3)' : undefined,
                     touchAction: 'none'
                   }}
@@ -637,10 +632,10 @@ export const Language: React.FC = () => {
                       <span className="absolute inset-0 rounded-full animate-pulse bg-rose-300 opacity-40 duration-500" />
                     </>
                   )}
-                  <span className={`relative flex h-10 w-10 items-center justify-center rounded-full sm:h-12 sm:w-12 transition-all duration-300 ${isRecording ? 'bg-white text-rose-500 scale-110' : 'bg-white/20 text-white'}`}>
-                    <Mic className={`h-5 w-5 sm:h-6 sm:w-6 ${isRecording ? 'animate-bounce' : ''}`} />
+                  <span className={`relative flex h-7 w-7 sm:h-10 sm:w-10 items-center justify-center rounded-full transition-all duration-300 ${isRecording ? 'bg-white text-rose-500 scale-110' : 'bg-white/20 text-white'}`}>
+                    <Mic className={`h-3.5 w-3.5 sm:h-5 sm:w-5 ${isRecording ? 'animate-bounce' : ''}`} />
                   </span>
-                  <span className="relative tracking-wide">{isRecording ? '正在听你说...' : '长按读单词'}</span>
+                  <span className="relative tracking-wide">{isRecording ? '正在听...' : '长按读单词'}</span>
                 </button>
               </div>
 
@@ -653,7 +648,7 @@ export const Language: React.FC = () => {
             transition={{ duration: 0.2, ease: "easeOut" }}
             className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex flex-col items-center justify-center z-50 pointer-events-none"
           >
-            <div className={`bg-white/95 backdrop-blur-md px-8 py-6 rounded-3xl shadow-2xl border-4 flex flex-col items-center gap-3 ${
+            <div className={`bg-white/95 backdrop-blur-md px-6 py-4 sm:px-8 sm:py-6 rounded-2xl sm:rounded-3xl shadow-2xl border-4 flex flex-col items-center gap-2 sm:gap-3 ${
               assessmentResult.stars === 3 ? 'border-green-400 shadow-green-400/20' : 
               assessmentResult.stars === 2 ? 'border-accent-yellow shadow-accent-yellow/20' : 
               'border-rose-400 shadow-rose-400/20'
@@ -666,7 +661,7 @@ export const Language: React.FC = () => {
                       initial={{ scale: 0, rotate: -45 }}
                       animate={{ scale: 1, rotate: 0 }}
                       transition={{ delay: star * 0.1, type: "spring", stiffness: 300, damping: 20 }}
-                      className={`text-4xl ${
+                      className={`text-3xl sm:text-4xl ${
                         star <= assessmentResult.stars 
                           ? 'text-accent-yellow drop-shadow-sm' 
                           : 'text-gray-300'
@@ -680,13 +675,13 @@ export const Language: React.FC = () => {
                     initial={{ scale: 0, rotate: -20 }}
                     animate={{ scale: 1, rotate: 0 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="text-4xl"
+                    className="text-3xl sm:text-4xl"
                   >
                     👂
                   </motion.span>
                 )}
               </div>
-              <span className={`font-extrabold text-xl ${
+              <span className={`font-extrabold text-lg sm:text-xl ${
                 assessmentResult.stars === 3 ? 'text-green-600' : 
                 assessmentResult.stars === 2 ? 'text-orange-500' : 
                 'text-rose-500'
@@ -694,12 +689,12 @@ export const Language: React.FC = () => {
                 {assessmentResult.message}
               </span>
               {transcript && (
-                <span className="text-base font-bold text-text-light bg-gray-100 px-4 py-1.5 rounded-full mt-1">
+                <span className="text-xs sm:text-base font-bold text-text-light bg-gray-100 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full mt-1">
                   你说的是: "{transcript}"
                 </span>
               )}
               {assessmentResult.stars < 3 && (
-                <span className="text-sm font-bold text-rose-500/80 mt-1">
+                <span className="text-[10px] sm:text-sm font-bold text-rose-500/80 mt-1">
                   💡 点击"听发音"再听一遍，大声读出来哦！
                 </span>
               )}
@@ -712,12 +707,12 @@ export const Language: React.FC = () => {
         </AnimatePresence>
       </div>
 
-      <div className="sticky bottom-0 z-10 border-t border-white/60 bg-white/75 backdrop-blur-md">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] sm:px-6 sm:py-4 sm:pb-4 [@media(max-height:720px)]:py-2">
+      <div className="flex-none z-10 border-t border-white/60 bg-white/75 backdrop-blur-md">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-2 sm:gap-3 px-4 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] sm:px-6 sm:py-3 sm:pb-3">
           <button
             onClick={handlePrev}
             disabled={currentIndex === 0}
-            className={`flex-none h-12 rounded-4xl px-5 text-sm font-extrabold transition-all sm:h-14 sm:px-6 sm:text-base [@media(max-height:720px)]:h-11 [@media(max-height:720px)]:px-4 [@media(max-height:720px)]:text-sm ${
+            className={`flex-none h-10 sm:h-12 rounded-full px-4 sm:px-6 text-xs sm:text-sm font-extrabold transition-all ${
               currentIndex === 0
                 ? 'bg-background-soft text-text-light ring-1 ring-black/5'
                 : 'bg-white text-text-main shadow-sm ring-1 ring-black/5 hover:bg-background-surface'
@@ -726,51 +721,14 @@ export const Language: React.FC = () => {
             上一个
           </button>
 
-          <div className="flex gap-3 sm:hidden">
-            <button
-              onClick={playSound}
-              className="inline-flex h-14 w-14 items-center justify-center rounded-[1.75rem] bg-gradient-to-r from-accent-yellow to-accent-tangerine text-white shadow-pop-orange transition-transform active:scale-[0.98]"
-              aria-label="听发音"
-            >
-              <Volume2 className="h-6 w-6" />
-            </button>
-
-            <button
-              onPointerDown={startRecording}
-              onPointerUp={stopRecording}
-              onPointerLeave={stopRecording}
-              onPointerCancel={stopRecording}
-              onContextMenu={(e) => e.preventDefault()}
-              className={`inline-flex h-14 w-14 items-center justify-center rounded-[1.75rem] text-white transition-all duration-300 active:scale-95 ${
-                isRecording 
-                  ? 'bg-rose-500 shadow-[0_0_20px_rgba(244,63,94,0.6)] ring-4 ring-rose-500/30 scale-105' 
-                  : 'bg-gradient-to-br from-primary via-primary to-secondary shadow-[0_4px_0_rgba(79,70,229,0.3)] hover:-translate-y-1'
-              }`}
-              style={{
-                transform: isRecording ? 'translateY(4px)' : undefined,
-                boxShadow: isRecording ? 'none' : undefined,
-                touchAction: 'none'
-              }}
-              aria-label="跟读"
-            >
-              {isRecording && (
-                <>
-                  <span className="absolute inset-0 rounded-[1.75rem] animate-ping bg-rose-400 opacity-60 duration-700" />
-                  <span className="absolute inset-0 rounded-[1.75rem] animate-pulse bg-rose-300 opacity-40 duration-500" />
-                </>
-              )}
-              <Mic className={`relative h-6 w-6 ${isRecording ? 'animate-bounce' : ''}`} />
-            </button>
-          </div>
-
-          <div className="hidden items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-sm font-extrabold text-text-body shadow-sm ring-1 ring-black/5 sm:flex">
+          <div className="flex items-center gap-1.5 sm:gap-2 rounded-full bg-white/80 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-extrabold text-text-body shadow-sm ring-1 ring-black/5">
             <span>进度</span>
             <span className="text-text-light">{currentIndex + 1} / {words.length}</span>
           </div>
 
           <button
             onClick={handleNext}
-            className="flex-none h-12 rounded-4xl bg-gradient-to-r from-primary to-secondary px-6 text-sm font-extrabold text-white shadow-pop-purple transition-transform active:scale-[0.99] sm:h-14 sm:px-8 sm:text-base [@media(max-height:720px)]:h-11 [@media(max-height:720px)]:px-5 [@media(max-height:720px)]:text-sm"
+            className="flex-none h-10 sm:h-12 rounded-full bg-gradient-to-r from-primary to-secondary px-5 sm:px-8 text-xs sm:text-sm font-extrabold text-white shadow-pop-purple transition-transform active:scale-[0.99]"
           >
             {currentIndex === words.length - 1 ? '完成' : '下一个'}
           </button>
