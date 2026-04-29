@@ -1,10 +1,10 @@
 import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Music, Scroll, Search, Play, Pause, Sparkles, Star } from 'lucide-react';
+import { ArrowLeft, Music, Scroll, Search, Play, Pause, Sparkles, Star, ChevronRight } from 'lucide-react';
 import { supabaseAnonKey, supabaseUrl } from '../lib/supabase';
 import { useSpeech } from '../hooks/useSpeech';
-import { MusicPlayer } from '../components/MusicPlayer';
+import { SongPlayerDrawer } from '../components/SongPlayerDrawer';
 
 export type CultureCategory = 'poem' | 'song';
 
@@ -460,8 +460,8 @@ export const Culture: React.FC = () => {
       </div>
       {/* 音乐播放器层 */}
       <AnimatePresence>
-        {currentSongIndex !== null && cards[currentSongIndex] && (
-          <MusicPlayer 
+        {selectedCategory === 'song' && currentSongIndex !== null && cards[currentSongIndex] && (
+          <SongPlayerDrawer
             card={cards[currentSongIndex]}
             onClose={() => setCurrentSongIndex(null)}
             onNext={() => setCurrentSongIndex((prev) => (prev !== null && prev < cards.length - 1 ? prev + 1 : 0))}
@@ -547,7 +547,15 @@ export const Culture: React.FC = () => {
       </div>
 
       <div
-        className={`flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-4 md:p-8 scroll-smooth overscroll-contain relative ${currentSongIndex !== null ? 'pb-32' : 'pb-4'}`}
+        className={`flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-4 md:p-8 scroll-smooth overscroll-contain relative ${
+          selectedCategory === 'song'
+            ? currentSongIndex !== null
+              ? 'pb-40'
+              : 'pb-10'
+            : currentSongIndex !== null
+              ? 'pb-32'
+              : 'pb-4'
+        }`}
         onScroll={handleScroll}
       >
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
@@ -573,53 +581,108 @@ export const Culture: React.FC = () => {
             </button>
           </div>
         )}
-        <div className={`grid gap-5 md:gap-6 w-full pb-16 ${
-          selectedCategory === 'song' 
-            ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4' 
-            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-        }`}>
-          {filteredCards.slice(0, visibleCount).map((card, idx) => (
-            (() => {
-              const poemTheme = POEM_THEMES[idx % POEM_THEMES.length];
-              return (
-            <motion.div
-              key={card.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx % 10 * 0.05 }}
-              onClick={() => {
-                if (selectedCategory === 'song') {
-                    handleReadAll(card);
-                }
-              }}
-              className={`rounded-[2rem] border-4 border-white ring-1 ring-black/5 flex flex-col items-center text-center relative group cursor-pointer ${
-                selectedCategory === 'song' 
-                    ? 'bg-white/85 p-4 aspect-[3/4] justify-center shadow-clay-card-even border-[3px] border-white' 
-                    : `${poemTheme.cardBg} ${poemTheme.shadow} h-[24rem] sm:h-[26rem] lg:h-[28rem]`
-              }`}
-            >
-              {selectedCategory === 'song' ? (
-                // --- 儿歌卡片样式 ---
-                <>
-                  <div className="relative w-24 h-24 mb-4 rounded-3xl bg-orange-100 flex items-center justify-center shadow-inner border border-white/70 group-hover:scale-[1.04] transition-transform duration-300 overflow-hidden">
+        {selectedCategory === 'song' ? (
+          <div className="w-full pb-12 flex flex-col gap-3">
+            {filteredCards.slice(0, visibleCount).map((card, idx) => (
+              <motion.div
+                key={card.id}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: (idx % 12) * 0.02 }}
+                onClick={() => handleReadAll(card)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') handleReadAll(card);
+                }}
+                className={[
+                  'w-full text-left relative overflow-hidden',
+                  'rounded-[2rem] border-[3px] border-white/90 bg-white/88 shadow-[0_18px_44px_-28px_rgba(15,23,42,0.32)]',
+                  'ring-1 ring-black/5',
+                  'transition-all duration-300 ease-out',
+                  'hover:-translate-y-0.5 hover:shadow-[0_26px_60px_-34px_rgba(15,23,42,0.38)]',
+                  'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20',
+                  "before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:bg-gradient-to-br before:from-pink-200/18 before:via-yellow-200/12 before:to-cyan-200/16",
+                  "after:content-[''] after:absolute after:-top-12 after:-right-14 after:h-36 after:w-36 after:pointer-events-none after:rounded-full after:bg-orange-300/14 after:blur-2xl",
+                ].join(' ')}
+              >
+                <div className="relative z-10 p-4 flex items-center gap-4">
+                  <div className="relative flex-none">
+                    <div
+                      aria-hidden="true"
+                      className="absolute -inset-1 rounded-[2rem] bg-white/95 shadow-[0_18px_36px_-26px_rgba(15,23,42,0.30)]"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="absolute -top-1 -left-1 h-8 w-8 rounded-full bg-white/70 blur-[1px]"
+                    />
+                    <div className="relative w-16 h-16 rounded-[1.7rem] bg-gradient-to-br from-orange-100 via-yellow-50 to-pink-100 border-[2px] border-white/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.92),inset_0_-10px_18px_rgba(249,115,22,0.12),0_14px_26px_-18px_rgba(15,23,42,0.25)] overflow-hidden flex items-center justify-center">
                       {card.cover ? (
-                          <img src={card.cover} alt={card.title} className="w-full h-full object-cover" />
+                        <img src={card.cover} alt={card.title} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                       ) : (
-                          <span className="text-5xl">{card.image}</span>
+                        <span className="text-[34px] select-none drop-shadow-[0_10px_18px_rgba(15,23,42,0.10)]">{card.image}</span>
                       )}
-                      <div className="absolute inset-0 bg-black/20 rounded-3xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                         <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-orange-500 shadow-lg">
-                            <Music size={20} fill="currentColor" />
-                         </div>
+                    </div>
+                    <Sparkles aria-hidden="true" className="absolute -top-1 -right-1 w-4 h-4 text-yellow-400/80 drop-shadow-[0_6px_10px_rgba(250,204,21,0.35)]" />
+                  </div>
+
+                  <div className="min-w-0 flex-1 flex flex-col justify-center gap-2">
+                    <div className="relative">
+                      <div aria-hidden="true" className="absolute -inset-x-2 -inset-y-1 rounded-2xl bg-gradient-to-r from-orange-100/60 via-yellow-50/45 to-pink-100/55" />
+                      <h3 className="relative text-base sm:text-lg font-black text-gray-800 leading-[1.15] line-clamp-2 px-1">
+                        {card.title}
+                      </h3>
+                    </div>
+
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <div className="text-[12px] font-black text-gray-700 bg-white/85 border border-white/75 shadow-[0_10px_18px_-14px_rgba(15,23,42,0.20)] px-3 py-1 rounded-full">
+                        {card.author || '儿歌'}
                       </div>
+                    </div>
                   </div>
-                  <h3 className="text-lg font-black text-gray-800 line-clamp-2 leading-snug mb-2">{card.title}</h3>
-                  <div className="text-xs font-black text-gray-600 bg-white/70 border border-white/60 px-3 py-1 rounded-full">
-                    {card.author || '儿歌'}
+
+                  <div className="flex items-center gap-2 flex-none">
+                    <div className="h-11 w-11 rounded-full bg-gradient-to-tr from-orange-400 to-yellow-400 border-[3px] border-white shadow-[0_18px_34px_-24px_rgba(249,115,22,0.65)] flex items-center justify-center text-white">
+                      <Play size={18} fill="currentColor" className="ml-1" />
+                    </div>
+                    <ChevronRight className="text-gray-200" size={22} />
                   </div>
-                </>
-              ) : (
-                // --- 古诗卡片样式 (重构) ---
+                </div>
+              </motion.div>
+            ))}
+
+            {loading && (
+              <div className="py-8 flex justify-center text-stone-400">
+                <span className="animate-pulse">正在加载更多...</span>
+              </div>
+            )}
+
+            {!loading && visibleCount >= filteredCards.length && filteredCards.length > 0 && (
+              <div className="py-8 flex justify-center text-stone-300 text-sm">
+                —— 已经到底啦，真棒！ ——
+              </div>
+            )}
+
+            {filteredCards.length === 0 && (
+              <div className="py-20 flex flex-col items-center text-stone-400">
+                <div className="text-4xl mb-4">🔍</div>
+                <p>没有找到相关内容哦~</p>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="grid gap-5 md:gap-6 w-full pb-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {filteredCards.slice(0, visibleCount).map((card, idx) => (
+              (() => {
+                const poemTheme = POEM_THEMES[idx % POEM_THEMES.length];
+                return (
+              <motion.div
+                key={card.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx % 10 * 0.05 }}
+                className={`rounded-[2rem] border-4 border-white ring-1 ring-black/5 flex flex-col items-center text-center relative group cursor-pointer ${poemTheme.cardBg} ${poemTheme.shadow} h-[24rem] sm:h-[26rem] lg:h-[28rem]`}
+              >
                 <>
                   <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-[2rem]">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/92 via-white/78 to-white/68" />
@@ -675,31 +738,31 @@ export const Culture: React.FC = () => {
                       </div>
                   </div>
                 </>
-              )}
-            </motion.div>
-              );
-            })()
-          ))}
-          
-          {loading && (
-             <div className="col-span-full py-8 flex justify-center text-stone-400">
-                <span className="animate-pulse">正在加载更多...</span>
-             </div>
-          )}
-          
-          {!loading && visibleCount >= filteredCards.length && filteredCards.length > 0 && (
-            <div className="col-span-full py-8 flex justify-center text-stone-300 text-sm">
-               —— 已经到底啦，真棒！ ——
-            </div>
-          )}
+              </motion.div>
+                );
+              })()
+            ))}
 
-          {filteredCards.length === 0 && (
-             <div className="col-span-full py-20 flex flex-col items-center text-stone-400">
+            {loading && (
+              <div className="col-span-full py-8 flex justify-center text-stone-400">
+                <span className="animate-pulse">正在加载更多...</span>
+              </div>
+            )}
+
+            {!loading && visibleCount >= filteredCards.length && filteredCards.length > 0 && (
+              <div className="col-span-full py-8 flex justify-center text-stone-300 text-sm">
+                —— 已经到底啦，真棒！ ——
+              </div>
+            )}
+
+            {filteredCards.length === 0 && (
+              <div className="col-span-full py-20 flex flex-col items-center text-stone-400">
                 <div className="text-4xl mb-4">🔍</div>
                 <p>没有找到相关内容哦~</p>
-             </div>
-          )}
-        </div>
+              </div>
+            )}
+          </div>
+        )}
         </div>
       </div>
     </div>
