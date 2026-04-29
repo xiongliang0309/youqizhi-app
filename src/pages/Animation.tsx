@@ -88,7 +88,7 @@ export const Animation: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#E0F7FA] flex flex-col font-sans relative overflow-hidden">
+    <div className="h-full bg-[#E0F7FA] flex flex-col font-sans relative overflow-x-hidden">
       {/* 动态背景装饰 */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20 z-0">
           <div className="absolute top-10 left-10 text-9xl animate-bounce-slow" style={{ animationDuration: '8s' }}>☁️</div>
@@ -156,7 +156,7 @@ export const Animation: React.FC = () => {
       </div>
 
       {/* 视频列表 */}
-      <div className="relative z-10 flex-1 px-4 md:px-8 pb-20 overflow-y-auto">
+      <div className="relative z-10 flex-1 px-4 md:px-8 pb-4 overflow-y-auto min-h-0">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <AnimatePresence mode='popLayout'>
                 {filteredCartoons.map((cartoon: any, idx: number) => (

@@ -374,16 +374,16 @@ export const Language: React.FC = () => {
   // --- 视图 1: 分类选择页 ---
   if (!selectedCategory) {
     return (
-      <div className="h-full flex flex-col bg-background-cloud font-sans relative overflow-hidden selection:bg-accent-yellow/50">
+      <div className="h-full flex flex-col bg-background-cloud font-sans relative overflow-x-hidden selection:bg-accent-yellow/50 min-h-0">
         <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-primary/15 blur-3xl animate-blob" />
         <div className="pointer-events-none absolute top-32 -left-24 h-80 w-80 rounded-full bg-accent-cyan/14 blur-3xl animate-blob" />
         <div className="pointer-events-none absolute -bottom-20 right-0 h-72 w-72 rounded-full bg-accent-yellow/18 blur-3xl animate-blob" />
 
-        <div className="flex-1 min-h-0 mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 sm:py-6 flex flex-col">
-          <header className="flex-none flex items-center gap-3 sm:gap-4 pb-2">
+        <div className="flex-1 min-h-0 mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 sm:py-6 flex flex-col relative z-10 pb-8 md:pb-12">
+          <header className="flex-none flex items-start gap-3 sm:gap-4 pb-2">
             <button
               onClick={() => navigate('/')}
-              className="flex-none h-10 w-10 sm:h-11 sm:w-11 rounded-full bg-white/90 shadow-md ring-1 ring-black/5 transition-colors hover:bg-white"
+              className="flex-none h-10 w-10 sm:h-11 sm:w-11 rounded-full bg-white/90 border-[3px] border-white shadow-clay-card-even transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
               aria-label="返回主页"
             >
               <ArrowLeft className="mx-auto h-5 w-5 text-text-body" />
@@ -392,7 +392,7 @@ export const Language: React.FC = () => {
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
                 <span className="text-xl sm:text-2xl">{CHARACTERS.tommy.emoji}</span>
-                <span className="rounded-full bg-white/70 px-2 py-1 sm:px-3 sm:py-1.5 text-xs sm:text-sm font-extrabold text-text-body shadow-sm ring-1 ring-black/5">
+                <span className="rounded-full bg-white/80 px-2 py-1 sm:px-3 sm:py-1.5 text-xs sm:text-sm font-extrabold text-text-body shadow-sm border-2 border-white">
                   汤米陪你学单词
                 </span>
                 <span className="hidden sm:inline-flex rounded-full bg-primary/10 px-3 py-1.5 text-sm font-extrabold text-primary ring-1 ring-primary/15">
@@ -407,32 +407,32 @@ export const Language: React.FC = () => {
               </p>
             </div>
 
-            <div className="hidden md:flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 shadow-sm ring-1 ring-black/5">
+            <div className="hidden md:flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 shadow-sm border-2 border-white shrink-0 self-start">
               <span className="text-xl">{CHARACTERS.posy.emoji}</span>
               <span className="text-sm font-extrabold text-text-body">波西：我来当你的小伙伴！</span>
             </div>
           </header>
 
-          <div className="flex-1 min-h-0 mt-4 sm:mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 content-start overflow-y-auto overflow-x-hidden pb-6">
+          <div className="flex-1 min-h-0 mt-4 sm:mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 content-start overflow-y-auto overflow-x-hidden relative z-10 pb-4">
             {CATEGORIES.map(cat => (
               <motion.button
                 key={cat.id}
                 whileHover={{ y: -2, scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`group relative flex items-center gap-3 sm:gap-4 rounded-[1.25rem] sm:rounded-[1.75rem] border-2 border-white/70 bg-gradient-to-br from-white/85 via-white/70 to-white/60 p-3 sm:p-5 text-left ring-1 ring-black/5 backdrop-blur-md transition-all duration-200 ease-out hover:from-white/90 hover:via-white/75 hover:to-white/65 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20 ${cat.border} ${cat.shadow}`}
+                className="group relative flex items-center gap-3 sm:gap-4 rounded-[1.25rem] sm:rounded-[1.75rem] border-[3px] border-white bg-white/80 p-3 sm:p-5 text-left shadow-clay-card-even ring-1 ring-black/5 transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-white/90 hover:shadow-clay-card-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
               >
-                <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${cat.overlay} opacity-90 rounded-[1.25rem] sm:rounded-[1.75rem]`} />
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-white/70 via-white/10 to-transparent opacity-80 rounded-t-[1.25rem] sm:rounded-t-[1.75rem]" />
-                <div className={`pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full ${cat.orbA} blur-3xl opacity-70`} />
-                <div className={`pointer-events-none absolute -left-14 -bottom-14 h-36 w-36 rounded-full ${cat.orbB} blur-3xl opacity-60`} />
+                <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${cat.overlay} opacity-85 rounded-[1.25rem] sm:rounded-[1.75rem] z-0`} />
+                <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.6),transparent_62%)]" />
+                <div className={`pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full ${cat.orbA} blur-3xl opacity-45 z-0`} />
+                <div className={`pointer-events-none absolute -left-12 -bottom-12 h-32 w-32 rounded-full ${cat.orbB} blur-3xl opacity-35 z-0`} />
                 
-                <div className="relative grid h-10 w-10 sm:h-14 sm:w-14 flex-none place-items-center overflow-hidden rounded-full bg-white/75 shadow-sm ring-1 ring-black/5 backdrop-blur-sm transition-transform duration-200 ease-out group-hover:scale-[1.03]">
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/80 to-white/0" />
+                <div className="relative z-10 grid h-10 w-10 sm:h-14 sm:w-14 flex-none place-items-center overflow-hidden rounded-2xl bg-white/85 shadow-sm border border-white/60 transition-transform duration-200 ease-out group-hover:scale-[1.03]">
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/90 to-white/0" />
                   <span className="relative text-2xl sm:text-3xl drop-shadow-sm">{cat.icon}</span>
                 </div>
 
-                <div className="min-w-0 flex-1">
+                <div className="relative z-10 min-w-0 flex-1">
                   <div className="truncate text-[clamp(0.9rem,3.5vw,1.1rem)] sm:text-lg font-black text-text-main leading-tight">{cat.name}</div>
                   <div className="mt-0.5 text-[10px] sm:text-sm font-bold text-text-light">开始学习</div>
                 </div>
@@ -453,7 +453,7 @@ export const Language: React.FC = () => {
 
   // --- 视图 2: 单词卡片页 ---
   return (
-    <div className="h-full bg-background-cloud flex flex-col font-sans relative overflow-hidden selection:bg-accent-yellow/50">
+    <div className="bg-background-cloud font-sans selection:bg-accent-yellow/50 relative flex h-full flex-col overflow-x-hidden">
       <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-primary/15 blur-3xl animate-blob" />
       <div className="pointer-events-none absolute top-40 -left-24 h-80 w-80 rounded-full bg-accent-cyan/14 blur-3xl animate-blob" />
       <div className="pointer-events-none absolute -bottom-20 right-0 h-72 w-72 rounded-full bg-accent-yellow/18 blur-3xl animate-blob" />
@@ -502,7 +502,7 @@ export const Language: React.FC = () => {
         </div>
       </div>
 
-      <div className="mx-auto flex w-full max-w-7xl flex-1 min-h-0 flex-col px-4 py-3 sm:px-6 sm:py-4 justify-center items-center">
+      <div className="mx-auto flex w-full max-w-7xl flex-1 min-h-0 flex-col px-4 py-3 sm:px-6 sm:py-4 justify-center items-center pb-8">
         <AnimatePresence mode="wait">
           {currentWord && (
             <motion.div
@@ -510,7 +510,7 @@ export const Language: React.FC = () => {
               initial={{ opacity: 0, x: 50, scale: 0.9 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: -50, scale: 0.9 }}
-              className={`w-full max-w-[34rem] h-full max-h-[44rem] flex flex-col overflow-hidden rounded-[2rem] sm:rounded-[2.75rem] border-[4px] sm:border-[6px] border-white bg-white/85 p-4 sm:p-6 shadow-candy-card ring-1 ring-black/5 backdrop-blur-sm ${activeCategory?.shadow ?? ''}`}
+              className={`w-full max-w-[34rem] h-full max-h-[44rem] flex flex-col overflow-hidden rounded-[2rem] sm:rounded-[2.75rem] border-[4px] sm:border-[6px] border-white bg-white/85 p-4 sm:p-6 shadow-clay-card ring-1 ring-black/5 backdrop-blur-sm ${activeCategory?.shadow ?? ''}`}
             >
               <div className="flex-none flex items-start justify-end">
                 <button
@@ -551,7 +551,7 @@ export const Language: React.FC = () => {
                         loading="eager"
                       />
                     ) : (
-                      <span className="text-[clamp(3.5rem,min(15vw,13svh),8rem)] leading-none">{currentWord.image}</span>
+                      <span className="text-[clamp(3.5rem,min(15vw,13svh),8rem)] leading-none block">{currentWord.image}</span>
                     )}
                   </div>
                   <div className="mt-3 sm:mt-4 text-center flex-none">
@@ -598,7 +598,7 @@ export const Language: React.FC = () => {
                 </div>
               )}
 
-              <div className="flex-none mt-3 sm:mt-5 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+              <div className="flex-none mt-3 sm:mt-5 flex flex-wrap items-center justify-center gap-3 sm:gap-4 pb-4">
                 <button
                   onClick={playSound}
                   className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-gradient-to-r from-accent-yellow to-accent-tangerine px-4 py-2 sm:px-5 sm:py-3 text-xs sm:text-sm font-extrabold text-white shadow-pop-orange transition-transform active:scale-[0.98]"

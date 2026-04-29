@@ -139,3 +139,6 @@ public/audio/processed/
 
 .env
 .env.*
+
+.superpowers/
+.worktrees/

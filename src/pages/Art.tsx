@@ -38,10 +38,19 @@ interface GalleryItem {
 }
 
 const getDeviceId = () => {
-  let id = localStorage.getItem('device_id');
+  let id = null;
+  try {
+    id = localStorage.getItem('device_id');
+  } catch (e) {}
   if (!id) {
-    id = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString();
-    localStorage.setItem('device_id', id);
+    try {
+      id = window.crypto && window.crypto.randomUUID ? window.crypto.randomUUID() : Date.now().toString();
+    } catch (e) {
+      id = Date.now().toString();
+    }
+    try {
+      localStorage.setItem('device_id', id);
+    } catch (e) {}
   }
   return id;
 };
@@ -83,11 +92,16 @@ export const Art: React.FC = () => {
         }));
         setGallery(items);
         // 同步到本地缓存以防离线
-        localStorage.setItem('youqizhi_gallery', JSON.stringify(items));
+        try {
+          localStorage.setItem('youqizhi_gallery', JSON.stringify(items));
+        } catch (e) {}
       }
     } catch (e) {
       console.warn('获取云端画廊失败，回退到本地缓存', e);
-      const saved = localStorage.getItem('youqizhi_gallery');
+      let saved = null;
+      try {
+        saved = localStorage.getItem('youqizhi_gallery');
+      } catch (e) {}
       if (saved) {
         try { setGallery(JSON.parse(saved)); } catch (err) {}
       }
@@ -102,7 +116,9 @@ export const Art: React.FC = () => {
 
   const saveGallery = (items: GalleryItem[]) => {
     setGallery(items);
-    localStorage.setItem('youqizhi_gallery', JSON.stringify(items));
+    try {
+      localStorage.setItem('youqizhi_gallery', JSON.stringify(items));
+    } catch (e) {}
   };
 
   // 初始化画布
@@ -319,7 +335,7 @@ export const Art: React.FC = () => {
   const colors = ['#000000', '#ffffff', '#EF4444', '#F97316', '#EAB308', '#22C55E', '#3B82F6', '#A855F7', '#EC4899', '#8B5CF6'];
 
   const renderHome = () => (
-    <div className="flex-1 p-6 overflow-y-auto">
+    <div className="flex-1 p-6 overflow-y-auto min-h-0 pb-4">
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-3xl p-8 text-center shadow-sm">
           <h3 className="text-2xl font-black text-gray-800 mb-4">今天想画点什么呢？</h3>
@@ -369,7 +385,7 @@ export const Art: React.FC = () => {
     const template = selectedTemplate ? TEMPLATES.find(t => t.id === selectedTemplate) : null;
     
     return (
-      <div className="flex-1 p-4 md:p-6 flex flex-col h-full overflow-hidden max-w-6xl mx-auto w-full">
+      <div className="flex-1 p-4 md:p-6 flex flex-col min-h-0 max-w-6xl mx-auto w-full">
         {/* 画布区域 */}
         <div className="flex-1 bg-white rounded-[2rem] shadow-xl overflow-hidden border-[6px] border-purple-200 touch-none relative cursor-crosshair">
            <canvas
@@ -426,7 +442,7 @@ export const Art: React.FC = () => {
   };
 
   const renderGallery = () => (
-    <div className="flex-1 p-6 overflow-y-auto">
+    <div className="flex-1 p-6 overflow-y-auto min-h-0 pb-4">
       <div className="max-w-6xl mx-auto">
         {isLoadingGallery && gallery.length === 0 ? (
           <div className="text-center py-20 flex flex-col items-center">
@@ -503,7 +519,7 @@ export const Art: React.FC = () => {
   );
 
   return (
-    <div className="h-screen bg-[#FAF5FF] flex flex-col overflow-hidden font-sans">
+    <div className="h-full bg-gradient-to-b from-[#FFF5F8] to-[#FFF0F5] flex flex-col font-sans relative overflow-x-hidden">
       <div className="p-4 flex items-center justify-between bg-white/80 backdrop-blur-md shadow-sm shrink-0 z-10">
         <div className="flex items-center">
           <button 

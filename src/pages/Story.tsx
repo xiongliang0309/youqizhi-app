@@ -49,7 +49,7 @@ export const Story: React.FC = () => {
   // --- 视图 1: 故事列表 ---
   if (!selectedStory) {
     return (
-      <div className="h-screen bg-[#FDF2F8] flex flex-col font-sans overflow-hidden">
+      <div className="h-full bg-[#FDF2F8] flex flex-col font-sans relative overflow-x-hidden">
         <div className="p-4 md:p-6 flex items-center bg-white/60 backdrop-blur-md sticky top-0 z-10 shadow-sm border-b border-pink-100">
           <button onClick={() => navigate('/')} className="bg-white p-3 rounded-full shadow-md hover:bg-pink-50 transition-colors">
             <ArrowLeft className="text-gray-600" />
@@ -61,10 +61,10 @@ export const Story: React.FC = () => {
         </div>
 
         <div 
-          className="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth"
+          className="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth min-h-0 pb-4"
           onScroll={handleScroll}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto w-full pb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto w-full pb-8">
             {stories.slice(0, visibleCount).map((story, idx) => (
               <motion.div
                 key={story.id}
@@ -114,7 +114,7 @@ export const Story: React.FC = () => {
 
   // --- 视图 2: 阅读器 ---
   return (
-    <div className="h-screen bg-gray-900 flex flex-col items-center justify-center relative overflow-hidden font-sans">
+    <div className="h-full bg-gray-900 flex flex-col items-center justify-center relative overflow-hidden font-sans">
       {/* 退出按钮 */}
       <div className="absolute top-6 left-6 z-20 flex items-center gap-4">
         <button 

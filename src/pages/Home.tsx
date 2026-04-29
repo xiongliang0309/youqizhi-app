@@ -13,7 +13,7 @@ const MODULES = [
     icon: BookOpen, 
     color: 'text-white', 
     bg: 'bg-yellow-400', 
-    shadow: 'shadow-pop-yellow',
+    shadow: 'shadow-clay-card-even',
     border: 'border-yellow-200',
     path: '/language' 
   },
@@ -24,7 +24,7 @@ const MODULES = [
     icon: Brain, 
     color: 'text-white', 
     bg: 'bg-blue-500', 
-    shadow: 'shadow-pop-cyan', // Blue/Cyan pop
+    shadow: 'shadow-clay-card-even', // Blue/Cyan pop
     border: 'border-blue-300',
     path: '/logic' 
   },
@@ -35,7 +35,7 @@ const MODULES = [
     icon: Lightbulb, 
     color: 'text-white', 
     bg: 'bg-lime-500', 
-    shadow: 'shadow-pop-green',
+    shadow: 'shadow-clay-card-even',
     border: 'border-lime-300',
     path: '/science' 
   },
@@ -46,7 +46,7 @@ const MODULES = [
     icon: Music, 
     color: 'text-white', 
     bg: 'bg-rose-500', 
-    shadow: 'shadow-pop-pink',
+    shadow: 'shadow-clay-card-even',
     border: 'border-rose-300',
     path: '/culture' 
   },
@@ -57,7 +57,7 @@ const MODULES = [
     icon: Tv, 
     color: 'text-white', 
     bg: 'bg-cyan-500', 
-    shadow: 'shadow-pop-cyan',
+    shadow: 'shadow-clay-card-even',
     border: 'border-cyan-300',
     path: '/animation' 
   },
@@ -68,7 +68,7 @@ const MODULES = [
     icon: Book, 
     color: 'text-white', 
     bg: 'bg-violet-500', 
-    shadow: 'shadow-pop-purple',
+    shadow: 'shadow-clay-card-even',
     border: 'border-violet-300',
     path: '/story' 
   },
@@ -79,7 +79,7 @@ const MODULES = [
     icon: Palette, 
     color: 'text-white', 
     bg: 'bg-pink-500', 
-    shadow: 'shadow-pop-pink',
+    shadow: 'shadow-clay-card-even',
     border: 'border-pink-300',
     path: '/art' 
   },
@@ -90,7 +90,7 @@ const MODULES = [
     icon: CheckCircle, 
     color: 'text-white', 
     bg: 'bg-orange-500', 
-    shadow: 'shadow-pop-orange',
+    shadow: 'shadow-clay-card-even',
     border: 'border-orange-300',
     path: '/habits' 
   },
@@ -100,20 +100,19 @@ const ModuleCard = ({ title, icon: Icon, color, bg, shadow, border, path, delay,
   const navigate = useNavigate();
   const { playPop } = useInteraction();
 
-  // 简化版背景色，不再使用过多的装饰元素
-  // 仅保留淡淡的色彩倾向
-  const lightBgMap: Record<string, string> = {
-    'bg-yellow-400': 'bg-yellow-50',
-    'bg-blue-500': 'bg-blue-50',
-    'bg-lime-500': 'bg-lime-50',
-    'bg-rose-500': 'bg-rose-50',
-    'bg-cyan-500': 'bg-cyan-50',
-    'bg-violet-500': 'bg-violet-50',
-    'bg-pink-500': 'bg-pink-50',
-    'bg-orange-500': 'bg-orange-50',
+  const tintMap: Record<string, string> = {
+    'bg-yellow-400': 'from-yellow-200/90 via-yellow-100/60 to-white/85',
+    'bg-blue-500': 'from-sky-200/90 via-sky-100/60 to-white/85',
+    'bg-lime-500': 'from-lime-200/90 via-lime-100/60 to-white/85',
+    'bg-rose-500': 'from-rose-200/90 via-rose-100/60 to-white/85',
+    'bg-cyan-500': 'from-cyan-200/90 via-cyan-100/60 to-white/85',
+    'bg-violet-500': 'from-violet-200/90 via-violet-100/60 to-white/85',
+    'bg-pink-500': 'from-pink-200/90 via-pink-100/60 to-white/85',
+    'bg-orange-500': 'from-orange-200/90 via-orange-100/60 to-white/85',
   };
 
-  const cardBg = lightBgMap[bg] || 'bg-white';
+  const tint = tintMap[bg] || 'from-white via-white to-white';
+  const cardBg = 'bg-white/80';
 
   return (
     <motion.div
@@ -128,19 +127,21 @@ const ModuleCard = ({ title, icon: Icon, color, bg, shadow, border, path, delay,
       }}
       className={`relative h-48 sm:h-52 md:h-56 lg:h-60 w-full cursor-pointer group`}
     >
-      {/* 卡片主体 - 恢复原版背景和悬浮效果 */}
-      <div className={`absolute inset-0 ${cardBg} rounded-[2rem] border-4 border-white ${shadow} p-6 flex flex-col items-center justify-center overflow-hidden z-10 transition-all duration-300 group-hover:bg-white`}>
+      {/* 卡片主体 - 黏土风重构 */}
+      <div className={`absolute inset-0 ${cardBg} relative rounded-[2rem] border-[3px] border-white ${shadow} p-6 flex flex-col items-center justify-center overflow-hidden z-10 transition-all duration-300 group-hover:bg-white/95`}>
+        <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${tint} z-0 opacity-95`} />
+        <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.55),transparent_55%)]" />
         
         {/* 去掉复杂的装饰圆点，改为顶部柔和光晕 */}
-        <div className={`absolute top-0 inset-x-0 h-16 sm:h-20 bg-gradient-to-b from-white/40 to-transparent`} />
+        <div className={`absolute top-0 inset-x-0 h-16 sm:h-20 bg-gradient-to-b from-white/40 to-transparent z-10`} />
 
-        {/* 图标容器 - 稍微缩小并简化 */}
-        <div className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl ${bg} flex items-center justify-center mb-3 shadow-md group-hover:scale-110 transition-transform duration-300 ring-4 ring-white`}>
+        {/* 图标容器 - 下凹的坑 */}
+        <div className={`relative z-10 w-14 h-14 md:w-16 md:h-16 rounded-2xl ${bg} flex items-center justify-center mb-3 shadow-inner border border-white/50 group-hover:scale-110 transition-transform duration-300 ring-2 ring-white/50`}>
           <Icon className={`w-7 h-7 md:w-8 md:h-8 ${color}`} strokeWidth={3} />
         </div>
         
-        <h3 className={`text-lg md:text-xl font-black text-gray-800 mb-1 tracking-wide text-center group-hover:${bg.replace('bg-', 'text-')} transition-colors`}>{title}</h3>
-        <p className="text-gray-500 text-xs md:text-sm font-bold bg-white/60 px-2 py-1 rounded-full">{desc}</p>
+        <h3 className={`relative z-10 text-lg md:text-xl font-black text-gray-800 mb-1 tracking-wide text-center group-hover:${bg.replace('bg-', 'text-')} transition-colors`}>{title}</h3>
+        <p className="relative z-10 text-gray-500 text-xs md:text-sm font-bold bg-white/60 px-2 py-1 rounded-full">{desc}</p>
       </div>
     </motion.div>
   );
@@ -218,7 +219,12 @@ const DraggableTailMascot: React.FC = () => {
 
   React.useEffect(() => {
     const key = 'xwb_mascot_pos_v4'; // 更新 key 以适配新的坐标系（偏移量）
-    const raw = localStorage.getItem(key);
+    let raw = null;
+    try {
+      raw = localStorage.getItem(key);
+    } catch (e) {
+      console.warn('localStorage is not available');
+    }
     
     if (raw) {
       try {
@@ -227,7 +233,9 @@ const DraggableTailMascot: React.FC = () => {
         setPos(clamped);
         return;
       } catch {
-        localStorage.removeItem(key);
+        try {
+          localStorage.removeItem(key);
+        } catch (e) {}
       }
     }
     
@@ -238,7 +246,9 @@ const DraggableTailMascot: React.FC = () => {
   React.useEffect(() => {
     if (!pos) return;
     const key = 'xwb_mascot_pos_v4';
-    localStorage.setItem(key, JSON.stringify(pos));
+    try {
+      localStorage.setItem(key, JSON.stringify(pos));
+    } catch (e) {}
   }, [pos]);
 
   React.useEffect(() => {
@@ -290,7 +300,9 @@ const DraggableTailMascot: React.FC = () => {
         setPos(currentPos => {
           if (currentPos) {
             const key = 'xwb_mascot_pos_v4';
-            localStorage.setItem(key, JSON.stringify(currentPos));
+            try {
+              localStorage.setItem(key, JSON.stringify(currentPos));
+            } catch (e) {}
           }
           return currentPos;
         });
@@ -344,7 +356,7 @@ const DraggableTailMascot: React.FC = () => {
           loading="lazy"
           decoding="async"
           fetchPriority="low"
-          className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-cover rounded-[2rem] ring-4 ring-white shadow-pop-purple"
+          className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-cover rounded-[2rem] ring-[4px] ring-white shadow-clay-card"
           draggable={false}
         />
         <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-white text-black text-[10px] font-black px-2 py-1 rounded-full border-2 border-black shadow-[2px_2px_0px_#000] whitespace-nowrap">
@@ -357,7 +369,7 @@ const DraggableTailMascot: React.FC = () => {
 
 export const Home: React.FC = () => {
   return (
-    <div className="min-h-screen bg-background-cloud font-sans selection:bg-accent-yellow/50 relative overflow-x-hidden">
+    <div className="bg-background-cloud font-sans selection:bg-accent-yellow/50 relative overflow-x-hidden min-h-full flex flex-col">
       
       {/* 动态背景装饰 - 孟菲斯风格 */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
@@ -377,7 +389,7 @@ export const Home: React.FC = () => {
         </motion.div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 py-8 md:py-12 relative z-10">
+      <main className="w-full max-w-7xl mx-auto px-4 py-8 md:py-12 relative z-10 flex-1 flex flex-col justify-center pb-4">
         {/* 欢迎标语 - 动感文字 */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -389,14 +401,13 @@ export const Home: React.FC = () => {
           </h2>
           <div className="inline-block relative">
             <div className="absolute -inset-1 bg-gradient-to-r from-accent-mint to-accent-yellow rounded-full blur opacity-70"></div>
-            <p className="relative bg-white text-text-main text-sm sm:text-base font-bold px-6 sm:px-8 py-2 rounded-full shadow-xl border-4 border-white flex items-center gap-2">
+            <p className="relative bg-white text-text-main text-sm sm:text-base font-bold px-6 sm:px-8 py-3 rounded-full shadow-clay-card border-[3px] border-white flex items-center gap-2">
               <span className="text-base sm:text-lg">✨</span> 准备好开始今天的冒险了吗？
             </p>
           </div>
         </motion.div>
 
-        {/* 模块网格 */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 pb-20 md:pb-24 px-2 sm:px-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 px-2 sm:px-4">
           {MODULES.map((mod, idx) => (
             <ModuleCard 
               key={mod.id}

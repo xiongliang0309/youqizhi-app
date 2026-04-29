@@ -121,7 +121,7 @@ export const Science: React.FC = () => {
 
   if (!selectedCategory) {
     return (
-      <div className="flex-1 bg-background-cloud flex flex-col font-sans p-4 md:p-8 relative overflow-hidden">
+      <div className="h-full bg-background-cloud flex flex-col font-sans p-4 md:p-8 relative overflow-x-hidden">
         {/* 动态背景装饰 - 柔和的云雾光晕 */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
           <div className="absolute top-1/4 left-1/4 w-[40rem] h-[40rem] bg-accent-mint/20 rounded-full blur-[100px] animate-blob" />
@@ -199,7 +199,7 @@ export const Science: React.FC = () => {
   // --- 十万个为什么模块：恢复瀑布流滚动模式 ---
   if (selectedCategory === 'knowledge') {
     return (
-      <div className="flex-1 bg-background-cloud flex flex-col font-sans overflow-hidden relative">
+      <div className="h-full bg-background-cloud flex flex-col font-sans overflow-x-hidden relative">
         {/* 动态背景装饰 */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
           <div className="absolute top-1/4 left-1/4 w-[40rem] h-[40rem] bg-accent-mint/20 rounded-full blur-[100px]" />
@@ -228,7 +228,7 @@ export const Science: React.FC = () => {
 
          <div
            ref={knowledgeScrollRef}
-           className="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12 relative z-10"
+           className="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12 relative z-10 min-h-0 pb-4"
            style={{ WebkitOverflowScrolling: 'touch' }}
          >
            {loadingCards ? (
@@ -288,14 +288,14 @@ export const Science: React.FC = () => {
 
   // --- 其他模块（例如职业认知）：保持单卡片幻灯片模式 ---
   return (
-    <div className="flex-1 bg-background-cloud flex flex-col font-sans overflow-hidden relative">
+    <div className="h-full bg-background-cloud flex flex-col font-sans overflow-x-hidden relative">
       {/* 动态背景装饰 - 柔和的云雾光晕 */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-1/4 left-1/4 w-[40rem] h-[40rem] bg-accent-mint/20 rounded-full blur-[100px] animate-blob" />
         <div className="absolute bottom-1/4 right-1/4 w-[35rem] h-[35rem] bg-primary/20 rounded-full blur-[100px] animate-blob animation-delay-2000" />
       </div>
 
-      <div className="p-4 md:p-6 flex items-center bg-white/60 backdrop-blur-md sticky top-0 z-10 shadow-sm border-b border-white/50 relative shrink-0">
+      <div className="p-4 md:p-6 flex items-center bg-white/60 backdrop-blur-md sticky top-0 z-10 shadow-sm border-b border-white/50 shrink-0">
         <button onClick={() => setSelectedCategory(null)} className="bg-white/80 backdrop-blur p-3 md:p-4 rounded-full shadow-sm hover:-translate-y-1 transition-transform border border-white">
           <ArrowLeft className="w-6 h-6 stroke-[3] text-text-light" />
         </button>
@@ -316,7 +316,7 @@ export const Science: React.FC = () => {
       </div>
 
       <div 
-        className="flex-1 overflow-hidden p-2 md:p-8 relative z-10 flex flex-col items-center justify-center min-h-0"
+        className="flex-1 overflow-hidden p-2 md:p-8 relative z-10 flex flex-col items-center justify-center min-h-0 pb-4"
       >
         {loadingCards ? (
           <div className="flex-1 flex items-center justify-center min-h-[400px]">

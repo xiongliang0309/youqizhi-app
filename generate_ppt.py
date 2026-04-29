@@ -1,0 +1,150 @@
+from pptx import Presentation
+from pptx.util import Inches, Pt
+
+def create_presentation(output_filename):
+    prs = Presentation()
+
+    # 1. 开场白
+    slide = prs.slides.add_slide(prs.slide_layouts[0])
+    slide.shapes.title.text = "AI 时代，为孩子手撸一个专属 AI 学习机"
+    subtitle = slide.placeholders[1]
+    subtitle.text = "一个周末业余项目的前端全栈之旅\n分享人：前端老兵"
+
+    # 2. 项目背景
+    slide = prs.slides.add_slide(prs.slide_layouts[1])
+    slide.shapes.title.text = "2. 项目背景 (Background)"
+    tf = slide.placeholders[1].text_frame
+    tf.text = "灵感来源：周末带小朋友去逛街，偶然体验了商场里的科大讯飞 AI 学习机。"
+    p = tf.add_paragraph()
+    p.text = "小朋友的反馈：试用后非常感兴趣，爱不释手，互动效果很好。"
+    p = tf.add_paragraph()
+    p.text = "极客老爸的脑洞：既然现在大模型这么强大，我是不是能用 AI 自己手撸一个简易版的学习机给孩子？"
+    p = tf.add_paragraph()
+    p.text = "说干就干：从零开始的“野生 AI 学习机”项目正式启动！"
+
+    # 3. 拥抱新范式：Vibe Coding
+    slide = prs.slides.add_slide(prs.slide_layouts[1])
+    slide.shapes.title.text = "3. 拥抱新范式：Vibe Coding"
+    tf = slide.placeholders[1].text_frame
+    tf.text = "什么是 Vibe Coding？：用自然语言描述需求，通过“感觉/氛围”引导 AI 生成代码，而非逐行手写。"
+    p = tf.add_paragraph()
+    p.text = "开发体验的颠覆：从传统的“思考怎么写代码”转变为“思考产品逻辑、交互和架构”。"
+    p = tf.add_paragraph()
+    p.text = "在这个项目中的实践："
+    p = tf.add_paragraph()
+    p.text = "遇到报错直接抛给 AI 解决。"
+    p.level = 1
+    p = tf.add_paragraph()
+    p.text = "需求迭代和 UI 调整只需一句话。"
+    p.level = 1
+    p = tf.add_paragraph()
+    p.text = "极大地缩短了从想法到 MVP 的时间。"
+    p.level = 1
+
+    # 4. 核心生产力工具：Trae
+    slide = prs.slides.add_slide(prs.slide_layouts[1])
+    slide.shapes.title.text = "4. 核心生产力工具：Trae"
+    tf = slide.placeholders[1].text_frame
+    tf.text = "认识 Trae：专为 AI 时代打造的智能 IDE。"
+    p = tf.add_paragraph()
+    p.text = "为什么选择 Trae？深度契合 Vibe Coding 体验："
+    p = tf.add_paragraph()
+    p.text = "极致的代码上下文理解：随时随地把文件、代码块等元素添加到对话中。"
+    p.level = 1
+    p = tf.add_paragraph()
+    p.text = "Solo 模式 (Builder)：高度自动化的智能体，帮你自动规划、编写和修改代码，沉浸感极强。"
+    p.level = 1
+    p = tf.add_paragraph()
+    p.text = "提示词优化：不懂怎么写高级 Prompt？内置工具帮你一键润色。"
+    p.level = 1
+    p = tf.add_paragraph()
+    p.text = "内置浏览器：左边写代码，右边直接预览交互，甚至能让 AI 帮你去操作浏览器调试。"
+    p.level = 1
+
+    # 5. 项目实现与 Trae 技能实战
+    slide = prs.slides.add_slide(prs.slide_layouts[1])
+    slide.shapes.title.text = "5. 项目实现与 Trae 技能实战"
+    tf = slide.placeholders[1].text_frame
+    tf.text = "初期项目规划：利用 using-superpowers 技能。从想法到落地，让 AI 辅助理清思路，生成清晰的架构设计和开发规划。"
+    p = tf.add_paragraph()
+    p.text = "UI/UX 智能美化：利用 ui-ux-pro-max 技能。一句话指令，将粗糙的原型直接升级为适合儿童的极简且充满童趣的专业级 UI。"
+    p = tf.add_paragraph()
+    p.text = "系统架构与功能："
+    p = tf.add_paragraph()
+    p.text = "前端交互层 -> API 路由层 -> AI 大模型 -> 数据持久层。"
+    p.level = 1
+    p = tf.add_paragraph()
+    p.text = "核心实现：语音/文字的自然语言交互（对接主流大模型）。"
+    p.level = 1
+    p = tf.add_paragraph()
+    p.text = "遇到的坑与解决方案：简单分享开发过程中遇到的一两个技术难点及如何用 AI 解决。"
+
+    # 6. 后端基建：Supabase 智能集成
+    slide = prs.slides.add_slide(prs.slide_layouts[1])
+    slide.shapes.title.text = "6. 后端基建：Supabase 智能集成"
+    tf = slide.placeholders[1].text_frame
+    tf.text = "前端视角的痛点：对于前端开发者来说，数据库设计和后端 API 编写往往是“拦路虎”。"
+    p = tf.add_paragraph()
+    p.text = "AI 辅助知识储备：先让 AI 收集整理 Supabase 的优质资源和最佳实践（如 Schema 设计、RLS 策略），并保存到本地作为参考上下文。"
+    p = tf.add_paragraph()
+    p.text = "技能一键集成：利用 Trae 的 supabase-migration-generator 技能，结合本地收集的优质资料，让 AI 直接生成符合规范的 SQL 和后端配置。"
+    p = tf.add_paragraph()
+    p.text = "实现效果：完美解决了数据持久化、Row Level Security (RLS) 隔离等问题，前端开发者也能轻松搞定复杂的后端基建。"
+
+    # 7. 部署上线：Vercel 一键部署
+    slide = prs.slides.add_slide(prs.slide_layouts[1])
+    slide.shapes.title.text = "7. 部署上线：Vercel 一键部署"
+    tf = slide.placeholders[1].text_frame
+    tf.text = "Vercel 的优势：前端和全栈应用的托管神器。"
+    p = tf.add_paragraph()
+    p.text = "丝滑的部署体验："
+    p = tf.add_paragraph()
+    p.text = "GitHub 提交代码，自动触发 CI/CD 构建。"
+    p.level = 1
+    p = tf.add_paragraph()
+    p.text = "零配置一键上线，自动生成免费的访问域名。"
+    p.level = 1
+    p = tf.add_paragraph()
+    p.text = "面临的挑战："
+    p = tf.add_paragraph()
+    p.text = "Vercel 默认分配的免费域名（.vercel.app 等）在国内网络环境下访问体验不佳，经常受到网络波动影响甚至无法访问。"
+    p.level = 1
+
+    # 8. 网络连通：Cloudflare 代理
+    slide = prs.slides.add_slide(prs.slide_layouts[1])
+    slide.shapes.title.text = "8. 网络连通：Cloudflare 代理"
+    tf = slide.placeholders[1].text_frame
+    tf.text = "痛点：国内直接访问海外优质 AI API（如 Claude 等）存在网络连通性问题。"
+    p = tf.add_paragraph()
+    p.text = "解决方案：利用 Cloudflare Workers 搭建 API 代理转发（ClaudeFlare），同时也一并解决了前端应用域名访问困难的问题。"
+    p = tf.add_paragraph()
+    p.text = "优势："
+    p = tf.add_paragraph()
+    p.text = "解决网络限制，实现低延迟、高稳定的接口调用。"
+    p.level = 1
+    p = tf.add_paragraph()
+    p.text = "在代理层隐藏真实的 API Key，防止前端直连泄露，保障调用安全。"
+    p.level = 1
+
+    # 9. 总结与展望
+    slide = prs.slides.add_slide(prs.slide_layouts[1])
+    slide.shapes.title.text = "9. 总结与展望"
+    tf = slide.placeholders[1].text_frame
+    tf.text = "项目成果：小朋友用上了爸爸亲手做的 AI 学习机，成就感拉满。"
+    p = tf.add_paragraph()
+    p.text = "核心感悟：AI 加快了我们想法的落地。"
+    p = tf.add_paragraph()
+    p.text = "在 AI 时代，“想法比代码更重要”，强大的执行力被 AI 工具极大地放大了。"
+    p.level = 1
+    p = tf.add_paragraph()
+    p.text = "给开发者的建议：不管是从生活中还是工作中选一个 AI 相关的课题去实践，对我们去深入了解 AI、驾驭 AI 都是一个非常不错的选择。"
+    p = tf.add_paragraph()
+    p.text = "未来计划：加入更多学科知识库、多模态互动（图片/语音识别）等。"
+    p = tf.add_paragraph()
+    p.text = "Q&A 环节：欢迎大家提问和交流！"
+
+    prs.save(output_filename)
+    print(f"PPT successfully updated at {output_filename}")
+
+if __name__ == "__main__":
+    create_presentation("/Users/xl/我的项目/youqizhi-app/youqizhi-ai-sharing.pptx")

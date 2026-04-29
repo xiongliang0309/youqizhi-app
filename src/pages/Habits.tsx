@@ -47,7 +47,7 @@ export const Habits: React.FC = () => {
   const progress = Math.round((tasks.filter(t => t.completed).length / tasks.length) * 100);
 
   return (
-    <div className="min-h-screen bg-[#F0FDF4] flex flex-col font-sans relative">
+    <div className="h-full bg-[#F0FDF4] flex flex-col font-sans relative overflow-x-hidden min-h-0">
       <div className="p-4 md:p-6 flex items-center bg-white/80 backdrop-blur-md sticky top-0 z-10 border-b border-green-100">
         <button onClick={() => navigate('/')} className="bg-white p-3 rounded-full shadow-md hover:bg-green-50">
           <ArrowLeft className="text-gray-600" />
@@ -55,7 +55,7 @@ export const Habits: React.FC = () => {
         <h2 className="ml-4 text-xl md:text-2xl font-black text-gray-800">习惯养成</h2>
       </div>
 
-      <div className="p-4 md:p-8 max-w-2xl mx-auto w-full">
+      <div className="p-4 md:p-8 max-w-2xl mx-auto w-full flex-1 overflow-y-auto min-h-0 pb-4">
         {/* 进度条 */}
         <div className="bg-white p-6 rounded-[2rem] shadow-lg mb-8 border border-green-50">
           <div className="flex justify-between mb-3">

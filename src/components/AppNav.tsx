@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Book, BookOpen, Brain, CheckCircle, Github, Home, Lightbulb, Menu, Moon, Music, Palette, Sun, Tv, X } from 'lucide-react'
-import { useUserStore } from '../store/useUserStore'
+import { useAuth } from '../auth/useAuth'
 
 type NavItem = {
   label: string
@@ -24,7 +24,7 @@ const NAV_ITEMS: NavItem[] = [
 export function AppNav() {
   const location = useLocation()
   const shouldReduceMotion = useReducedMotion()
-  const { nickname } = useUserStore()
+  const { user, profile, signOut } = useAuth()
   const mobileMenuRef = React.useRef<HTMLElement | null>(null)
   const mobileMenuCloseRef = React.useRef<HTMLButtonElement | null>(null)
   const [open, setOpen] = React.useState(false)
@@ -102,30 +102,16 @@ export function AppNav() {
   const hour = now.getHours()
   const TimeIcon = hour >= 6 && hour < 18 ? Sun : Moon
 
+  const displayName = profile?.nickname || user?.email || '未登录'
+
   return (
     <>
       <header
         className={[
-          'xwb-motion sticky top-0 z-50 backdrop-blur-xl border-b border-black/10 transition-colors duration-300 ease-out relative overflow-hidden',
-          'shadow-[0_2px_8px_rgba(0,0,0,0.08)]',
-          scrolled ? 'bg-background-cloud/35' : 'bg-background-cloud/75',
+          'xwb-motion sticky top-4 left-4 right-4 z-50 transition-all duration-300 ease-out flex-none shrink-0 min-h-[var(--app-nav-height)] rounded-3xl mx-4 mb-4',
+          scrolled ? 'bg-white/95 shadow-clay-card border-[3px] border-white backdrop-blur-md' : 'bg-transparent',
         ].join(' ')}
       >
-        <div
-          aria-hidden="true"
-          className={[
-            'pointer-events-none absolute inset-0 bg-gradient-to-r from-primary/20 via-accent-cyan/10 to-secondary/20 transition-opacity duration-300 ease-out',
-            scrolled ? 'opacity-60' : 'opacity-100',
-          ].join(' ')}
-        />
-        <div
-          aria-hidden="true"
-          className={[
-            'pointer-events-none absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white/70 to-transparent transition-opacity duration-300 ease-out',
-            scrolled ? 'opacity-40' : 'opacity-100',
-          ].join(' ')}
-        />
-
         <div className="relative h-[var(--app-nav-height)] px-3 min-[320px]:px-[var(--space-4)] md:px-[var(--space-6)]">
           <div className="mx-auto w-full max-w-[var(--app-nav-max-width)] h-full flex items-center gap-[var(--space-4)]">
             <div className="flex items-center gap-[var(--space-4)] min-w-0">
@@ -164,17 +150,17 @@ export function AppNav() {
                       aria-label={label}
                       className={({ isActive }) =>
                         [
-                          'flex-none h-10 rounded-full px-4 flex items-center gap-2 border font-black text-[14px] transition-colors duration-300 ease-out',
+                          'flex-none h-10 rounded-full px-4 flex items-center gap-2 border-[3px] font-black text-[14px] transition-all duration-300 ease-out',
                           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40',
                           isActive
-                            ? 'bg-white/90 border-primary/30 text-text-main shadow-pop-purple'
-                            : 'bg-white/60 border-black/10 text-text-body hover:bg-white/90',
+                            ? 'bg-primary border-primary-light text-white shadow-clay-btn'
+                            : 'bg-white/80 border-white text-text-body shadow-sm hover:shadow-clay-card hover:-translate-y-0.5',
                         ].join(' ')
                       }
                     >
                       {({ isActive }) => (
                         <>
-                          <Icon className={["w-4 h-4", isActive ? 'text-primary' : 'text-text-light'].join(' ')} />
+                          <Icon className={["w-4 h-4", isActive ? 'text-white' : 'text-text-light'].join(' ')} />
                           <span className="whitespace-nowrap">{label}</span>
                         </>
                       )}
@@ -187,7 +173,7 @@ export function AppNav() {
             </nav>
 
             <div className="flex items-center gap-[var(--space-2)] flex-none ml-auto">
-              <div className="hidden lg:flex items-center gap-2 bg-white/80 border border-black/10 rounded-full px-[var(--space-4)] h-[3rem] shadow-sm">
+              <div className="hidden lg:flex items-center gap-2 bg-white/90 border-[3px] border-white rounded-full px-[var(--space-4)] h-[3rem] shadow-sm">
                 <TimeIcon className="w-5 h-5 text-text-light" />
                 <div className="text-[14px] font-semibold text-text-main leading-[1.2] tabular-nums">{timeText}</div>
               </div>
@@ -199,40 +185,49 @@ export function AppNav() {
                 aria-label="打开 GitHub 仓库"
                 className={[
                   'h-[3rem] w-[3rem] rounded-full flex items-center justify-center',
-                  'bg-white/80 border border-black/10 shadow-sm',
-                  'transition-colors duration-300 ease-out hover:bg-white',
+                  'bg-white/90 border-[3px] border-white shadow-sm',
+                  'transition-all duration-300 ease-out hover:shadow-clay-card hover:-translate-y-0.5',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40',
                 ].join(' ')}
               >
                 <div
                   aria-hidden="true"
-                  className="w-9 h-9 rounded-full bg-gradient-to-br from-primary/90 via-secondary/80 to-accent-cyan/70 flex items-center justify-center shadow-[0_10px_20px_rgba(99,102,241,0.20)] ring-1 ring-white/60"
+                  className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/90 via-secondary/80 to-accent-cyan/70 flex items-center justify-center shadow-inner"
                 >
-                  <Github className="w-5 h-5 text-white/95" />
+                  <Github className="w-4 h-4 text-white/95" />
                 </div>
               </a>
 
-              <div className="hidden sm:flex items-center gap-2 bg-white/80 border border-black/10 rounded-full px-[var(--space-4)] h-[3rem] shadow-sm">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-accent-yellow to-orange-400 flex items-center justify-center text-[18px] border border-black/10">
+              <div className="hidden sm:flex items-center gap-2 bg-white/90 border-[3px] border-white rounded-full px-[var(--space-4)] h-[3rem] shadow-sm">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-accent-yellow to-orange-400 flex items-center justify-center text-[18px] border-2 border-white shadow-inner">
                   🦁
                 </div>
                 <div className="min-w-0">
                   <div className="text-[14px] md:text-[16px] font-semibold text-text-main leading-[1.2] truncate max-w-[10rem]">
-                    {nickname || '未登录'}
+                    {displayName}
                   </div>
-                  {!nickname && (
+                  {!user && (
                     <div className="text-[12px] text-text-light font-semibold leading-[1.2]">登录 / 注册</div>
                   )}
                 </div>
+                {user && (
+                  <button
+                    type="button"
+                    onClick={() => signOut()}
+                    className="ml-2 hidden sm:inline-flex h-[2rem] items-center rounded-full px-3 bg-white/50 border-2 border-white shadow-sm font-bold text-[12px] text-text-light transition-all duration-300 hover:shadow-clay-card hover:-translate-y-0.5 hover:text-text-main focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                  >
+                    退出
+                  </button>
+                )}
               </div>
 
               <button
                 type="button"
-                className="md:hidden h-[3rem] w-[3rem] rounded-full bg-white/80 border border-black/10 shadow-sm flex items-center justify-center transition-colors duration-300 ease-out hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                className="md:hidden h-[3rem] w-[3rem] rounded-full bg-white/90 border-[3px] border-white shadow-sm flex items-center justify-center transition-all duration-300 ease-out hover:shadow-clay-card hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                 aria-label={open ? '关闭菜单' : '打开菜单'}
                 aria-expanded={open}
                 aria-controls="app-mobile-menu"
-                onClick={() => setOpen(v => !v)}
+                onClick={() => setOpen((v) => !v)}
               >
                 {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -288,16 +283,25 @@ export function AppNav() {
                 </button>
               </div>
 
-              <div className="p-[var(--space-4)] flex-1 overflow-y-auto">
+              <div className="p-[var(--space-4)] flex-1 overflow-y-auto min-h-0">
                 <div className="bg-white/80 border border-black/10 rounded-3xl p-4 shadow-sm">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-accent-yellow to-orange-400 flex items-center justify-center text-[20px] border border-black/10">
                       🦁
                     </div>
-                    <div className="min-w-0">
-                      <div className="font-black text-text-main leading-[1.2] truncate">{nickname || '未登录'}</div>
-                      {!nickname && <div className="text-[12px] text-text-light font-semibold leading-[1.2]">登录 / 注册</div>}
+                    <div className="min-w-0 flex-1">
+                      <div className="font-black text-text-main leading-[1.2] truncate">{displayName}</div>
+                      {!user && <div className="text-[12px] text-text-light font-semibold leading-[1.2]">登录 / 注册</div>}
                     </div>
+                    {user && (
+                      <button
+                        type="button"
+                        onClick={() => signOut()}
+                        className="flex-none inline-flex h-[2rem] items-center rounded-full px-3 bg-white/50 border border-black/10 shadow-sm font-bold text-[12px] text-text-light transition-colors duration-300 hover:bg-white hover:text-text-main focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                      >
+                        退出
+                      </button>
+                    )}
                   </div>
                 </div>
 

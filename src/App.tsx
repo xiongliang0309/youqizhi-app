@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AppLayout } from './components/AppLayout';
 import { Home } from './pages/Home';
 import { useInteraction } from './hooks/useInteraction';
+import { AuthProvider } from './auth/AuthProvider';
+import { RequireAuth } from './auth/RequireAuth';
+import { Login } from './pages/Login';
 
 const Language = React.lazy(() => import('./pages/Language').then(m => ({ default: m.Language })));
 const Logic = React.lazy(() => import('./pages/Logic').then(m => ({ default: m.Logic })));
@@ -14,7 +17,7 @@ const Story = React.lazy(() => import('./pages/Story').then(m => ({ default: m.S
 const Animation = React.lazy(() => import('./pages/Animation').then(m => ({ default: m.Animation })));
 
 function PageLoader() {
-  return <div className="min-h-[40vh] flex items-center justify-center text-text-light font-semibold animate-pulse">加载中…</div>;
+  return <div className="h-full flex items-center justify-center text-text-light font-semibold animate-pulse">加载中…</div>;
 }
 
 function GlobalInteraction() {
@@ -29,7 +32,7 @@ function GlobalInteraction() {
                           target.closest('.cursor-pointer');
       
       // 特殊按钮播放 ding
-      if (target.closest('.candy-btn-secondary') || target.closest('[data-action="reward"]')) {
+      if (target.closest('.clay-btn-cta') || target.closest('[data-action="reward"]')) {
         playDing();
       } else if (isClickable) {
         playPop();
@@ -46,22 +49,26 @@ function GlobalInteraction() {
 
 function App() {
   return (
-    <Router>
-      <GlobalInteraction />
-      <Routes>
-        <Route element={<AppLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/language" element={<Suspense fallback={<PageLoader />}><Language /></Suspense>} />
-          <Route path="/logic" element={<Suspense fallback={<PageLoader />}><Logic /></Suspense>} />
-          <Route path="/habits" element={<Suspense fallback={<PageLoader />}><Habits /></Suspense>} />
-          <Route path="/art" element={<Suspense fallback={<PageLoader />}><Art /></Suspense>} />
-          <Route path="/science" element={<Suspense fallback={<PageLoader />}><Science /></Suspense>} />
-          <Route path="/culture" element={<Suspense fallback={<PageLoader />}><Culture /></Suspense>} />
-          <Route path="/story" element={<Suspense fallback={<PageLoader />}><Story /></Suspense>} />
-          <Route path="/animation" element={<Suspense fallback={<PageLoader />}><Animation /></Suspense>} />
-        </Route>
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <GlobalInteraction />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route element={<RequireAuth><AppLayout /></RequireAuth>}>
+            <Route path="/" element={<Home />} />
+            <Route path="/language" element={<Suspense fallback={<PageLoader />}><Language /></Suspense>} />
+            <Route path="/logic" element={<Suspense fallback={<PageLoader />}><Logic /></Suspense>} />
+            <Route path="/habits" element={<Suspense fallback={<PageLoader />}><Habits /></Suspense>} />
+            <Route path="/art" element={<Suspense fallback={<PageLoader />}><Art /></Suspense>} />
+            <Route path="/science" element={<Suspense fallback={<PageLoader />}><Science /></Suspense>} />
+            <Route path="/culture" element={<Suspense fallback={<PageLoader />}><Culture /></Suspense>} />
+            <Route path="/story" element={<Suspense fallback={<PageLoader />}><Story /></Suspense>} />
+            <Route path="/animation" element={<Suspense fallback={<PageLoader />}><Animation /></Suspense>} />
+          </Route>
+          <Route path="*" element={<div className="flex h-screen items-center justify-center text-red-500">404 Not Found: {window.location.pathname}</div>} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

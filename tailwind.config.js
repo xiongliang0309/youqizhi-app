@@ -7,13 +7,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        // V2 Dopamine Palette
+        // V2 Dopamine Palette (Restored to original colors)
         primary: {
           DEFAULT: '#8B5CF6', // Electric Purple (Violet 500)
           light: '#A78BFA',   // Violet 400
           dark: '#7C3AED',    // Violet 600
         },
         secondary: '#EC4899', // Pink 500
+        cta: {
+          DEFAULT: '#22C55E', // Green 500 (Kept from clay update for button support)
+          light: '#86EFAC',   // Green 300
+          dark: '#16A34A',    // Green 600
+        },
         accent: {
           mint: '#84CC16',    // Lime 500
           tangerine: '#F97316', // Orange 500
@@ -40,10 +45,15 @@ export default {
         xingkai: ['"LXGW WenKai"', '"KaiTi"', '"Kaiti SC"', '"STKaiti"', '"STXingkai"', '"Xingkai SC"', 'serif'],
       },
       boxShadow: {
-        // V2 Shadows - Colored & Bouncy
-        'candy-card': '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
-        'candy-btn': '0 6px 0 #7C3AED, 0 10px 10px rgba(0,0,0,0.2)', // Purple bottom shade
-        'candy-btn-active': '0 0 0 #7C3AED, inset 0 2px 5px rgba(0,0,0,0.2)',
+        // Claymorphism Shadows (Soft 3D)
+        'clay-card': '8px 8px 16px rgba(0, 0, 0, 0.05), -8px -8px 16px rgba(255, 255, 255, 0.8), inset 4px 4px 8px rgba(255, 255, 255, 0.8), inset -4px -4px 8px rgba(0, 0, 0, 0.03)',
+        'clay-card-hover': '12px 12px 20px rgba(0, 0, 0, 0.08), -12px -12px 20px rgba(255, 255, 255, 0.9), inset 4px 4px 8px rgba(255, 255, 255, 0.8), inset -4px -4px 8px rgba(0, 0, 0, 0.03)',
+        'clay-card-even': '0 18px 30px -18px rgba(0, 0, 0, 0.12), 0 10px 16px -12px rgba(0, 0, 0, 0.08), 0 0 18px rgba(255, 255, 255, 0.55), inset 0 2px 10px rgba(255, 255, 255, 0.35)',
+        'clay-btn': '6px 6px 12px rgba(139, 92, 246, 0.25), -4px -4px 10px rgba(255, 255, 255, 0.5), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -4px -4px 6px rgba(0, 0, 0, 0.2)',
+        'clay-btn-active': 'inset 4px 4px 8px rgba(0, 0, 0, 0.15), inset -2px -2px 4px rgba(255, 255, 255, 0.2)',
+        'clay-btn-cta': '6px 6px 12px rgba(34, 197, 94, 0.25), -4px -4px 10px rgba(255, 255, 255, 0.5), inset 2px 2px 4px rgba(255, 255, 255, 0.5), inset -4px -4px 6px rgba(0, 0, 0, 0.2)',
+        
+        // Legacy Pop Shadows (Restored original colors)
         'pop-purple': '0 14px 28px -16px rgba(139, 92, 246, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.65)',
         'pop-pink': '0 14px 28px -16px rgba(236, 72, 153, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.65)',
         'pop-orange': '0 14px 28px -16px rgba(249, 115, 22, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.65)',

@@ -1,0 +1,3 @@
+curl -s -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rdXprcXhqZmRpaHlwY3Z2cWVuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MTYwODcsImV4cCI6MjA4OTM5MjA4N30.nnrptPsIvvJ_ps9f2l6ubPRA58TM9ftRFdhtJOi6TJc" \
+     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rdXprcXhqZmRpaHlwY3Z2cWVuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MTYwODcsImV4cCI6MjA4OTM5MjA4N30.nnrptPsIvvJ_ps9f2l6ubPRA58TM9ftRFdhtJOi6TJc" \
+     "https://okuzkqxjfdihypcvvqen.supabase.co/rest/v1/songs?select=*&limit=1"
