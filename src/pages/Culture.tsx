@@ -4,7 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Music, Scroll, Search, Play, Pause, Sparkles, Star, ChevronRight } from 'lucide-react';
 import { supabaseAnonKey, supabaseUrl } from '../lib/supabase';
 import { useSpeech } from '../hooks/useSpeech';
+import { PoemPager } from '../components/PoemPager';
 import { SongPlayerDrawer } from '../components/SongPlayerDrawer';
+import { loopIndex } from '../lib/loopIndex';
 
 export type CultureCategory = 'poem' | 'song';
 
@@ -23,69 +25,6 @@ const CATEGORIES: { id: CultureCategory; name: string; icon: any; color: string 
   { id: 'poem', name: '古诗诵读', icon: Scroll, color: 'bg-red-50 text-red-800' },
   { id: 'song', name: '快乐儿歌', icon: Music, color: 'bg-orange-50 text-orange-800' },
 ];
-
-const POEM_THEMES = [
-  {
-    cardBg: 'bg-rose-50',
-    tintA: 'from-[#FF6B6B]/18',
-    tintB: 'to-[#FFE66D]/14',
-    iconBg: 'bg-[#FF6B6B]',
-    iconRing: 'ring-rose-200',
-    shadow: 'shadow-pop-pink',
-    play: 'text-[#FF6B6B]',
-    authorPill: 'bg-rose-50/80 border-rose-100 text-rose-800',
-    titleText: 'text-rose-800',
-    bodyText: 'text-rose-900',
-  },
-  {
-    cardBg: 'bg-cyan-50',
-    tintA: 'from-[#4ECDC4]/18',
-    tintB: 'to-[#FFE66D]/14',
-    iconBg: 'bg-[#4ECDC4]',
-    iconRing: 'ring-cyan-200',
-    shadow: 'shadow-pop-cyan',
-    play: 'text-[#4ECDC4]',
-    authorPill: 'bg-cyan-50/80 border-cyan-100 text-cyan-800',
-    titleText: 'text-teal-800',
-    bodyText: 'text-teal-900',
-  },
-  {
-    cardBg: 'bg-yellow-50',
-    tintA: 'from-[#FFE66D]/22',
-    tintB: 'to-[#FF6B6B]/12',
-    iconBg: 'bg-[#FFE66D]',
-    iconRing: 'ring-yellow-200',
-    shadow: 'shadow-pop-yellow',
-    play: 'text-amber-700',
-    authorPill: 'bg-yellow-50/80 border-yellow-100 text-amber-800',
-    titleText: 'text-amber-900',
-    bodyText: 'text-amber-950',
-  },
-  {
-    cardBg: 'bg-violet-50',
-    tintA: 'from-primary/18',
-    tintB: 'to-secondary/12',
-    iconBg: 'bg-primary',
-    iconRing: 'ring-violet-200',
-    shadow: 'shadow-pop-purple',
-    play: 'text-primary',
-    authorPill: 'bg-primary/10 border-primary/15 text-primary',
-    titleText: 'text-violet-900',
-    bodyText: 'text-violet-950',
-  },
-  {
-    cardBg: 'bg-orange-50',
-    tintA: 'from-accent-tangerine/18',
-    tintB: 'to-[#FFE66D]/12',
-    iconBg: 'bg-accent-tangerine',
-    iconRing: 'ring-orange-200',
-    shadow: 'shadow-pop-orange',
-    play: 'text-accent-tangerine',
-    authorPill: 'bg-orange-50/80 border-orange-100 text-orange-800',
-    titleText: 'text-orange-900',
-    bodyText: 'text-orange-950',
-  },
-] as const;
 
 // 儿歌子分类
 const SONG_FILTERS = [
@@ -119,10 +58,10 @@ export const Culture: React.FC = () => {
 
   // 记录当前正在朗读的卡片ID和行索引 (古诗模式)
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
-  const [activeLineIndex, setActiveLineIndex] = useState<number | null>(null);
 
   // 记录当前播放的儿歌索引 (儿歌模式)
   const [currentSongIndex, setCurrentSongIndex] = useState<number | null>(null);
+  const [currentPoemIndex, setCurrentPoemIndex] = useState(0);
 
   // 音频播放器引用 (用于播放古诗 MP3)
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -212,14 +151,21 @@ export const Culture: React.FC = () => {
     return () => {
       stopAllAudio();
       setActiveCardId(null);
-      setActiveLineIndex(null);
       setCurrentSongIndex(null);
+      setCurrentPoemIndex(0);
       setSearchQuery('');
       setActiveSongFilter('all');
       setCards([]);
       setLoadError(null);
     };
   }, [selectedCategory, fetchCards]);
+
+  useEffect(() => {
+    if (selectedCategory !== 'poem') return;
+    stopAllAudio();
+    setActiveCardId(null);
+    setCurrentPoemIndex(0);
+  }, [selectedCategory, searchQuery]);
 
   const stopAllAudio = () => {
       cancel(); // 停止 TTS
@@ -247,6 +193,15 @@ export const Culture: React.FC = () => {
     });
   }, [cards, searchQuery, activeSongFilter, selectedCategory]);
 
+  useEffect(() => {
+    if (selectedCategory !== 'poem') return;
+    if (filteredCards.length === 0) {
+      setCurrentPoemIndex(0);
+      return;
+    }
+    if (currentPoemIndex >= filteredCards.length) setCurrentPoemIndex(0);
+  }, [selectedCategory, filteredCards.length, currentPoemIndex]);
+
   const [visibleCount, setVisibleCount] = useState(10);
   const [loading, setLoading] = useState(false);
 
@@ -259,6 +214,20 @@ export const Culture: React.FC = () => {
         setLoading(false);
       }, 300);
     }
+  };
+
+  const goPrevPoem = () => {
+    if (selectedCategory !== 'poem' || filteredCards.length === 0) return;
+    stopAllAudio();
+    setActiveCardId(null);
+    setCurrentPoemIndex((i) => loopIndex(i, -1, filteredCards.length));
+  };
+
+  const goNextPoem = () => {
+    if (selectedCategory !== 'poem' || filteredCards.length === 0) return;
+    stopAllAudio();
+    setActiveCardId(null);
+    setCurrentPoemIndex((i) => loopIndex(i, 1, filteredCards.length));
   };
 
   const handlePlayPoemAudio = (card: CultureCard) => {
@@ -291,23 +260,6 @@ export const Culture: React.FC = () => {
       }
   };
 
-  const handleReadLine = (cardId: string, line: string, index: number, cardIndex: number) => {
-    // 儿歌模式：点击任意行直接进入播放器
-    if (selectedCategory === 'song') {
-      const originalIndex = cards.findIndex(c => c.id === cardId);
-      if (originalIndex !== -1) {
-          setCurrentSongIndex(originalIndex);
-      }
-      return;
-    }
-
-    // 古诗模式：TTS朗读单句 (因为 MP3 是整首的，单句还得用 TTS)
-    stopAllAudio();
-    setActiveCardId(cardId);
-    setActiveLineIndex(index);
-    speak(line);
-  };
-
   const handleReadAll = (card: CultureCard) => {
     // 儿歌模式：进入播放器
     if (selectedCategory === 'song') {
@@ -320,7 +272,6 @@ export const Culture: React.FC = () => {
 
     // 古诗模式：TTS全文朗读 (备用)
     setActiveCardId(card.id);
-    setActiveLineIndex(-1); // -1 表示全文朗读
     
     const text = card.category === 'poem' 
       ? `${card.title}，${card.author}。${card.content.join('，')}。`
@@ -502,7 +453,9 @@ export const Culture: React.FC = () => {
                 <span className="w-4 h-4 border-2 border-orange-500 border-t-transparent rounded-full animate-spin"></span>
               )}
               <span className={`text-xs md:text-sm text-gray-700 font-black bg-white/85 px-3 py-1 rounded-full border border-white/70 ring-1 ring-black/5 ${isPoemMode ? 'font-kaishu' : ''}`}>
-                共 {filteredCards.length} 首
+                {selectedCategory === 'poem' && filteredCards.length > 0
+                  ? `第 ${currentPoemIndex + 1} / ${filteredCards.length} 首`
+                  : `共 ${filteredCards.length} 首`}
               </span>
             </div>
           </div>
@@ -552,8 +505,8 @@ export const Culture: React.FC = () => {
             ? currentSongIndex !== null
               ? 'pb-40'
               : 'pb-10'
-            : currentSongIndex !== null
-              ? 'pb-32'
+            : selectedCategory === 'poem' && filteredCards.length > 0
+              ? 'pb-36'
               : 'pb-4'
         }`}
         onScroll={handleScroll}
@@ -671,95 +624,22 @@ export const Culture: React.FC = () => {
             )}
           </div>
         ) : (
-          <div className="grid gap-5 md:gap-6 w-full pb-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {filteredCards.slice(0, visibleCount).map((card, idx) => (
-              (() => {
-                const poemTheme = POEM_THEMES[idx % POEM_THEMES.length];
-                return (
-              <motion.div
-                key={card.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx % 10 * 0.05 }}
-                className={`rounded-[2rem] border-4 border-white ring-1 ring-black/5 flex flex-col items-center text-center relative group cursor-pointer ${poemTheme.cardBg} ${poemTheme.shadow} h-[24rem] sm:h-[26rem] lg:h-[28rem]`}
-              >
-                <>
-                  <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-[2rem]">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/92 via-white/78 to-white/68" />
-                    <div className={`absolute inset-0 bg-gradient-to-br ${poemTheme.tintA} via-white/0 ${poemTheme.tintB}`} />
-                    <div className="absolute top-0 inset-x-0 h-20 bg-gradient-to-b from-white/55 to-transparent" />
-                    <div className="absolute -top-14 -right-16 h-44 w-44 rounded-full bg-white/40 blur-3xl" />
-                    <div className="absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-white/35 blur-3xl" />
-                  </div>
-
-                  {/* 内容层 */}
-                  <div className="relative z-10 w-full h-full flex flex-col p-5 sm:p-6 font-kaishu">
-                      <div className="text-center">
-                        <h3 className={`mx-auto max-w-[18rem] sm:max-w-[22rem] text-2xl sm:text-3xl font-black tracking-tight font-kaishu ${poemTheme.titleText}`}>
-                          {card.title}
-                        </h3>
-                        <div className="mt-2 flex justify-center">
-                          <div className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold backdrop-blur-sm border ${poemTheme.authorPill}`}>
-                            {card.author ? card.author : '佚名'}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="mt-4 flex-1 flex items-center justify-center">
-                        <div className="w-full rounded-[1.75rem] bg-white/75 ring-1 ring-black/5 p-4 sm:p-5 shadow-sm">
-                          <div className={`grid grid-cols-1 gap-y-3 text-[clamp(1.2rem,2.4vw,1.55rem)] font-black tracking-widest leading-[1.75] font-kaishu ${poemTheme.bodyText}`}>
-                            {card.content.map((line, lIdx) => (
-                              <div key={lIdx} className="text-center break-words">
-                                {line}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* 播放控制区 */}
-                      <div className="mt-4 flex justify-center pb-10 sm:pb-12">
-                          <button 
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                handlePlayPoemAudio(card);
-                            }}
-                            className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center shadow-lg transition-all transform hover:scale-105 active:scale-95 ${
-                                activeCardId === card.id && isPlayingAudio
-                                    ? `${poemTheme.iconBg} text-white animate-pulse`
-                                    : `bg-white ${poemTheme.play} border-2 border-white/60 ring-1 ring-black/5`
-                            }`}
-                          >
-                             {activeCardId === card.id && isPlayingAudio 
-                                ? <Pause fill="currentColor" size={24} /> 
-                                : <Play fill="currentColor" size={24} className="ml-1" />
-                             }
-                          </button>
-                      </div>
-                  </div>
-                </>
-              </motion.div>
-                );
-              })()
-            ))}
-
-            {loading && (
-              <div className="col-span-full py-8 flex justify-center text-stone-400">
-                <span className="animate-pulse">正在加载更多...</span>
-              </div>
-            )}
-
-            {!loading && visibleCount >= filteredCards.length && filteredCards.length > 0 && (
-              <div className="col-span-full py-8 flex justify-center text-stone-300 text-sm">
-                —— 已经到底啦，真棒！ ——
-              </div>
-            )}
-
-            {filteredCards.length === 0 && (
-              <div className="col-span-full py-20 flex flex-col items-center text-stone-400">
+          <div className="w-full">
+            {filteredCards.length === 0 ? (
+              <div className="py-20 flex flex-col items-center text-stone-400">
                 <div className="text-4xl mb-4">🔍</div>
                 <p>没有找到相关内容哦~</p>
               </div>
+            ) : (
+              <PoemPager
+                card={filteredCards[currentPoemIndex]}
+                index={currentPoemIndex}
+                total={filteredCards.length}
+                onPrev={goPrevPoem}
+                onNext={goNextPoem}
+                onPlay={() => handlePlayPoemAudio(filteredCards[currentPoemIndex])}
+                isPlaying={activeCardId === filteredCards[currentPoemIndex].id && isPlayingAudio}
+              />
             )}
           </div>
         )}
