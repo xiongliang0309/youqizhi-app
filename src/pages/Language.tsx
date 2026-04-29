@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Volume2, RefreshCw, Grid, Mic } from 'lucide-react';
+import { ArrowLeft, Volume2, RefreshCw, Grid, Mic, Sparkles, Star, ChevronRight } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { generateWordCards, generateWordCardsFromBank, type WordCard, type WordCategory } from '../data/generator';
 import { fetchLanguageWordsFromSupabase } from '../data/languageSupabase';
@@ -374,78 +374,108 @@ export const Language: React.FC = () => {
   // --- 视图 1: 分类选择页 ---
   if (!selectedCategory) {
     return (
-      <div className="h-full flex flex-col bg-background-cloud font-sans relative overflow-x-hidden selection:bg-accent-yellow/50 min-h-0">
-        <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-primary/15 blur-3xl animate-blob" />
-        <div className="pointer-events-none absolute top-32 -left-24 h-80 w-80 rounded-full bg-accent-cyan/14 blur-3xl animate-blob" />
-        <div className="pointer-events-none absolute -bottom-20 right-0 h-72 w-72 rounded-full bg-accent-yellow/18 blur-3xl animate-blob" />
+      <div className="bg-gradient-to-b from-[#FFF8E7] via-[#F7FBFF] to-[#FFF3F7] font-sans selection:bg-accent-yellow/50 relative flex flex-col h-full overflow-hidden min-h-0">
+        <div className="fixed inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-24 -left-28 w-[32rem] h-[32rem] bg-accent-mint/22 rounded-full blur-3xl" />
+          <div className="absolute top-[12%] -right-28 w-[30rem] h-[30rem] bg-accent-yellow/18 rounded-full blur-3xl" />
+          <div className="absolute -bottom-28 left-10 w-[30rem] h-[30rem] bg-accent-rose/16 rounded-full blur-3xl" />
+          <motion.div
+            animate={{ y: [0, -18, 0], rotate: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 6 }}
+            className="absolute top-36 left-16 opacity-20"
+          >
+            <Sparkles size={40} className="text-accent-yellow" />
+          </motion.div>
+          <motion.div
+            animate={{ y: [0, 18, 0], rotate: [0, -10, 0] }}
+            transition={{ repeat: Infinity, duration: 7 }}
+            className="absolute bottom-36 right-16 opacity-20"
+          >
+            <Star size={40} className="text-accent-rose fill-current" />
+          </motion.div>
+        </div>
 
-        <div className="flex-1 min-h-0 mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 sm:py-6 flex flex-col relative z-10 pb-8 md:pb-12">
-          <header className="flex-none flex items-start gap-3 sm:gap-4 pb-2">
-            <button
-              onClick={() => navigate('/')}
-              className="flex-none h-10 w-10 sm:h-11 sm:w-11 rounded-full bg-white/90 border-[3px] border-white shadow-clay-card-even transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
-              aria-label="返回主页"
-            >
-              <ArrowLeft className="mx-auto h-5 w-5 text-text-body" />
-            </button>
-
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2">
-                <span className="text-xl sm:text-2xl">{CHARACTERS.tommy.emoji}</span>
-                <span className="rounded-full bg-white/80 px-2 py-1 sm:px-3 sm:py-1.5 text-xs sm:text-sm font-extrabold text-text-body shadow-sm border-2 border-white">
-                  汤米陪你学单词
-                </span>
-                <span className="hidden sm:inline-flex rounded-full bg-primary/10 px-3 py-1.5 text-sm font-extrabold text-primary ring-1 ring-primary/15">
-                  轻松 · 有趣 · 记得牢
-                </span>
-              </div>
-              <h1 className="mt-2 sm:mt-3 font-heading text-[clamp(1.4rem,4vw,2.6rem)] font-black tracking-tight text-text-main leading-tight">
-                你想学什么？
-              </h1>
-              <p className="mt-1 text-xs sm:text-sm font-bold text-text-light">
-                先选一个主题，再跟着卡片大声读出来
-              </p>
+        <header className="shrink-0 px-4 pt-4 md:px-8 md:pt-6 relative z-10">
+          <div className="mx-auto w-full max-w-6xl relative overflow-hidden rounded-[2.25rem] border-[3px] border-white bg-white/75 backdrop-blur-xl shadow-clay-card-even">
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+              <div className="absolute inset-0 bg-gradient-to-r from-accent-rose/10 via-accent-cyan/10 to-accent-yellow/12" />
+              <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-white/45 to-white/25" />
+              <div className="absolute -top-14 -left-20 h-44 w-44 rounded-full bg-secondary/14 blur-3xl" />
+              <div className="absolute -top-10 -right-24 h-48 w-48 rounded-full bg-primary/12 blur-3xl" />
             </div>
 
-            <div className="hidden md:flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 shadow-sm border-2 border-white shrink-0 self-start">
-              <span className="text-xl">{CHARACTERS.posy.emoji}</span>
-              <span className="text-sm font-extrabold text-text-body">波西：我来当你的小伙伴！</span>
-            </div>
-          </header>
-
-          <div className="flex-1 min-h-0 mt-4 sm:mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 content-start overflow-y-auto overflow-x-hidden relative z-10 pb-4">
-            {CATEGORIES.map(cat => (
-              <motion.button
-                key={cat.id}
-                whileHover={{ y: -2, scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setSelectedCategory(cat.id)}
-                className="group relative flex items-center gap-3 sm:gap-4 rounded-[1.25rem] sm:rounded-[1.75rem] border-[3px] border-white bg-white/80 p-3 sm:p-5 text-left shadow-clay-card-even ring-1 ring-black/5 transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-white/90 hover:shadow-clay-card-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
+            <div className="relative z-10 px-4 py-4 md:px-6 md:py-5 flex items-start gap-3">
+              <button
+                onClick={() => navigate('/')}
+                className="bg-white/90 p-3 rounded-full shadow-clay-card-even transition-all duration-300 ease-out border-[3px] border-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
+                aria-label="返回主页"
               >
-                <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${cat.overlay} opacity-85 rounded-[1.25rem] sm:rounded-[1.75rem] z-0`} />
-                <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.6),transparent_62%)]" />
-                <div className={`pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full ${cat.orbA} blur-3xl opacity-45 z-0`} />
-                <div className={`pointer-events-none absolute -left-12 -bottom-12 h-32 w-32 rounded-full ${cat.orbB} blur-3xl opacity-35 z-0`} />
-                
-                <div className="relative z-10 grid h-10 w-10 sm:h-14 sm:w-14 flex-none place-items-center overflow-hidden rounded-2xl bg-white/85 shadow-sm border border-white/60 transition-transform duration-200 ease-out group-hover:scale-[1.03]">
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/90 to-white/0" />
-                  <span className="relative text-2xl sm:text-3xl drop-shadow-sm">{cat.icon}</span>
-                </div>
+                <ArrowLeft className="text-gray-600" />
+              </button>
 
-                <div className="relative z-10 min-w-0 flex-1">
-                  <div className="truncate text-[clamp(0.9rem,3.5vw,1.1rem)] sm:text-lg font-black text-text-main leading-tight">{cat.name}</div>
-                  <div className="mt-0.5 text-[10px] sm:text-sm font-bold text-text-light">开始学习</div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-xl sm:text-2xl">{CHARACTERS.tommy.emoji}</span>
+                  <span className="rounded-full bg-white/85 px-3 py-1.5 text-xs sm:text-sm font-extrabold text-text-body shadow-sm border-2 border-white">
+                    汤米陪你学单词
+                  </span>
+                  <span className="hidden sm:inline-flex rounded-full bg-primary/10 px-3 py-1.5 text-sm font-extrabold text-primary ring-1 ring-primary/15">
+                    轻松 · 有趣 · 记得牢
+                  </span>
                 </div>
-              </motion.button>
-            ))}
+                <h1 className="mt-2 font-heading text-[clamp(1.5rem,4.5vw,2.7rem)] font-black tracking-tight text-text-main leading-tight">
+                  你想学什么？
+                </h1>
+                <p className="mt-1 text-xs sm:text-sm font-bold text-text-light">
+                  先选一个主题，再跟着卡片大声读出来
+                </p>
+              </div>
+
+              <div className="hidden md:flex items-center gap-2 rounded-full bg-white/85 px-4 py-2 shadow-sm border-2 border-white shrink-0 self-start">
+                <span className="text-xl">{CHARACTERS.posy.emoji}</span>
+                <span className="text-sm font-extrabold text-text-body">波西：我来当你的小伙伴！</span>
+              </div>
+            </div>
           </div>
-        </div>
+        </header>
 
-        <div className="pointer-events-none absolute bottom-4 left-4 opacity-40 sm:bottom-6 sm:left-8">
-          <span className="text-6xl sm:text-8xl">{CHARACTERS.pip.emoji}</span>
-        </div>
-        <div className="pointer-events-none absolute bottom-4 right-4 opacity-40 sm:bottom-6 sm:right-8">
-          <span className="text-6xl sm:text-8xl">{CHARACTERS.posy.emoji}</span>
+        <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-4 pb-10 md:px-8 relative z-10">
+          <div className="mx-auto w-full max-w-6xl pt-4 md:pt-6">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4">
+              {CATEGORIES.map(cat => (
+                <motion.button
+                  key={cat.id}
+                  whileHover={{ y: -4 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className="group relative overflow-hidden rounded-[2rem] border-[3px] border-white bg-white/78 shadow-clay-card-even text-left focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
+                >
+                  <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${cat.overlay} opacity-100`} />
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.65),transparent_60%)]" />
+                  <div className={`pointer-events-none absolute -right-14 -top-14 h-44 w-44 rounded-full ${cat.orbA} blur-3xl opacity-55`} />
+                  <div className={`pointer-events-none absolute -left-16 -bottom-16 h-48 w-48 rounded-full ${cat.orbB} blur-3xl opacity-55`} />
+
+                  <div className="relative z-10 p-5 sm:p-6 flex items-center gap-4">
+                    <div className="w-16 h-16 rounded-[1.75rem] bg-white/85 border border-white/70 shadow-inner flex items-center justify-center flex-none">
+                      <span className="text-3xl sm:text-4xl drop-shadow-sm">{cat.icon}</span>
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="text-lg sm:text-xl font-black tracking-wide text-text-main truncate">
+                          {cat.name}
+                        </div>
+                        <ChevronRight className="text-gray-200 group-hover:text-gray-300 transition-colors flex-none" size={22} />
+                      </div>
+                      <div className="mt-2 inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold bg-white/80 border border-white/70 text-text-light">
+                        开始学习
+                      </div>
+                    </div>
+                  </div>
+                </motion.button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -453,56 +483,82 @@ export const Language: React.FC = () => {
 
   // --- 视图 2: 单词卡片页 ---
   return (
-    <div className="bg-background-cloud font-sans selection:bg-accent-yellow/50 relative flex h-full flex-col overflow-x-hidden">
-      <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-primary/15 blur-3xl animate-blob" />
-      <div className="pointer-events-none absolute top-40 -left-24 h-80 w-80 rounded-full bg-accent-cyan/14 blur-3xl animate-blob" />
-      <div className="pointer-events-none absolute -bottom-20 right-0 h-72 w-72 rounded-full bg-accent-yellow/18 blur-3xl animate-blob" />
+    <div className="bg-gradient-to-b from-[#FFF8E7] via-[#F7FBFF] to-[#FFF3F7] font-sans selection:bg-accent-yellow/50 relative flex h-full flex-col overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-20 -left-24 w-96 h-96 bg-accent-mint/20 rounded-full blur-3xl" />
+        <div className="absolute top-1/3 -right-24 w-80 h-80 bg-accent-yellow/16 rounded-full blur-3xl" />
+        <div className="absolute -bottom-28 left-10 w-80 h-80 bg-accent-rose/14 rounded-full blur-3xl" />
+        <motion.div
+          animate={{ y: [0, -16, 0], rotate: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 6 }}
+          className="absolute top-40 left-20 opacity-20"
+        >
+          <Sparkles size={36} className="text-accent-yellow" />
+        </motion.div>
+        <motion.div
+          animate={{ y: [0, 16, 0], rotate: [0, -10, 0] }}
+          transition={{ repeat: Infinity, duration: 7 }}
+          className="absolute bottom-40 right-20 opacity-20"
+        >
+          <Star size={36} className="text-accent-rose fill-current" />
+        </motion.div>
+      </div>
 
-      <div className="flex-none z-10 border-b border-white/60 bg-white/65 backdrop-blur-md">
-        <div className="mx-auto flex w-full max-w-7xl items-center gap-3 px-4 py-2 sm:px-6 sm:py-3">
-          <button
-            onClick={() => setSelectedCategory(null)}
-            className="flex-none h-10 w-10 sm:h-11 sm:w-11 rounded-full bg-white/95 shadow-md ring-1 ring-black/5 transition-colors hover:bg-white"
-            aria-label="返回主题选择"
-          >
-            <Grid className="mx-auto h-5 w-5 text-text-body" />
-          </button>
-
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2">
-              <span className="text-xl sm:text-2xl">{activeCategory?.icon}</span>
-              <h2 className="truncate font-heading text-[clamp(1.1rem,4vw,1.5rem)] font-black text-text-main sm:text-2xl">
-                {activeCategory?.name}
-              </h2>
-              <span className={`hidden sm:inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold ${activeCategory?.pill ?? 'bg-primary/10 text-primary'}`}>
-                轻轻点卡片发音
-              </span>
-            </div>
-            <div className="mt-0.5 flex items-center gap-2 text-[10px] sm:text-sm font-bold text-text-light">
-              <span>
-                {currentIndex + 1} / {words.length}
-              </span>
-              <span className="text-text-light/50">·</span>
-              <span>听一听，再跟着读</span>
-            </div>
+      <div className="shrink-0 relative z-10 px-4 pt-4 md:px-8 md:pt-6">
+        <div className="mx-auto w-full max-w-6xl relative overflow-hidden rounded-[2.25rem] border-[3px] border-white bg-white/75 backdrop-blur-xl shadow-clay-card-even">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-r from-accent-rose/10 via-accent-cyan/10 to-accent-yellow/12" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-white/45 to-white/25" />
+            <div className="absolute -top-14 -left-20 h-44 w-44 rounded-full bg-secondary/14 blur-3xl" />
+            <div className="absolute -top-10 -right-24 h-48 w-48 rounded-full bg-primary/12 blur-3xl" />
           </div>
 
-          <button
-            onClick={handleRegenerate}
-            className="hidden h-10 sm:h-11 items-center gap-2 rounded-full bg-white/90 px-4 text-sm font-extrabold text-text-body shadow-sm ring-1 ring-black/5 transition-colors hover:bg-white sm:inline-flex"
-          >
-            <RefreshCw className="h-4 w-4" />
-            换一批
-          </button>
+          <div className="relative z-10 px-4 py-4 md:px-6 md:py-5 flex items-center gap-3">
+            <button
+              onClick={() => setSelectedCategory(null)}
+              className="bg-white/90 p-3 rounded-full shadow-clay-card-even transition-all duration-300 ease-out border-[3px] border-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
+              aria-label="返回主题选择"
+            >
+              <Grid className="text-gray-600" />
+            </button>
 
-          <div className={`hidden md:flex items-center gap-2 rounded-full border-2 bg-white px-4 py-2 ${CHARACTERS.posy.color}`}>
-            <span className="text-2xl">{CHARACTERS.posy.emoji}</span>
-            <span className="text-sm font-extrabold text-text-body">波西：大声读出来哦！</span>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-xl sm:text-2xl">{activeCategory?.icon}</span>
+                <h2 className="truncate font-heading text-[clamp(1.1rem,4vw,1.6rem)] font-black text-text-main sm:text-2xl">
+                  {activeCategory?.name}
+                </h2>
+                <span className={`hidden sm:inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold ${activeCategory?.pill ?? 'bg-primary/10 text-primary'}`}>
+                  轻轻点卡片发音
+                </span>
+              </div>
+              <div className="mt-0.5 flex items-center gap-2 text-[10px] sm:text-sm font-bold text-text-light">
+                <span>
+                  {currentIndex + 1} / {words.length}
+                </span>
+                <span className="text-text-light/50">·</span>
+                <span>听一听，再跟着读</span>
+              </div>
+            </div>
+
+            <button
+              onClick={handleRegenerate}
+              className="hidden h-10 sm:h-11 items-center gap-2 rounded-full bg-white/90 px-4 text-sm font-extrabold text-text-body shadow-sm ring-1 ring-black/5 transition-colors hover:bg-white sm:inline-flex"
+            >
+              <RefreshCw className="h-4 w-4" />
+              换一批
+            </button>
+
+            <div className={`hidden md:flex items-center gap-2 rounded-full border-2 bg-white px-4 py-2 ${CHARACTERS.posy.color}`}>
+              <span className="text-2xl">{CHARACTERS.posy.emoji}</span>
+              <span className="text-sm font-extrabold text-text-body">波西：大声读出来哦！</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="mx-auto flex w-full max-w-7xl flex-1 min-h-0 flex-col px-4 py-3 sm:px-6 sm:py-4 justify-center items-center pb-8">
+      <div className="flex-1 min-h-0 overflow-hidden px-4 pb-6 md:px-8 relative z-10">
+        <div className="mx-auto w-full max-w-6xl h-full flex items-center justify-center">
         <AnimatePresence mode="wait">
           {currentWord && (
             <motion.div
@@ -510,7 +566,7 @@ export const Language: React.FC = () => {
               initial={{ opacity: 0, x: 50, scale: 0.9 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: -50, scale: 0.9 }}
-              className={`w-full max-w-[34rem] h-full max-h-[44rem] flex flex-col overflow-hidden rounded-[2rem] sm:rounded-[2.75rem] border-[4px] sm:border-[6px] border-white bg-white/85 p-4 sm:p-6 shadow-clay-card ring-1 ring-black/5 backdrop-blur-sm ${activeCategory?.shadow ?? ''}`}
+              className={`w-full max-w-[36rem] h-full max-h-[46rem] flex flex-col overflow-hidden rounded-[2.5rem] sm:rounded-[3rem] border-[4px] sm:border-[5px] border-white bg-white/82 p-4 sm:p-6 shadow-clay-card-even ring-1 ring-black/5 backdrop-blur-xl ${activeCategory?.shadow ?? ''}`}
             >
               <div className="flex-none flex items-start justify-end">
                 <button
@@ -705,33 +761,46 @@ export const Language: React.FC = () => {
             </motion.div>
           )}
         </AnimatePresence>
+        </div>
       </div>
 
-      <div className="flex-none z-10 border-t border-white/60 bg-white/75 backdrop-blur-md">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-2 sm:gap-3 px-4 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] sm:px-6 sm:py-3 sm:pb-3">
-          <button
-            onClick={handlePrev}
-            disabled={currentIndex === 0}
-            className={`flex-none h-10 sm:h-12 rounded-full px-4 sm:px-6 text-xs sm:text-sm font-extrabold transition-all ${
-              currentIndex === 0
-                ? 'bg-background-soft text-text-light ring-1 ring-black/5'
-                : 'bg-white text-text-main shadow-sm ring-1 ring-black/5 hover:bg-background-surface'
-            }`}
-          >
-            上一个
-          </button>
+      <div className="sticky bottom-0 z-20 px-4 md:px-8 pb-[env(safe-area-inset-bottom)]">
+        <div className="mx-auto w-full max-w-6xl pb-3">
+          <div className="rounded-[2rem] border-[3px] border-white bg-white/85 backdrop-blur-xl shadow-clay-card-even ring-1 ring-black/5 px-4 py-3">
+            <div className="flex items-center justify-between gap-3">
+              <button
+                onClick={handlePrev}
+                disabled={currentIndex === 0}
+                className={[
+                  'flex-none h-12 px-5 rounded-2xl font-black text-sm transition-all active:scale-95',
+                  currentIndex === 0
+                    ? 'bg-white/60 text-text-light border-[3px] border-white/70 ring-1 ring-black/5'
+                    : 'bg-white/85 text-text-main border-[3px] border-white shadow-sm hover:bg-white',
+                ].join(' ')}
+              >
+                上一个
+              </button>
 
-          <div className="flex items-center gap-1.5 sm:gap-2 rounded-full bg-white/80 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-extrabold text-text-body shadow-sm ring-1 ring-black/5">
-            <span>进度</span>
-            <span className="text-text-light">{currentIndex + 1} / {words.length}</span>
+              <div className="flex-1 min-w-0">
+                <div className="text-center text-xs font-black text-text-body">
+                  进度 {currentIndex + 1} / {words.length}
+                </div>
+                <div className="mt-2 h-2 rounded-full bg-gray-200/70 overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-accent-yellow via-accent-tangerine to-secondary"
+                    style={{ width: `${words.length ? ((currentIndex + 1) / words.length) * 100 : 0}%` }}
+                  />
+                </div>
+              </div>
+
+              <button
+                onClick={handleNext}
+                className="flex-none h-12 px-6 rounded-2xl bg-gradient-to-r from-primary to-secondary text-sm font-black text-white border-[3px] border-white shadow-pop-purple transition-transform active:scale-[0.99]"
+              >
+                {currentIndex === words.length - 1 ? '完成' : '下一个'}
+              </button>
+            </div>
           </div>
-
-          <button
-            onClick={handleNext}
-            className="flex-none h-10 sm:h-12 rounded-full bg-gradient-to-r from-primary to-secondary px-5 sm:px-8 text-xs sm:text-sm font-extrabold text-white shadow-pop-purple transition-transform active:scale-[0.99]"
-          >
-            {currentIndex === words.length - 1 ? '完成' : '下一个'}
-          </button>
         </div>
       </div>
 

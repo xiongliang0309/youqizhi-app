@@ -193,6 +193,8 @@ export const Culture: React.FC = () => {
     });
   }, [cards, searchQuery, activeSongFilter, selectedCategory]);
 
+  const poemPagerActive = selectedCategory === 'poem' && filteredCards.length > 0
+
   useEffect(() => {
     if (selectedCategory !== 'poem') return;
     if (filteredCards.length === 0) {
@@ -409,7 +411,6 @@ export const Culture: React.FC = () => {
           <Star size={36} className="text-accent-rose fill-current" />
         </motion.div>
       </div>
-      {/* 音乐播放器层 */}
       <AnimatePresence>
         {selectedCategory === 'song' && currentSongIndex !== null && cards[currentSongIndex] && (
           <SongPlayerDrawer
@@ -500,16 +501,18 @@ export const Culture: React.FC = () => {
       </div>
 
       <div
-        className={`flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-4 md:p-8 scroll-smooth overscroll-contain relative ${
+        className={[
+          'flex-1 min-h-0 overflow-x-hidden relative',
+          poemPagerActive ? 'overflow-hidden p-3 sm:p-4 md:p-6 pb-3' : 'overflow-y-auto p-4 md:p-8 scroll-smooth overscroll-contain',
           selectedCategory === 'song'
             ? currentSongIndex !== null
               ? 'pb-40'
               : 'pb-10'
-            : selectedCategory === 'poem' && filteredCards.length > 0
-              ? 'pb-36'
-              : 'pb-4'
-        }`}
-        onScroll={handleScroll}
+            : poemPagerActive
+              ? ''
+              : 'pb-4',
+        ].join(' ')}
+        onScroll={selectedCategory === 'song' ? handleScroll : undefined}
       >
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-white/12 via-white/0 to-white/18" />
@@ -518,7 +521,12 @@ export const Culture: React.FC = () => {
           <div className="absolute -bottom-28 left-1/3 h-96 w-96 rounded-full bg-accent-yellow/12 blur-3xl" />
         </div>
 
-        <div className="relative z-10 mx-auto w-full max-w-6xl rounded-[2.5rem] bg-white/65 border-[3px] border-white shadow-clay-card-even p-4 sm:p-6 md:p-8 overflow-hidden">
+        <div
+          className={[
+            'relative z-10 mx-auto w-full max-w-6xl rounded-[2.5rem] bg-white/65 border-[3px] border-white shadow-clay-card-even overflow-hidden',
+            poemPagerActive ? 'h-full flex flex-col p-3 sm:p-4 md:p-5' : 'p-4 sm:p-6 md:p-8',
+          ].join(' ')}
+        >
         {loadError && (
           <div className="mb-5 rounded-2xl bg-rose-50 border border-rose-200 px-4 py-3 flex items-center justify-between gap-3">
             <div className="text-sm font-bold text-rose-800 break-words">
@@ -624,7 +632,7 @@ export const Culture: React.FC = () => {
             )}
           </div>
         ) : (
-          <div className="w-full">
+          <div className="w-full flex-1 min-h-0">
             {filteredCards.length === 0 ? (
               <div className="py-20 flex flex-col items-center text-stone-400">
                 <div className="text-4xl mb-4">🔍</div>
