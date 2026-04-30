@@ -13,13 +13,13 @@
 
 @layer base {
   html {
-    @apply overflow-x-hidden;
+    @apply h-full overflow-hidden;
   }
   body {
-    @apply font-sans bg-background-cloud text-text-body antialiased overflow-x-hidden;
+    @apply h-full font-sans bg-background-cloud text-text-body antialiased overflow-hidden;
   }
   #root {
-    @apply overflow-x-hidden;
+    @apply h-full overflow-hidden;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading text-text-main;
