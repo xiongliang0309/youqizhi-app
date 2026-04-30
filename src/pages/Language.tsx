@@ -395,7 +395,7 @@ export const Language: React.FC = () => {
           </motion.div>
         </div>
 
-        <header className="shrink-0 px-4 pt-4 md:px-8 md:pt-6 relative z-10">
+        <header className="shrink-0 px-3 pt-3 sm:px-4 sm:pt-4 md:px-8 md:pt-6 relative z-10">
           <div className="mx-auto w-full max-w-6xl relative overflow-hidden rounded-[2.25rem] border-[3px] border-white bg-white/75 backdrop-blur-xl shadow-clay-card-even">
             <div aria-hidden="true" className="pointer-events-none absolute inset-0">
               <div className="absolute inset-0 bg-gradient-to-r from-accent-rose/10 via-accent-cyan/10 to-accent-yellow/12" />
@@ -404,10 +404,10 @@ export const Language: React.FC = () => {
               <div className="absolute -top-10 -right-24 h-48 w-48 rounded-full bg-primary/12 blur-3xl" />
             </div>
 
-            <div className="relative z-10 px-4 py-4 md:px-6 md:py-5 flex items-start gap-3">
+            <div className="relative z-10 px-3 py-3 sm:px-4 sm:py-4 md:px-6 md:py-5 flex items-start gap-3">
               <button
                 onClick={() => navigate('/')}
-                className="bg-white/90 p-3 rounded-full shadow-clay-card-even transition-all duration-300 ease-out border-[3px] border-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
+                className="bg-white/90 p-2.5 sm:p-3 rounded-full shadow-clay-card-even transition-all duration-300 ease-out border-[3px] border-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
                 aria-label="返回主页"
               >
                 <ArrowLeft className="text-gray-600" />
@@ -415,18 +415,18 @@ export const Language: React.FC = () => {
 
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-xl sm:text-2xl">{CHARACTERS.tommy.emoji}</span>
-                  <span className="rounded-full bg-white/85 px-3 py-1.5 text-xs sm:text-sm font-extrabold text-text-body shadow-sm border-2 border-white">
+                  <span className="text-lg sm:text-2xl">{CHARACTERS.tommy.emoji}</span>
+                  <span className="rounded-full bg-white/85 px-3 py-1.5 text-[11px] sm:text-sm font-extrabold text-text-body shadow-sm border-2 border-white">
                     汤米陪你学单词
                   </span>
                   <span className="hidden sm:inline-flex rounded-full bg-primary/10 px-3 py-1.5 text-sm font-extrabold text-primary ring-1 ring-primary/15">
                     轻松 · 有趣 · 记得牢
                   </span>
                 </div>
-                <h1 className="mt-2 font-heading text-[clamp(1.5rem,4.5vw,2.7rem)] font-black tracking-tight text-text-main leading-tight">
+                <h1 className="mt-2 font-heading text-[clamp(1.35rem,4.2vw,2.7rem)] font-black tracking-tight text-text-main leading-tight">
                   你想学什么？
                 </h1>
-                <p className="mt-1 text-xs sm:text-sm font-bold text-text-light">
+                <p className="mt-1 text-[11px] sm:text-sm font-bold text-text-light">
                   先选一个主题，再跟着卡片大声读出来
                 </p>
               </div>
@@ -439,9 +439,9 @@ export const Language: React.FC = () => {
           </div>
         </header>
 
-        <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-4 pb-10 md:px-8 relative z-10">
-          <div className="mx-auto w-full max-w-6xl pt-4 md:pt-6">
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4">
+        <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 pb-[calc(env(safe-area-inset-bottom)+6rem)] sm:px-4 sm:pb-10 md:px-8 relative z-10">
+          <div className="mx-auto w-full max-w-6xl pt-3 sm:pt-4 md:pt-6">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4">
               {CATEGORIES.map(cat => (
                 <motion.button
                   key={cat.id}
@@ -455,19 +455,19 @@ export const Language: React.FC = () => {
                   <div className={`pointer-events-none absolute -right-14 -top-14 h-44 w-44 rounded-full ${cat.orbA} blur-3xl opacity-55`} />
                   <div className={`pointer-events-none absolute -left-16 -bottom-16 h-48 w-48 rounded-full ${cat.orbB} blur-3xl opacity-55`} />
 
-                  <div className="relative z-10 p-5 sm:p-6 flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-[1.75rem] bg-white/85 border border-white/70 shadow-inner flex items-center justify-center flex-none">
-                      <span className="text-3xl sm:text-4xl drop-shadow-sm">{cat.icon}</span>
+                  <div className="relative z-10 p-4 sm:p-6 flex items-center gap-3 sm:gap-4">
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-[1.6rem] sm:rounded-[1.75rem] bg-white/85 border border-white/70 shadow-inner flex items-center justify-center flex-none">
+                      <span className="text-2xl sm:text-4xl drop-shadow-sm">{cat.icon}</span>
                     </div>
 
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between gap-3">
-                        <div className="text-lg sm:text-xl font-black tracking-wide text-text-main truncate">
+                        <div className="text-base sm:text-xl font-black tracking-wide text-text-main truncate">
                           {cat.name}
                         </div>
-                        <ChevronRight className="text-gray-200 group-hover:text-gray-300 transition-colors flex-none" size={22} />
+                        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-gray-200 group-hover:text-gray-300 transition-colors flex-none" />
                       </div>
-                      <div className="mt-2 inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold bg-white/80 border border-white/70 text-text-light">
+                      <div className="mt-2 inline-flex items-center rounded-full px-2.5 py-1 text-[11px] sm:text-xs font-extrabold bg-white/80 border border-white/70 text-text-light">
                         开始学习
                       </div>
                     </div>
@@ -504,7 +504,7 @@ export const Language: React.FC = () => {
         </motion.div>
       </div>
 
-      <div className="shrink-0 relative z-10 px-4 pt-4 md:px-8 md:pt-6">
+      <div className="shrink-0 relative z-10 px-3 pt-3 sm:px-4 sm:pt-4 md:px-8 md:pt-6">
         <div className="mx-auto w-full max-w-6xl relative overflow-hidden rounded-[2.25rem] border-[3px] border-white bg-white/75 backdrop-blur-xl shadow-clay-card-even">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0">
             <div className="absolute inset-0 bg-gradient-to-r from-accent-rose/10 via-accent-cyan/10 to-accent-yellow/12" />
@@ -513,10 +513,10 @@ export const Language: React.FC = () => {
             <div className="absolute -top-10 -right-24 h-48 w-48 rounded-full bg-primary/12 blur-3xl" />
           </div>
 
-          <div className="relative z-10 px-4 py-4 md:px-6 md:py-5 flex items-center gap-3">
+          <div className="relative z-10 px-3 py-3 sm:px-4 sm:py-4 md:px-6 md:py-5 flex items-center gap-3">
             <button
               onClick={() => setSelectedCategory(null)}
-              className="bg-white/90 p-3 rounded-full shadow-clay-card-even transition-all duration-300 ease-out border-[3px] border-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
+              className="bg-white/90 p-2.5 sm:p-3 rounded-full shadow-clay-card-even transition-all duration-300 ease-out border-[3px] border-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
               aria-label="返回主题选择"
             >
               <Grid className="text-gray-600" />
@@ -524,8 +524,8 @@ export const Language: React.FC = () => {
 
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xl sm:text-2xl">{activeCategory?.icon}</span>
-                <h2 className="truncate font-heading text-[clamp(1.1rem,4vw,1.6rem)] font-black text-text-main sm:text-2xl">
+                <span className="text-lg sm:text-2xl">{activeCategory?.icon}</span>
+                <h2 className="truncate font-heading text-[clamp(1rem,4vw,1.6rem)] font-black text-text-main sm:text-2xl">
                   {activeCategory?.name}
                 </h2>
                 <span className={`hidden sm:inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold ${activeCategory?.pill ?? 'bg-primary/10 text-primary'}`}>
@@ -557,7 +557,7 @@ export const Language: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 overflow-hidden px-4 pb-6 md:px-8 relative z-10">
+      <div className="flex-1 min-h-0 overflow-hidden px-3 pb-4 sm:px-4 sm:pb-6 md:px-8 relative z-10">
         <div className="mx-auto w-full max-w-6xl h-full flex items-center justify-center">
         <AnimatePresence mode="wait">
           {(isWordsLoading || currentWord) && (
@@ -764,15 +764,15 @@ export const Language: React.FC = () => {
         </div>
       </div>
 
-      <div className="sticky bottom-0 z-20 px-4 md:px-8 pb-[env(safe-area-inset-bottom)]">
+      <div className="sticky bottom-0 z-20 px-3 sm:px-4 md:px-8 pb-[env(safe-area-inset-bottom)]">
         <div className="mx-auto w-full max-w-6xl pb-3">
-          <div className="rounded-[2rem] border-[3px] border-white bg-white/85 backdrop-blur-xl shadow-clay-card-even ring-1 ring-black/5 px-4 py-3">
+          <div className="rounded-[2rem] border-[3px] border-white bg-white/85 backdrop-blur-xl shadow-clay-card-even ring-1 ring-black/5 px-3 py-2.5 sm:px-4 sm:py-3">
             <div className="flex items-center justify-between gap-3">
               <button
                 onClick={handlePrev}
                 disabled={currentIndex === 0}
                 className={[
-                  'flex-none h-12 px-5 rounded-2xl font-black text-sm transition-all active:scale-95',
+                  'flex-none h-11 sm:h-12 px-4 sm:px-5 rounded-2xl font-black text-[13px] sm:text-sm transition-all active:scale-95',
                   currentIndex === 0
                     ? 'bg-white/60 text-text-light border-[3px] border-white/70 ring-1 ring-black/5'
                     : 'bg-white/85 text-text-main border-[3px] border-white shadow-sm hover:bg-white',
@@ -795,7 +795,7 @@ export const Language: React.FC = () => {
 
               <button
                 onClick={handleNext}
-                className="flex-none h-12 px-6 rounded-2xl bg-gradient-to-r from-primary to-secondary text-sm font-black text-white border-[3px] border-white shadow-pop-purple transition-transform active:scale-[0.99]"
+                className="flex-none h-11 sm:h-12 px-5 sm:px-6 rounded-2xl bg-gradient-to-r from-primary to-secondary text-[13px] sm:text-sm font-black text-white border-[3px] border-white shadow-pop-purple transition-transform active:scale-[0.99]"
               >
                 {currentIndex === words.length - 1 ? '完成' : '下一个'}
               </button>
