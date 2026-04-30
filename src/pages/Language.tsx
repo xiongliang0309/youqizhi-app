@@ -462,12 +462,12 @@ export const Language: React.FC = () => {
 
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between gap-3">
-                        <div className="text-base sm:text-xl font-black tracking-wide text-text-main truncate">
+                        <div className="text-[15px] sm:text-xl font-black tracking-wide text-text-main whitespace-nowrap">
                           {cat.name}
                         </div>
                         <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-gray-200 group-hover:text-gray-300 transition-colors flex-none" />
                       </div>
-                      <div className="mt-2 inline-flex items-center rounded-full px-2.5 py-1 text-[11px] sm:text-xs font-extrabold bg-white/80 border border-white/70 text-text-light">
+                      <div className="mt-2 inline-flex items-center rounded-full px-2.5 py-1 text-[11px] sm:text-xs font-extrabold bg-white/80 border border-white/70 text-text-light whitespace-nowrap leading-none">
                         开始学习
                       </div>
                     </div>
@@ -566,7 +566,7 @@ export const Language: React.FC = () => {
               initial={{ opacity: 0, x: 50, scale: 0.9 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: -50, scale: 0.9 }}
-              className={`w-full max-w-[36rem] h-full max-h-[46rem] flex flex-col overflow-hidden rounded-[2.5rem] sm:rounded-[3rem] border-[4px] sm:border-[5px] border-white bg-white/82 p-4 sm:p-6 shadow-clay-card-even ring-1 ring-black/5 backdrop-blur-xl ${activeCategory?.shadow ?? ''}`}
+              className={`w-full max-w-[36rem] h-full flex flex-col overflow-hidden rounded-[2.5rem] sm:rounded-[3rem] border-[4px] sm:border-[5px] border-white bg-white/82 p-3 sm:p-6 shadow-clay-card-even ring-1 ring-black/5 backdrop-blur-xl [@media(max-height:740px)]:p-3 [@media(max-height:740px)]:border-[3px] ${activeCategory?.shadow ?? ''}`}
             >
               <div className="flex-none flex items-start justify-end">
                 <button
@@ -584,7 +584,7 @@ export const Language: React.FC = () => {
               </div>
 
               {isWordsLoading ? (
-                <div className="flex-1 min-h-0 mt-2 sm:mt-4 w-full rounded-3xl sm:rounded-5xl bg-gradient-to-br from-background-surface to-background-soft p-4 flex flex-col items-center justify-center shadow-sm ring-1 ring-black/5">
+                <div className="flex-1 min-h-0 mt-2 sm:mt-4 w-full rounded-3xl sm:rounded-5xl bg-gradient-to-br from-background-surface to-background-soft p-3 sm:p-4 flex flex-col items-center justify-center shadow-sm ring-1 ring-black/5 [@media(max-height:740px)]:mt-2">
                   <div className="h-[clamp(4rem,min(16vw,14svh),8.5rem)] w-[clamp(4rem,min(16vw,14svh),8.5rem)] rounded-3xl sm:rounded-4xl bg-white/70 ring-1 ring-black/5 animate-pulse" />
                   <div className="mt-4 sm:mt-5 w-full max-w-[18rem] space-y-3">
                     <div className="mx-auto h-6 sm:h-8 w-3/4 rounded-full bg-white/70 ring-1 ring-black/5 animate-pulse" />
@@ -594,7 +594,7 @@ export const Language: React.FC = () => {
               ) : currentWord ? (
                 <button
                   onClick={playSound}
-                  className="flex-1 min-h-0 mt-2 sm:mt-4 w-full flex flex-col items-center justify-center rounded-3xl sm:rounded-5xl bg-gradient-to-br from-background-surface to-background-soft p-3 sm:p-5 shadow-sm ring-1 ring-black/5 transition-transform active:scale-[0.99]"
+                  className="flex-1 min-h-0 mt-2 sm:mt-4 w-full flex flex-col items-center justify-center rounded-3xl sm:rounded-5xl bg-gradient-to-br from-background-surface to-background-soft p-3 sm:p-5 shadow-sm ring-1 ring-black/5 transition-transform active:scale-[0.99] [@media(max-height:740px)]:mt-2 [@media(max-height:740px)]:p-3"
                   aria-label="播放发音"
                 >
                   <div className="leading-none drop-shadow-2xl flex-none">
@@ -622,7 +622,7 @@ export const Language: React.FC = () => {
               ) : null}
 
               {((currentWord?.examples && currentWord.examples.length > 0) || (currentWord?.collocations && currentWord.collocations.length > 0)) && (
-                <div className="flex-none mt-3 sm:mt-4 grid gap-2 sm:gap-3 rounded-2xl sm:rounded-3xl bg-white/70 p-3 sm:p-4 shadow-sm ring-1 ring-black/5 sm:grid-cols-2 overflow-hidden">
+                <div className="flex-none mt-2 sm:mt-4 grid gap-2 sm:gap-3 rounded-2xl sm:rounded-3xl bg-white/70 p-3 sm:p-4 shadow-sm ring-1 ring-black/5 sm:grid-cols-2 overflow-hidden [@media(max-height:740px)]:hidden">
                   {currentWord.examples && currentWord.examples.length > 0 && (
                     <div className="text-left">
                       <div className="text-[10px] sm:text-xs font-black text-text-light">例句</div>
@@ -654,10 +654,10 @@ export const Language: React.FC = () => {
                 </div>
               )}
 
-              <div className="flex-none mt-3 sm:mt-5 flex flex-wrap items-center justify-center gap-3 sm:gap-4 pb-4">
+              <div className="flex-none mt-2 sm:mt-5 flex flex-wrap items-center justify-center gap-2 sm:gap-4 pb-2 sm:pb-4">
                 <button
                   onClick={playSound}
-                  className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-gradient-to-r from-accent-yellow to-accent-tangerine px-4 py-2 sm:px-5 sm:py-3 text-xs sm:text-sm font-extrabold text-white shadow-pop-orange transition-transform active:scale-[0.98]"
+                  className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-gradient-to-r from-accent-yellow to-accent-tangerine px-3.5 py-2 sm:px-5 sm:py-3 text-[12px] sm:text-sm font-extrabold text-white shadow-pop-orange transition-transform active:scale-[0.98]"
                 >
                   <span className="grid h-6 w-6 sm:h-8 sm:w-8 place-items-center rounded-full bg-white/20">
                     <Volume2 className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -671,7 +671,7 @@ export const Language: React.FC = () => {
                   onPointerLeave={stopRecording}
                   onPointerCancel={stopRecording}
                   onContextMenu={(e) => e.preventDefault()}
-                  className={`group relative inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 sm:px-8 sm:py-3.5 text-sm sm:text-base font-black text-white transition-all duration-300 active:scale-95 ${
+                  className={`group relative inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 sm:px-8 sm:py-3.5 text-[13px] sm:text-base font-black text-white transition-all duration-300 active:scale-95 ${
                     isRecording 
                       ? 'bg-rose-500 shadow-[0_0_20px_rgba(244,63,94,0.6)] ring-4 ring-rose-500/30 scale-105' 
                       : 'bg-gradient-to-br from-primary via-primary to-secondary shadow-[0_4px_0_rgba(79,70,229,0.3)] hover:-translate-y-1 hover:shadow-[0_6px_0_rgba(79,70,229,0.3)]'
@@ -764,8 +764,8 @@ export const Language: React.FC = () => {
         </div>
       </div>
 
-      <div className="sticky bottom-0 z-20 px-3 sm:px-4 md:px-8 pb-[env(safe-area-inset-bottom)]">
-        <div className="mx-auto w-full max-w-6xl pb-3">
+      <div className="sticky bottom-0 z-20 px-3 sm:px-4 md:px-8 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
+        <div className="mx-auto w-full max-w-6xl pb-2 sm:pb-3">
           <div className="rounded-[2rem] border-[3px] border-white bg-white/85 backdrop-blur-xl shadow-clay-card-even ring-1 ring-black/5 px-3 py-2.5 sm:px-4 sm:py-3">
             <div className="flex items-center justify-between gap-3">
               <button
