@@ -483,7 +483,7 @@ export const Language: React.FC = () => {
 
   // --- 视图 2: 单词卡片页 ---
   return (
-    <div className="bg-gradient-to-b from-[#FFF8E7] via-[#F7FBFF] to-[#FFF3F7] font-sans selection:bg-accent-yellow/50 relative flex h-full flex-col overflow-hidden">
+    <div className="bg-gradient-to-b from-[#FFF8E7] via-[#F7FBFF] to-[#FFF3F7] font-sans selection:bg-accent-yellow/50 relative flex h-full flex-col overflow-hidden" style={{ height: '100dvh' }}>
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute -top-20 -left-24 w-96 h-96 bg-accent-mint/20 rounded-full blur-3xl" />
         <div className="absolute top-1/3 -right-24 w-80 h-80 bg-accent-yellow/16 rounded-full blur-3xl" />
@@ -504,7 +504,7 @@ export const Language: React.FC = () => {
         </motion.div>
       </div>
 
-      <div className="shrink-0 relative z-10 px-3 pt-3 sm:px-4 sm:pt-4 md:px-8 md:pt-6">
+      <div className="shrink-0 relative z-10 px-3 pt-2 sm:px-4 sm:pt-4 md:px-8 md:pt-6">
         <div className="mx-auto w-full max-w-6xl relative overflow-hidden rounded-[2.25rem] border-[3px] border-white bg-white/75 backdrop-blur-xl shadow-clay-card-even">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0">
             <div className="absolute inset-0 bg-gradient-to-r from-accent-rose/10 via-accent-cyan/10 to-accent-yellow/12" />
@@ -557,8 +557,8 @@ export const Language: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] sm:px-4 md:px-8 relative z-10">
-        <div className="mx-auto w-full max-w-6xl min-h-full flex flex-col items-center gap-3 py-3 sm:py-5">
+      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 sm:px-4 md:px-8 relative z-10">
+        <div className="mx-auto w-full max-w-6xl min-h-full flex flex-col items-center gap-2 pt-2 pb-3 sm:gap-3 sm:py-5">
           <div className="w-full flex-1 min-h-0 flex items-center justify-center">
           <AnimatePresence mode="wait">
             {(isWordsLoading || currentWord) && (
@@ -567,7 +567,7 @@ export const Language: React.FC = () => {
                 initial={{ opacity: 0, x: 50, scale: 0.9 }}
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: -50, scale: 0.9 }}
-                className={`w-full max-w-[36rem] flex flex-col overflow-hidden rounded-[2.5rem] sm:rounded-[3rem] border-[4px] sm:border-[5px] border-white bg-white/82 p-3 sm:p-6 shadow-clay-card-even ring-1 ring-black/5 backdrop-blur-xl [@media(max-height:740px)]:p-3 [@media(max-height:740px)]:border-[3px] ${activeCategory?.shadow ?? ''}`}
+                className={`w-full max-w-[36rem] flex flex-col overflow-hidden rounded-[2rem] sm:rounded-[3rem] border-[3px] sm:border-[5px] border-white bg-white/82 p-2.5 sm:p-6 shadow-clay-card-even ring-1 ring-black/5 backdrop-blur-xl [@media(max-height:740px)]:p-2 [@media(max-height:740px)]:border-[3px] [@media(max-height:740px)]:rounded-[1.5rem] ${activeCategory?.shadow ?? ''}`}
               >
               <div className="flex-none flex items-start justify-end">
                 <button
@@ -595,7 +595,7 @@ export const Language: React.FC = () => {
               ) : currentWord ? (
                 <button
                   onClick={playSound}
-                  className="flex-1 min-h-0 mt-2 sm:mt-4 w-full flex flex-col items-center justify-center rounded-3xl sm:rounded-5xl bg-gradient-to-br from-background-surface to-background-soft p-3 sm:p-5 shadow-sm ring-1 ring-black/5 transition-transform active:scale-[0.99] [@media(max-height:740px)]:mt-2 [@media(max-height:740px)]:p-3"
+                  className="flex-1 min-h-0 mt-1.5 sm:mt-4 w-full flex flex-col items-center justify-center rounded-2xl sm:rounded-5xl bg-gradient-to-br from-background-surface to-background-soft p-2.5 sm:p-5 shadow-sm ring-1 ring-black/5 transition-transform active:scale-[0.99] [@media(max-height:740px)]:mt-1 [@media(max-height:740px)]:p-2"
                   aria-label="播放发音"
                 >
                   <div className="leading-none drop-shadow-2xl flex-none">
@@ -655,7 +655,7 @@ export const Language: React.FC = () => {
                 </div>
               )}
 
-              <div className="flex-none mt-2 sm:mt-5 flex flex-wrap items-center justify-center gap-2 sm:gap-4 pb-2 sm:pb-4">
+              <div className="flex-none mt-1.5 sm:mt-5 flex flex-wrap items-center justify-center gap-2 sm:gap-4 pb-1.5 sm:pb-4">
                 <button
                   onClick={playSound}
                   className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-gradient-to-r from-accent-yellow to-accent-tangerine px-3.5 py-2 sm:px-5 sm:py-3 text-[12px] sm:text-sm font-extrabold text-white shadow-pop-orange transition-transform active:scale-[0.98]"
@@ -764,41 +764,45 @@ export const Language: React.FC = () => {
           </AnimatePresence>
           </div>
 
-          <div className="w-full max-w-[36rem]">
-            <div className="rounded-[2rem] border-[3px] border-white bg-white/85 backdrop-blur-xl shadow-clay-card-even ring-1 ring-black/5 px-3 py-2.5 sm:px-4 sm:py-3">
-              <div className="flex items-center justify-between gap-3">
-                <button
-                  onClick={handlePrev}
-                  disabled={currentIndex === 0}
-                  className={[
-                    'flex-none h-11 sm:h-12 px-4 sm:px-5 rounded-2xl font-black text-[13px] sm:text-sm transition-all active:scale-95',
-                    currentIndex === 0
-                      ? 'bg-white/60 text-text-light border-[3px] border-white/70 ring-1 ring-black/5'
-                      : 'bg-white/85 text-text-main border-[3px] border-white shadow-sm hover:bg-white',
-                  ].join(' ')}
-                >
-                  上一个
-                </button>
+        </div>
+      </div>
 
-                <div className="flex-1 min-w-0">
-                  <div className="text-center text-xs font-black text-text-body">
-                    进度 {currentIndex + 1} / {words.length}
-                  </div>
-                  <div className="mt-2 h-2 rounded-full bg-gray-200/70 overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-accent-yellow via-accent-tangerine to-secondary"
-                      style={{ width: `${words.length ? ((currentIndex + 1) / words.length) * 100 : 0}%` }}
-                    />
-                  </div>
+      {/* 底部导航栏 - 固定在底部，不随内容滚动 */}
+      <div className="shrink-0 relative z-10 px-3 sm:px-4 md:px-8" style={{ paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 0.5rem)' }}>
+        <div className="mx-auto w-full max-w-[36rem]">
+          <div className="rounded-[1.5rem] sm:rounded-[2rem] border-[3px] border-white bg-white/90 backdrop-blur-xl shadow-clay-card-even ring-1 ring-black/5 px-2.5 py-2 sm:px-4 sm:py-3">
+            <div className="flex items-center justify-between gap-2 sm:gap-3">
+              <button
+                onClick={handlePrev}
+                disabled={currentIndex === 0}
+                className={[
+                  'flex-none h-9 sm:h-12 px-3 sm:px-5 rounded-xl sm:rounded-2xl font-black text-[12px] sm:text-sm transition-all active:scale-95',
+                  currentIndex === 0
+                    ? 'bg-white/60 text-text-light border-[2px] sm:border-[3px] border-white/70 ring-1 ring-black/5'
+                    : 'bg-white/85 text-text-main border-[2px] sm:border-[3px] border-white shadow-sm hover:bg-white',
+                ].join(' ')}
+              >
+                上一个
+              </button>
+
+              <div className="flex-1 min-w-0">
+                <div className="text-center text-[11px] sm:text-xs font-black text-text-body">
+                  进度 {currentIndex + 1} / {words.length}
                 </div>
-
-                <button
-                  onClick={handleNext}
-                  className="flex-none h-11 sm:h-12 px-5 sm:px-6 rounded-2xl bg-gradient-to-r from-primary to-secondary text-[13px] sm:text-sm font-black text-white border-[3px] border-white shadow-pop-purple transition-transform active:scale-[0.99]"
-                >
-                  {currentIndex === words.length - 1 ? '完成' : '下一个'}
-                </button>
+                <div className="mt-1 sm:mt-2 h-1.5 sm:h-2 rounded-full bg-gray-200/70 overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-accent-yellow via-accent-tangerine to-secondary transition-all duration-300"
+                    style={{ width: `${words.length ? ((currentIndex + 1) / words.length) * 100 : 0}%` }}
+                  />
+                </div>
               </div>
+
+              <button
+                onClick={handleNext}
+                className="flex-none h-9 sm:h-12 px-4 sm:px-6 rounded-xl sm:rounded-2xl bg-gradient-to-r from-primary to-secondary text-[12px] sm:text-sm font-black text-white border-[2px] sm:border-[3px] border-white shadow-pop-purple transition-transform active:scale-[0.99]"
+              >
+                {currentIndex === words.length - 1 ? '完成' : '下一个'}
+              </button>
             </div>
           </div>
         </div>
