@@ -12,6 +12,9 @@
 }
 
 @layer base {
+  :root {
+    --app-vvh: 100dvh;
+  }
   html {
     @apply h-full overflow-hidden;
   }
