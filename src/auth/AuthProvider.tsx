@@ -1,6 +1,6 @@
 import React from 'react'
 import type { Session, User } from '@supabase/supabase-js'
-import { isSupabaseConfigured, supabase } from '../lib/supabase'
+import { isSupabaseConfigured, supabase, supabaseUrl } from '../lib/supabase'
 import type { ProfileRow } from '../data/profilesSupabase'
 import { getOrCreateProfile, updateProfileNickname } from '../data/profilesSupabase'
 
@@ -19,6 +19,25 @@ type AuthContextValue = {
 }
 
 const AuthContext = React.createContext<AuthContextValue | null>(null)
+
+const clearAuthStorage = () => {
+  let ref: string | null = null
+  try {
+    ref = new URL(supabaseUrl).hostname.split('.')[0] ?? null
+  } catch (e) {}
+
+  try {
+    if (ref) {
+      const prefix = `sb-${ref}-`
+      for (let i = localStorage.length - 1; i >= 0; i -= 1) {
+        const key = localStorage.key(i)
+        if (key && key.startsWith(prefix)) localStorage.removeItem(key)
+      }
+      localStorage.removeItem(`sb-${ref}-auth-token`)
+    }
+    localStorage.removeItem('supabase.auth.token')
+  } catch (e) {}
+}
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [status, setStatus] = React.useState<AuthStatus>('loading')
@@ -99,8 +118,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = React.useCallback(async () => {
     ensureConfigured()
-    const { error } = await supabase.auth.signOut()
-    if (error) throw error
+    setStatus('unauthed')
+    setSession(null)
+    setUser(null)
+    setProfile(null)
+    clearAuthStorage()
+    const { error: localError } = await supabase.auth.signOut({ scope: 'local' })
+    clearAuthStorage()
+    void supabase.auth.signOut().catch(() => {})
+    if (localError) throw localError
   }, [ensureConfigured])
 
   const resetPassword = React.useCallback(async (email: string) => {

@@ -213,7 +213,7 @@ export function AppNav() {
                 {user && (
                   <button
                     type="button"
-                    onClick={() => signOut()}
+                    onClick={() => void signOut().catch(() => alert('退出失败，请检查网络连接'))}
                     className="ml-2 hidden sm:inline-flex h-[2rem] items-center rounded-full px-3 bg-white/50 border-2 border-white shadow-sm font-bold text-[12px] text-text-light transition-all duration-300 hover:shadow-clay-card hover:-translate-y-0.5 hover:text-text-main focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                   >
                     退出
@@ -296,7 +296,7 @@ export function AppNav() {
                     {user && (
                       <button
                         type="button"
-                        onClick={() => signOut()}
+                        onClick={() => void signOut().catch(() => alert('退出失败，请检查网络连接'))}
                         className="flex-none inline-flex h-[2rem] items-center rounded-full px-3 bg-white/50 border border-black/10 shadow-sm font-bold text-[12px] text-text-light transition-colors duration-300 hover:bg-white hover:text-text-main focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                       >
                         退出
