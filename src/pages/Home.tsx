@@ -389,7 +389,7 @@ export const Home: React.FC = () => {
         </motion.div>
       </div>
 
-      <main className="w-full max-w-7xl mx-auto px-4 py-8 md:py-12 relative z-10 flex-1 flex flex-col justify-center pb-4">
+      <main className="w-full max-w-7xl mx-auto px-4 py-8 md:py-12 relative z-10 flex-1 flex flex-col justify-center pb-44 sm:pb-8">
         {/* 欢迎标语 - 动感文字 */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

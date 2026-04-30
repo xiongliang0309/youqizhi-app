@@ -75,6 +75,25 @@
   background-clip: padding-box;
 }
 
+@media (max-width: 768px) {
+  * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  *::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+  [data-app-scroll-container="true"] {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  [data-app-scroll-container="true"]::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;

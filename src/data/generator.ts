@@ -94,7 +94,10 @@ const ENTITIES = {
   ]
 };
 
-const LANGUAGE_WORD_BANK: LanguageWordEntry[] = (LANGUAGE_WORDS as unknown as LanguageWordEntry[]).filter(isLanguageWordEntryAcceptable);
+const LANGUAGE_WORD_BANK_RAW: LanguageWordEntry[] = LANGUAGE_WORDS as unknown as LanguageWordEntry[];
+const LANGUAGE_WORD_BANK_STRICT: LanguageWordEntry[] = LANGUAGE_WORD_BANK_RAW.filter(isLanguageWordEntryAcceptable);
+
+const getLanguageWordBank = () => (LANGUAGE_WORD_BANK_STRICT.length > 0 ? LANGUAGE_WORD_BANK_STRICT : LANGUAGE_WORD_BANK_RAW);
 
 // --- 知识库 (保留原有高质量内容) ---
 const SCIENCE_KNOWLEDGE_BASE = {
@@ -416,7 +419,7 @@ export const generateWordCardsFromBank = (bank: LanguageWordEntry[], count: numb
 
 // 1. [升级] 单词生成器 - 组合生成法
 export const generateWordCards = (count: number = 50, category?: WordCategory): WordCard[] => {
-  return generateWordCardsFromBank(LANGUAGE_WORD_BANK, count, category);
+  return generateWordCardsFromBank(getLanguageWordBank(), count, category);
 };
 
 // 2. [升级] 逻辑生成器 (算法生成，本身支持无限)

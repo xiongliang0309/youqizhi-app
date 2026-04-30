@@ -560,9 +560,9 @@ export const Language: React.FC = () => {
       <div className="flex-1 min-h-0 overflow-hidden px-4 pb-6 md:px-8 relative z-10">
         <div className="mx-auto w-full max-w-6xl h-full flex items-center justify-center">
         <AnimatePresence mode="wait">
-          {currentWord && (
+          {(isWordsLoading || currentWord) && (
             <motion.div
-              key={currentWord.id}
+              key={currentWord?.id ?? 'loading'}
               initial={{ opacity: 0, x: 50, scale: 0.9 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: -50, scale: 0.9 }}

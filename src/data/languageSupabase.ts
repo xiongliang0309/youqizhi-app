@@ -1,4 +1,4 @@
-import { supabase } from '../lib/supabase'
+import { supabasePublic } from '../lib/supabase'
 import { isLanguageWordEntryAcceptable, type LanguageWordEntry, type WordCategory } from './languageQuality'
 
 type LanguageWordRow = {
@@ -37,7 +37,7 @@ export const fetchLanguageWordsFromSupabase = async (category: WordCategory): Pr
   const cached = cacheByCategory.get(category)
   if (cached) return cached
 
-  const { data, error } = await supabase
+  const { data, error } = await supabasePublic
     .from('language_words')
     .select('id,category,en,zh,image,emoji_fallback,level,pos,meaning,examples,collocations')
     .eq('category', category)
@@ -47,8 +47,9 @@ export const fetchLanguageWordsFromSupabase = async (category: WordCategory): Pr
   if (error) throw error
 
   const rows = (data ?? []) as LanguageWordRow[]
-  const entries = rows.map(toEntry).filter(isLanguageWordEntryAcceptable)
-  cacheByCategory.set(category, entries)
-  return entries
+  const mapped = rows.map(toEntry)
+  const entries = mapped.filter(isLanguageWordEntryAcceptable)
+  const resolved = entries.length > 0 ? entries : mapped
+  cacheByCategory.set(category, resolved)
+  return resolved
 }
-
