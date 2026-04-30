@@ -422,7 +422,7 @@ export const Culture: React.FC = () => {
         )}
       </AnimatePresence>
 
-      <div className="shrink-0 relative z-10 px-4 pt-4 md:px-8 md:pt-6">
+      <div className="shrink-0 relative z-10 px-3 pt-2 sm:px-4 sm:pt-4 md:px-8 md:pt-6">
         <div className="mx-auto w-full max-w-6xl relative overflow-hidden rounded-[2.25rem] border-[3px] border-white bg-white/75 backdrop-blur-xl shadow-clay-card-even">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0">
             <div className="absolute inset-0 bg-gradient-to-r from-accent-rose/10 via-accent-cyan/10 to-accent-yellow/12" />
@@ -431,17 +431,17 @@ export const Culture: React.FC = () => {
             <div className="absolute -top-10 -right-24 h-48 w-48 rounded-full bg-primary/12 blur-3xl" />
           </div>
 
-          <div className="relative z-10 px-4 py-4 md:px-6 md:py-5 flex items-center gap-3">
+          <div className="relative z-10 px-3 py-2.5 sm:px-4 sm:py-4 md:px-6 md:py-5 flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => setSelectedCategory(null)}
-              className="bg-white/90 p-3 rounded-full shadow-clay-card-even transition-all duration-300 ease-out border-[3px] border-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
+              className="bg-white/90 p-2 sm:p-3 rounded-full shadow-clay-card-even transition-all duration-300 ease-out border-[3px] border-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
               aria-label="返回分类"
             >
               <ArrowLeft className="text-gray-600" />
             </button>
 
             <div className="min-w-0">
-              <div className={`text-lg md:text-xl font-black text-gray-800 tracking-wide ${isPoemMode ? 'font-kaishu' : ''}`}>
+              <div className={`text-sm sm:text-lg md:text-xl font-black text-gray-800 tracking-wide ${isPoemMode ? 'font-kaishu' : ''}`}>
                 {CATEGORIES.find(c => c.id === selectedCategory)?.name}
               </div>
               <div className="text-xs md:text-sm font-bold text-text-light">
@@ -461,15 +461,15 @@ export const Culture: React.FC = () => {
             </div>
           </div>
 
-          <div className="relative z-10 px-4 pb-4 md:px-6 md:pb-5 flex flex-col gap-3">
+          <div className="relative z-10 px-3 pb-2.5 sm:px-4 sm:pb-4 md:px-6 md:pb-5 flex flex-col gap-2 sm:gap-3">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
               <input
                 type="text"
                 placeholder={selectedCategory === 'poem' ? "搜索古诗标题/内容..." : "搜索儿歌标题..."}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-12 pl-12 pr-4 rounded-2xl border-[3px] border-white bg-white/85 shadow-clay-card-even ring-1 ring-black/5 focus:ring-2 focus:ring-primary/25 outline-none transition-all"
+                className="w-full h-10 sm:h-12 pl-10 sm:pl-12 pr-4 rounded-xl sm:rounded-2xl text-sm sm:text-base border-[3px] border-white bg-white/85 shadow-clay-card-even ring-1 ring-black/5 focus:ring-2 focus:ring-primary/25 outline-none transition-all"
               />
             </div>
 
@@ -503,7 +503,7 @@ export const Culture: React.FC = () => {
       <div
         className={[
           'flex-1 min-h-0 overflow-x-hidden relative',
-          poemPagerActive ? 'overflow-hidden p-3 sm:p-4 md:p-6 pb-3' : 'overflow-y-auto p-4 md:p-8 scroll-smooth overscroll-contain',
+          poemPagerActive ? 'overflow-hidden p-2 sm:p-3 md:p-6' : 'overflow-y-auto p-4 md:p-8 scroll-smooth overscroll-contain',
           selectedCategory === 'song'
             ? currentSongIndex !== null
               ? 'pb-40'
@@ -524,7 +524,7 @@ export const Culture: React.FC = () => {
         <div
           className={[
             'relative z-10 mx-auto w-full max-w-6xl rounded-[2.5rem] bg-white/65 border-[3px] border-white shadow-clay-card-even overflow-hidden',
-            poemPagerActive ? 'h-full flex flex-col p-3 sm:p-4 md:p-5' : 'p-4 sm:p-6 md:p-8',
+            poemPagerActive ? 'h-full flex flex-col p-1.5 sm:p-3 md:p-5' : 'p-4 sm:p-6 md:p-8',
           ].join(' ')}
         >
         {loadError && (
