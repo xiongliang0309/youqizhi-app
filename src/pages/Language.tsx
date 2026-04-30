@@ -483,7 +483,7 @@ export const Language: React.FC = () => {
 
   // --- 视图 2: 单词卡片页 ---
   return (
-    <div className="bg-gradient-to-b from-[#FFF8E7] via-[#F7FBFF] to-[#FFF3F7] font-sans selection:bg-accent-yellow/50 relative flex h-full flex-col overflow-hidden" style={{ height: '100dvh' }}>
+    <div className="bg-gradient-to-b from-[#FFF8E7] via-[#F7FBFF] to-[#FFF3F7] font-sans selection:bg-accent-yellow/50 relative flex h-full flex-col overflow-hidden">
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute -top-20 -left-24 w-96 h-96 bg-accent-mint/20 rounded-full blur-3xl" />
         <div className="absolute top-1/3 -right-24 w-80 h-80 bg-accent-yellow/16 rounded-full blur-3xl" />
@@ -557,8 +557,8 @@ export const Language: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 sm:px-4 md:px-8 relative z-10">
-        <div className="mx-auto w-full max-w-6xl min-h-full flex flex-col items-center gap-2 pt-2 pb-3 sm:gap-3 sm:py-5">
+      <div className="flex-1 min-h-0 overflow-hidden px-3 sm:px-4 md:px-8 py-2 sm:py-3 relative z-10 flex flex-col">
+        <div className="mx-auto w-full max-w-6xl flex-1 min-h-0 flex flex-col items-center">
           <div className="w-full flex-1 min-h-0 flex items-center justify-center">
           <AnimatePresence mode="wait">
             {(isWordsLoading || currentWord) && (
@@ -567,7 +567,7 @@ export const Language: React.FC = () => {
                 initial={{ opacity: 0, x: 50, scale: 0.9 }}
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: -50, scale: 0.9 }}
-                className={`w-full max-w-[36rem] flex flex-col overflow-hidden rounded-[2rem] sm:rounded-[3rem] border-[3px] sm:border-[5px] border-white bg-white/82 p-2.5 sm:p-6 shadow-clay-card-even ring-1 ring-black/5 backdrop-blur-xl [@media(max-height:740px)]:p-2 [@media(max-height:740px)]:border-[3px] [@media(max-height:740px)]:rounded-[1.5rem] ${activeCategory?.shadow ?? ''}`}
+                className={`w-full h-full max-w-[36rem] flex flex-col overflow-hidden rounded-[2rem] sm:rounded-[3rem] border-[3px] sm:border-[5px] border-white bg-white/82 p-2.5 sm:p-6 shadow-clay-card-even ring-1 ring-black/5 backdrop-blur-xl [@media(max-height:740px)]:p-2 [@media(max-height:740px)]:border-[3px] [@media(max-height:740px)]:rounded-[1.5rem] ${activeCategory?.shadow ?? ''}`}
               >
               <div className="flex-none flex items-start justify-end">
                 <button
